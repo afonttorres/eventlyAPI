@@ -37,13 +37,12 @@ public class Event {
     private User publisher;
 
     @OneToMany(mappedBy = "event")
-    @JsonSerialize
+    @JsonIgnore
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "event")
     @JsonIgnore
-    @JsonSerialize
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<Participation> participants = new HashSet<>();
 
