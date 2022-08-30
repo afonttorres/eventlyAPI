@@ -1,4 +1,4 @@
-package com.example.evently.auth.config.repositories;
+package com.example.evently.repositories;
 
 import com.example.evently.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
