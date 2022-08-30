@@ -37,4 +37,8 @@ public class User {
         this.password = encode;
     }
 
+    public String getCompleteName(){
+        return this.name+" "+this.surname;
+    }
+
 }

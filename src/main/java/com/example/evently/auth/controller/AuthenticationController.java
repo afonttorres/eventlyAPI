@@ -122,6 +122,9 @@ public class AuthenticationController {
         user.setRoles(roles);
         authRepository.save(user);
 
+//        LoginReq loginReq = new LoginReq(singUpReq.getUsername(), singUpReq.getPassword());
+//        this.authenticateUser(loginReq);
+
         return ResponseEntity.ok(new MessageRes("User registered successfully!"));
     }
 
