@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
- @Component
+@Component
 public class RoleRepositoryInitializer {
     private RoleRepository roleRepository;
     private AuthRepository authRepository;

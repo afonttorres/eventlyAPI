@@ -36,18 +36,31 @@ public class Event {
     @JoinColumn(name = "publisher_id")
     private User publisher;
 
-    @OneToMany(mappedBy = "event")
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name="events", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name="category_id"))
+//    @JsonIgnore
+//    private Set<Category> categories = new HashSet<>();
+
+    @ManyToMany
     @JsonIgnore
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "event")
     @JsonIgnore
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    private Set<Participation> participants = new HashSet<>();
-
     @JsonSerialize
-    private int participantsCount(){
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    private Set<Participation> participants;
+
+
+    public int participantsCount(){
         return this.participants.size();
+    }
+
+    public boolean isParticipant(User auth){
+        var participant = participants.stream().filter(Save->Save.getParticipant() == auth).findFirst();
+        if(participant.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 }

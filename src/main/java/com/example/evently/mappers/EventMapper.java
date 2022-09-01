@@ -27,6 +27,7 @@ public class EventMapper {
         res.setDescription(event.getDescription());
         res.setCategories(event.getCategories());
         res.setParticipants(event.getParticipants());
+        res.setParticipantsCount(event.participantsCount());
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
         return res;
     }

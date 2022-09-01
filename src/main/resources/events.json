@@ -1,0 +1,58 @@
+[
+  {
+  "title": "Xocolatada",
+  "description": "Xocolatada popular",
+  "categories": ["oci popular"],
+  "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+  "username": "xcapde"
+},
+  {
+    "title": "Bicicletada",
+    "description": "Bicicletada popular del barri",
+    "categories": ["esport", "oci popular"],
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "username": "xcapde"
+  },
+  {
+    "title": "Mentoria de programació",
+    "description": "Mentoria de basics de programacio Front-end. HTML, CSS, JavaScript",
+    "categories": ["programacio", "coding"],
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "username": "lauraparra"
+  },
+  {
+    "title": "Passeig caní en grup",
+    "description": "Passeig cani pel passeig de La Garriga amb la teva mascota!",
+    "categories": ["tracking", "pet-friendly"],
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "username": "lauraparra"
+  },
+  {
+    "title": "Yoga per jubilats",
+    "description": "Yoga a la platja per gent gran",
+    "categories": ["salut", "health"],
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "username": "joelblasi"
+  },
+  {
+    "title": "Classes de crochet",
+    "description": "Classes de crochet",
+    "categories": ["crochet"],
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "username": "afonttorres"
+  },
+  {
+    "title": "Analisi House of the Dragon",
+    "description": "Comenta l'ultim capitol de House of the Dragon amb gent que comparteixi ",
+    "categories": ["TV"],
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "username": "afonttorres"
+  },
+  {
+    "title": "Jocs de rol",
+    "description": "desc",
+    "categories": ["frikis"],
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "username": "joelblasi"
+  }
+]

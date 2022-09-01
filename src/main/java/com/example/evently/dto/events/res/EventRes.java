@@ -18,4 +18,5 @@ public class EventRes {
     private NestedUser publisher;
     private Set<Category> categories;
     private Set<Participation> participants;
+    private int participantsCount;
 }
