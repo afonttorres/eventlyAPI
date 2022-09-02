@@ -33,15 +33,9 @@ public class EventController {
         return new ResponseEntity<>(eventService.getEventById(id), HttpStatus.OK);
     }
 
-//    @PreAuthorize("hasRole('ROLE_USER')")
-//    @PostMapping("/events")
-//    ResponseEntity<EventRes>create(@RequestBody EventReq eventReq){
-//        return new ResponseEntity<>(eventService.create(eventReq), HttpStatus.OK);
-//    }
-
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/events/offline")
     ResponseEntity<EventRes>create(@RequestBody EventReq eventReq){
-        return new ResponseEntity<>(eventService.create(eventReq), HttpStatus.OK);
+        return new ResponseEntity<>(eventService.createOfflineEvent(eventReq), HttpStatus.OK);
     }
 }

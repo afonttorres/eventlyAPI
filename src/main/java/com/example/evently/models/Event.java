@@ -42,14 +42,11 @@ public class Event {
     @JoinColumn(name = "tags")
     private List<Tag> tags = new ArrayList<>();
 
-
-
     @OneToMany(mappedBy = "event")
     @JsonIgnore
     @JsonSerialize
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Participation> participants = new ArrayList<>();
-
 
     public int participantsCount(){
         return this.participants.size();

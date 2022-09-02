@@ -14,7 +14,6 @@ public class ControllerAdvice {
         var err = ErrorDto.builder()
                 .code(e.getCode())
                 .message(e.getMessage())
-                .emoji("🔎")
                 .build();
         return new ResponseEntity<>(err, e.getHttpStatus());
     }
@@ -24,7 +23,6 @@ public class ControllerAdvice {
         var err = ErrorDto.builder()
                 .code(e.getCode())
                 .message(e.getMessage())
-                .emoji("❌")
                 .build();
         return new ResponseEntity<>(err, e.getHttpStatus());
     }

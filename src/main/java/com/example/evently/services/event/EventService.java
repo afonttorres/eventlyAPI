@@ -11,6 +11,6 @@ public interface EventService {
     List<EventRes> getAll();
     EventRes getEventById(Long id);
 
-    EventRes create(EventReq eventReq);
+    EventRes createOfflineEvent(EventReq eventReq);
 
 }

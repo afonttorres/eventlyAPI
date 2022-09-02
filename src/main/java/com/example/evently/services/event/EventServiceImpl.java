@@ -55,14 +55,10 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventRes create(EventReq eventReq) {
+    public EventRes createOfflineEvent(EventReq eventReq) {
         var auth = this.getAuth();
         var type = typeRepository.findById(1).get();
-        System.out.println("fins a type , type: "+type.nameToString());
-        System.out.println(eventReq.getTags());
         var tags = tagService.getMultById(eventReq.getTags());
-        System.out.println("fins a tags");
-        tags.forEach(t -> System.out.println(t.getName()));
         var event = new EventMapper().mapReqToOffEvent(eventReq, type, tags,auth);
         eventRepository.save(event);
         return new EventMapper().mapEventToRes(event);
