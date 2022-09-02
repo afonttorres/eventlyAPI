@@ -1,58 +1,75 @@
 [
-  {
-  "title": "Xocolatada",
-  "description": "Xocolatada popular",
-  "categories": ["oci popular"],
-  "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
-  "username": "xcapde"
-},
+
   {
     "title": "Bicicletada",
     "description": "Bicicletada popular del barri",
-    "categories": ["esport", "oci popular"],
+    "tags": ["esport", "oci popular"],
+    "img": "",
+    "type": 1,
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "xcapde"
   },
   {
     "title": "Mentoria de programació",
     "description": "Mentoria de basics de programacio Front-end. HTML, CSS, JavaScript",
-    "categories": ["programacio", "coding"],
+    "tags": ["programacio", "coding"],
+    "img": "",
+    "type": 2,
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "lauraparra"
   },
   {
     "title": "Passeig caní en grup",
     "description": "Passeig cani pel passeig de La Garriga amb la teva mascota!",
-    "categories": ["tracking", "pet-friendly"],
+    "tags": ["tracking", "pet-friendly"],
+    "img": "",
+    "type": 1,
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "lauraparra"
   },
   {
     "title": "Yoga per jubilats",
     "description": "Yoga a la platja per gent gran",
-    "categories": ["salut", "health"],
+    "tags": ["salut", "health"],
+    "img": "",
+    "type": 1,
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "joelblasi"
   },
   {
     "title": "Classes de crochet",
     "description": "Classes de crochet",
-    "categories": ["crochet"],
+    "tags": ["crochet"],
+    "img": "",
+    "type": 1,
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "afonttorres"
   },
   {
     "title": "Analisi House of the Dragon",
     "description": "Comenta l'ultim capitol de House of the Dragon amb gent que comparteixi ",
-    "categories": ["TV"],
+    "tags": ["TV"],
+    "img": "",
+    "type": 2,
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "afonttorres"
   },
   {
     "title": "Jocs de rol",
     "description": "desc",
-    "categories": ["frikis"],
+    "tags": ["frikis"],
+    "img": "",
+    "type": 1,
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "joelblasi"
+  },
+  {
+    "title": "Xocolatada",
+    "description": "Xocolatada popular",
+    "tags": ["oci popular"],
+    "img": "",
+    "type": 1,
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "username": "xcapde"
   }
 ]

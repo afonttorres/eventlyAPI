@@ -1,10 +1,9 @@
-package com.example.evently.dto.events.req;
+package com.example.evently.dto.event.req;
 
+import com.example.evently.models.EventType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -13,6 +12,8 @@ public class EventJsonReq {
     String title;
     String description;
     String username;
-    String[] categories;
+    String[] tags;
+    String img;
+    Integer type;
     String[] participants;
 }

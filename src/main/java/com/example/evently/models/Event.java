@@ -10,7 +10,9 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,20 +38,19 @@ public class Event {
     @JoinColumn(name = "publisher_id")
     private User publisher;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name="events", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name="category_id"))
-//    @JsonIgnore
-//    private Set<Category> categories = new HashSet<>();
+    @OneToMany
+    @JoinColumn(name = "tags")
+    private List<Tag> tags = new ArrayList<>();
 
-    @ManyToMany
-    @JsonIgnore
-    private Set<Category> categories = new HashSet<>();
+    @OneToOne
+    @JoinColumn(name = "event_type")
+    private EventType type;
 
     @OneToMany(mappedBy = "event")
     @JsonIgnore
     @JsonSerialize
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    private Set<Participation> participants;
+    private List<Participation> participants = new ArrayList<>();
 
 
     public int participantsCount(){

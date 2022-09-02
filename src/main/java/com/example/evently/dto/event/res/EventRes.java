@@ -1,11 +1,13 @@
-package com.example.evently.dto.events.res;
+package com.example.evently.dto.event.res;
 import com.example.evently.dto.user.res.NestedUser;
-import com.example.evently.models.Category;
+import com.example.evently.models.EventType;
+import com.example.evently.models.Tag;
 import com.example.evently.models.Participation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -16,7 +18,8 @@ public class EventRes {
     private String title;
     private String description;
     private NestedUser publisher;
-    private Set<Category> categories;
-    private Set<Participation> participants;
+    private List<Tag> tags;
+    private String type;
+    private List<Participation> participants;
     private int participantsCount;
 }

@@ -1,21 +1,26 @@
 package com.example.evently.mappers;
 
 
-import com.example.evently.dto.events.req.EventReq;
-import com.example.evently.dto.events.res.EventRes;
+import com.example.evently.dto.event.req.EventReq;
+import com.example.evently.dto.event.res.EventRes;
+import com.example.evently.models.Tag;
 import com.example.evently.models.Event;
 import com.example.evently.models.User;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 public class EventMapper {
+
     public Event mapReqToEvent(EventReq eventReq, User auth){
         var event = new Event();
         event.setTitle(eventReq.getTitle());
         event.setDescription(eventReq.getDescription());
+        event.setTags(event.getTags());
         event.setPublisher(auth);
         return event;
     }
@@ -25,7 +30,8 @@ public class EventMapper {
         res.setId(event.getId());
         res.setTitle(event.getTitle());
         res.setDescription(event.getDescription());
-        res.setCategories(event.getCategories());
+        res.setTags(event.getTags());
+        res.setType(event.getType().nameToString());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));

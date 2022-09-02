@@ -1,6 +1,6 @@
 package com.example.evently.fakers;
 
-import com.example.evently.dto.events.req.EventJsonReq;
+import com.example.evently.dto.event.req.EventJsonReq;
 import com.example.evently.models.*;
 import com.example.evently.repositories.*;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,21 +26,31 @@ public class DataSeed {
     private AuthRepository authRepository;
     private EventRepository eventRepository;
     private PasswordEncoder encoder;
-    private CategoryRepository categoryRepository;
+    private TagRepository tagRepository;
     private ParticipationRepository participationRepository;
+    private EventTypeRepository typeRepository;
 
     @Autowired
-    public DataSeed(RoleRepository roleRepository, AuthRepository authRepository, EventRepository eventRepository, PasswordEncoder encoder, CategoryRepository categoryRepository, ParticipationRepository participationRepository) {
+    public DataSeed(RoleRepository roleRepository,
+                    AuthRepository authRepository,
+                    EventRepository eventRepository,
+                    PasswordEncoder encoder,
+                    TagRepository tagRepository,
+                    ParticipationRepository participationRepository,
+                    EventTypeRepository typeRepository
+    ) {
         this.roleRepository = roleRepository;
         this.authRepository = authRepository;
         this.eventRepository = eventRepository;
         this.encoder = encoder;
-        this.categoryRepository = categoryRepository;
+        this.tagRepository = tagRepository;
         this.participationRepository = participationRepository;
+        this.typeRepository = typeRepository;
     }
 
     @PostConstruct
     public void addData(){
+        new EventTypeInitializer(this.typeRepository).setEventTypes();
         this.createUsers();
         this.createEvents();
     }
@@ -84,44 +94,34 @@ public class DataSeed {
         System.out.println("Users saved!");
     }
 
-    public Set<Category> findCategories(String[] cats){
-        var categories = Set.of(cats);
-        return categoryRepository.findAll().stream().filter(c-> categories.contains(c.getName())).collect(Collectors.toSet());
-    }
-    public void createCategories(String[] cats){
-        var categories = Set.of(cats);
-        categories.stream().forEach(c -> this.createCategory(c));
-    }
-
-    public void createCategory(String name){
-        if(!categoryRepository.existsByName(name)){
-            var cat = new Category();
-            cat.setName(name);
-            categoryRepository.save(cat);
+    public void createTag(String tag){
+        if(tagRepository.findByName(tag).isPresent()){
+            return;
         }
+        var newTag = new Tag(tag);
+        tagRepository.save(newTag);
+        System.out.println(newTag);
     }
 
-    public void createParts(){
-        eventRepository.findAll().forEach(e-> this.createPart(e));
+    public void createTags(String[] tags){
+        Arrays.stream(tags).forEach(t -> this.createTag(t));
     }
 
-    public void createPart(Event event){
-        authRepository.findAll().forEach(u -> {
-            var part = new Participation();
-            part.setParticipant(u);
-            part.setEvent(event);
-            participationRepository.save(part);
-        });
-        System.out.println("Participations saved!");
+    public List<Tag> findTags(String[] tags){
+        var req = Arrays.stream(tags).map(i -> i).collect(Collectors.toList());
+        return tagRepository.findAll().stream()
+                .filter(t-> req.contains(t.getName()))
+                .collect(Collectors.toList());
     }
 
-    public Event createEvent(String title, String desc, String username, String[] categories, String[] participants){
-        this.createCategories(categories);
+    public Event createEvent(EventJsonReq req){
+        this.createTags(req.getTags());
         var event = new Event();
-        event.setTitle(title);
-        event.setDescription(desc);
-        event.setCategories(this.findCategories(categories));
-        event.setPublisher(authRepository.findByUsername(username).get());
+        event.setTitle(req.getTitle());
+        event.setDescription(req.getDescription());
+        event.setType(typeRepository.findById(req.getType()).get());
+        event.setTags(findTags(req.getTags()));
+        event.setPublisher(authRepository.findByUsername(req.getUsername()).get());
         return event;
     }
 
@@ -133,10 +133,9 @@ public class DataSeed {
         InputStream inputStream = TypeReference.class.getResourceAsStream("/events.json");
         try{
             List<EventJsonReq> eventsReq = mapper.readValue(inputStream, typeReference);
-            eventsReq.forEach(req -> events.add(this.createEvent(req.getTitle(), req.getDescription(), req.getUsername(), req.getCategories(), req.getParticipants())));
+            eventsReq.forEach(req -> events.add(this.createEvent(req)));
             eventRepository.saveAll(events);
             System.out.println("Events saved!");
-//            this.createParts();
         }catch (IOException e){
             System.out.println("Unable to save events: "+ e.getMessage());
         }
