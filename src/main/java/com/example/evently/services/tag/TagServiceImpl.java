@@ -42,15 +42,4 @@ public class TagServiceImpl implements TagService {
         return tagRepository.save(tag);
     }
 
-    @Override
-    public Tag findByName(String catName){
-        if(!tagRepository.existsByName(catName)) throw new NotFoundEx("Tag Not Found", "C-404");
-        return tagRepository.findByName(catName).get();
-    }
-
-    @Override
-    public List<Tag> findCategoriesByName(String[] cats){
-        return Arrays.stream(cats).map(c -> this.findByName(c)).collect(Collectors.toList());
-    }
-
 }

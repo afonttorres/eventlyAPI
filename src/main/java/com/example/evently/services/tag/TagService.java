@@ -12,6 +12,5 @@ public interface TagService {
     Tag getById(Long id);
 
     Tag create(TagReq req);
-    Tag findByName(String catName);
-    List<Tag> findCategoriesByName(String[] cats);
+
 }
