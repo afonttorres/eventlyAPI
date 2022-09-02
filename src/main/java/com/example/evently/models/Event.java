@@ -42,9 +42,7 @@ public class Event {
     @JoinColumn(name = "tags")
     private List<Tag> tags = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "event_type")
-    private EventType type;
+
 
     @OneToMany(mappedBy = "event")
     @JsonIgnore

@@ -38,4 +38,10 @@ public class EventController {
 //    ResponseEntity<EventRes>create(@RequestBody EventReq eventReq){
 //        return new ResponseEntity<>(eventService.create(eventReq), HttpStatus.OK);
 //    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/events/offline")
+    ResponseEntity<EventRes>create(@RequestBody EventReq eventReq){
+        return new ResponseEntity<>(eventService.create(eventReq), HttpStatus.OK);
+    }
 }

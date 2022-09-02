@@ -119,7 +119,7 @@ public class DataSeed {
         var event = new Event();
         event.setTitle(req.getTitle());
         event.setDescription(req.getDescription());
-        event.setType(typeRepository.findById(req.getType()).get());
+//        event.setType(typeRepository.findById(req.getType()).get());
         event.setTags(findTags(req.getTags()));
         event.setPublisher(authRepository.findByUsername(req.getUsername()).get());
         return event;

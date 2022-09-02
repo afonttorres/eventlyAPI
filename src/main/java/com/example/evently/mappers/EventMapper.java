@@ -3,9 +3,7 @@ package com.example.evently.mappers;
 
 import com.example.evently.dto.event.req.EventReq;
 import com.example.evently.dto.event.res.EventRes;
-import com.example.evently.models.Tag;
-import com.example.evently.models.Event;
-import com.example.evently.models.User;
+import com.example.evently.models.*;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -31,11 +29,33 @@ public class EventMapper {
         res.setTitle(event.getTitle());
         res.setDescription(event.getDescription());
         res.setTags(event.getTags());
+        res.setParticipants(event.getParticipants());
+        res.setParticipantsCount(event.participantsCount());
+        res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
+        return res;
+    }
+
+    public EventRes mapEventToOffRes(OfflineEvent event){
+        var res = new EventRes();
+        res.setId(event.getId());
+        res.setTitle(event.getTitle());
+        res.setDescription(event.getDescription());
+        res.setTags(event.getTags());
         res.setType(event.getType().nameToString());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
         return res;
+    }
+
+    public OfflineEvent mapReqToOffEvent(EventReq eventReq, EventType type, List<Tag>tags, User auth){
+        var event = new OfflineEvent();
+        event.setTitle(eventReq.getTitle());
+        event.setDescription(eventReq.getDescription());
+        event.setType(type);
+        event.setTags(tags);
+        event.setPublisher(auth);
+        return event;
     }
 
     public List<EventRes> mapMultipleEventsToRes(List<Event> events){
