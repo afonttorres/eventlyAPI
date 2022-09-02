@@ -24,6 +24,7 @@ public class EventMapper {
     }
 
     public EventRes mapEventToRes(Event event){
+        System.out.println(event.getClass().getDeclaredFields());
         var res = new EventRes();
         res.setId(event.getId());
         res.setTitle(event.getTitle());
