@@ -36,7 +36,7 @@ public class EventMapper {
         return res;
     }
 
-    public EventRes mapEventToOffRes(OfflineEvent event){
+    public EventRes mapEventToRes(OfflineEvent event){
         var res = new EventRes();
         res.setId(event.getId());
         res.setTitle(event.getTitle());

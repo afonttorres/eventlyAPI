@@ -65,6 +65,6 @@ public class EventServiceImpl implements EventService {
         tags.forEach(t -> System.out.println(t.getName()));
         var event = new EventMapper().mapReqToOffEvent(eventReq, type, tags,auth);
         eventRepository.save(event);
-        return new EventMapper().mapEventToOffRes(event);
+        return new EventMapper().mapEventToRes(event);
     }
 }
