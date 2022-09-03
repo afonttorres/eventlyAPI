@@ -34,8 +34,8 @@ public class EventController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping("/events/offline")
+    @PostMapping("/events")
     ResponseEntity<EventRes>create(@RequestBody EventReq eventReq){
-        return new ResponseEntity<>(eventService.createOfflineEvent(eventReq), HttpStatus.OK);
+        return new ResponseEntity<>(eventService.create(eventReq), HttpStatus.OK);
     }
 }

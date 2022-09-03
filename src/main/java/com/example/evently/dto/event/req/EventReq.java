@@ -12,5 +12,5 @@ public class EventReq {
     private String description;
     private Long[] tags;
     private String img;
-//    private String type;
+    private String type;
 }

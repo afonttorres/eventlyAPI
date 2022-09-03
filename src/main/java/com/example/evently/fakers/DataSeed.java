@@ -1,7 +1,14 @@
 package com.example.evently.fakers;
 
+import com.example.evently.EventTypeEntity.EventTypeRepository;
 import com.example.evently.dto.event.req.EventJsonReq;
+import com.example.evently.mappers.event.OfflineEventMapper;
+import com.example.evently.mappers.event.OnlineEventMapper;
 import com.example.evently.models.*;
+import com.example.evently.models.event.Event;
+import com.example.evently.models.event.OfflineEvent;
+import com.example.evently.models.event.OnlineEvent;
+import com.example.evently.models.user.User;
 import com.example.evently.repositories.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,7 +57,7 @@ public class DataSeed {
 
     @PostConstruct
     public void addData(){
-        new EventTypeInitializer(this.typeRepository).setEventTypes();
+//        new EventTypeInitializer(this.typeRepository).setEventTypes();
         this.createUsers();
         this.createEvents();
     }
@@ -116,15 +123,21 @@ public class DataSeed {
 
     public Event createEvent(EventJsonReq req){
         this.createTags(req.getTags());
-        var event = new Event();
-        event.setTitle(req.getTitle());
-        event.setDescription(req.getDescription());
-//        event.setType(typeRepository.findById(req.getType()).get());
-        event.setTags(findTags(req.getTags()));
-        event.setPublisher(authRepository.findByUsername(req.getUsername()).get());
-        return event;
+        var tags = this.findTags(req.getTags());
+        var user = authRepository.findByUsername(req.getUsername()).get();
+       if(req.getType().equals("offline")){
+           return this.createOffline(req, tags, user);
+       }
+       return this.createOnline(req, tags, user);
     }
 
+    public OnlineEvent createOnline(EventJsonReq req, List<Tag> tags, User publisher){
+        return new OnlineEventMapper().mapJsonReqToOnEvent(req, tags, publisher);
+    }
+
+    public OfflineEvent createOffline(EventJsonReq req, List<Tag> tags, User publisher){
+        return new OfflineEventMapper().mapJsonReqToOffEvent(req, tags, publisher);
+    }
 
     public void createEvents(){
         List<Event> events = new ArrayList<>();

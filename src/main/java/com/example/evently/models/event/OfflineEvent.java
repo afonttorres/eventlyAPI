@@ -1,5 +1,7 @@
-package com.example.evently.models;
+package com.example.evently.models.event;
 
+import com.example.evently.models.Direction;
+import com.example.evently.models.Type;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,10 +14,10 @@ import javax.persistence.OneToOne;
 @EqualsAndHashCode(callSuper=false)
 public class OfflineEvent extends Event{
     @OneToOne
-    @JoinColumn(name = "location_id")
-    Location location;
+    @JoinColumn(name = "direction_id")
+    Direction direction;
 
-    @OneToOne
-    @JoinColumn(name = "event_type")
-    private EventType type;
+    public OfflineEvent(){
+        super.setType(Type.OFFLINE);
+    }
 }

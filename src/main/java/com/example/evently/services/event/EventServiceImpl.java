@@ -3,18 +3,18 @@ package com.example.evently.services.event;
 import com.example.evently.auth.facade.AuthFacade;
 import com.example.evently.dto.event.req.EventReq;
 import com.example.evently.dto.event.res.EventRes;
+import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
-import com.example.evently.mappers.EventMapper;
-import com.example.evently.models.EventType;
-import com.example.evently.models.OfflineEvent;
-import com.example.evently.models.User;
+import com.example.evently.mappers.event.EventMapper;
+import com.example.evently.mappers.event.OfflineEventMapper;
+import com.example.evently.models.Tag;
+import com.example.evently.models.user.User;
 import com.example.evently.repositories.EventRepository;
-import com.example.evently.repositories.EventTypeRepository;
+import com.example.evently.EventTypeEntity.EventTypeRepository;
 import com.example.evently.services.tag.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,15 +24,26 @@ public class EventServiceImpl implements EventService {
     EventRepository eventRepository;
     TagService tagService;
     EventTypeRepository typeRepository;
+    OffEventServiceImpl offlineService;
+    OnEventServiceImpl onlineService;
+
+
     AuthFacade authFacade;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, TagService tagService, AuthFacade authFacade,
-                            EventTypeRepository typeRepository) {
+    public EventServiceImpl(EventRepository eventRepository,
+                            TagService tagService,
+                            AuthFacade authFacade,
+                            OnEventServiceImpl onlineService,
+                            OffEventServiceImpl offlineService
+//                            EventTypeRepository typeRepository
+    ) {
         this.eventRepository = eventRepository;
         this.tagService = tagService;
         this.authFacade = authFacade;
-        this.typeRepository = typeRepository;
+        this.onlineService = onlineService;
+        this.offlineService = offlineService;
+//        this.typeRepository = typeRepository;
     }
 
     private User getAuth(){
@@ -44,6 +55,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventRes> getAll() {
+        eventRepository.findAll().forEach(e -> System.out.println(e.getType().toString()));
         return new EventMapper().mapMultipleEventsToRes(eventRepository.findAll());
     }
 
@@ -55,12 +67,15 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventRes createOfflineEvent(EventReq eventReq) {
+    public EventRes create(EventReq eventReq) {
         var auth = this.getAuth();
-        var type = typeRepository.findById(1).get();
         var tags = tagService.getMultById(eventReq.getTags());
-        var event = new EventMapper().mapReqToOffEvent(eventReq, type, tags,auth);
-        eventRepository.save(event);
-        return new EventMapper().mapEventToRes(event);
+        return this.assingType(eventReq, auth, tags);
+    }
+
+    private EventRes assingType(EventReq req, User auth, List<Tag> tags){
+        if(req.getType() == null) throw new BadReqEx("Type can't be empty!", "T-001");
+        if(req.getType().equals("online")) return onlineService.create(req, auth, tags);
+        return offlineService.create(req, auth, tags);
     }
 }

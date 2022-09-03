@@ -1,29 +1,30 @@
 package com.example.evently.models;
 
-import com.example.evently.models.event.Event;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-@Table(name = "requirements")
+@Data
+@Table(name = "direction")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Requirement {
+public class Direction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
+    String country;
+    String province;
+    String city;
+    String street;
+    String building;
+    String door;
 
-    private String requirement;
-
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    @JsonSerialize
-    private Event event;
+    public String toString(){
+        return this.country+", "+this.province+", "+this.city+", "+this.street+", "+this.building+", "+this.door;
+    }
 }

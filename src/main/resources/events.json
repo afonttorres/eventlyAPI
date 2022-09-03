@@ -5,7 +5,7 @@
     "description": "Bicicletada popular del barri",
     "tags": ["esport", "oci popular"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "xcapde"
   },
@@ -14,7 +14,7 @@
     "description": "Mentoria de basics de programacio Front-end. HTML, CSS, JavaScript",
     "tags": ["programacio", "coding"],
     "img": "",
-    "type": 2,
+    "type": "online",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "lauraparra"
   },
@@ -23,7 +23,7 @@
     "description": "Passeig cani pel passeig de La Garriga amb la teva mascota!",
     "tags": ["tracking", "pet-friendly"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "lauraparra"
   },
@@ -32,7 +32,7 @@
     "description": "Yoga a la platja per gent gran",
     "tags": ["salut", "health"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "joelblasi"
   },
@@ -41,7 +41,7 @@
     "description": "Classes de crochet",
     "tags": ["crochet"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "afonttorres"
   },
@@ -50,7 +50,7 @@
     "description": "Comenta l'ultim capitol de House of the Dragon amb gent que comparteixi ",
     "tags": ["TV"],
     "img": "",
-    "type": 2,
+    "type": "online",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "afonttorres"
   },
@@ -59,7 +59,7 @@
     "description": "desc",
     "tags": ["frikis"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "joelblasi"
   },
@@ -68,7 +68,7 @@
     "description": "Xocolatada popular",
     "tags": ["oci popular"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "xcapde"
   }

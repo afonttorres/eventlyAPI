@@ -1,6 +1,6 @@
 package com.example.evently.auth.facade;
 
-import com.example.evently.models.User;
+import com.example.evently.models.user.User;
 import com.example.evently.repositories.AuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
