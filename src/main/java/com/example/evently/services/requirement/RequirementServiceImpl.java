@@ -52,14 +52,9 @@ public class RequirementServiceImpl implements RequirementService{
 
     @Override
     public Requirement create(RequirementReq req) {
-        if(requirementRepository.findByNameInEvent(req.getEventId(), req.getName()).isPresent())
+        if(requirementRepository.findByNameInEvent(req.getEventId(), req.getName()).stream().findAny().isPresent())
             throw new BadReqEx("Requirement already exists!", "R-001");
         var event = eventService.getCompleteEventById(req.getEventId());
-        System.out.println("is event publisher? "+(event.getPublisher() == this.getAuth()));
-        System.out.println("is admin? "+(authFacade.isAdmin()));
-
-        System.out.println(event.getPublisher() != this.getAuth() && !authFacade.isAdmin());
-
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can add requirements!", "R-003");
         var requirement = new Requirement();
