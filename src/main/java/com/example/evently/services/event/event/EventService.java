@@ -15,4 +15,5 @@ public interface EventService {
 
     EventRes create(EventReq eventReq);
 
+    EventRes delete(Long id);
 }

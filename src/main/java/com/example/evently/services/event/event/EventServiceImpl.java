@@ -77,6 +77,14 @@ public class EventServiceImpl implements EventService {
         return this.assingType(eventReq, auth, tags);
     }
 
+    @Override
+    public EventRes delete(Long id) {
+        var event = this.getCompleteEventById(id);
+        var res = new EventMapper().mapEventToRes(event);
+        eventRepository.delete(event);
+        return res;
+    }
+
     private EventRes assingType(EventReq req, User auth, List<Tag> tags){
         if(req.getType() == null) throw new BadReqEx("Type can't be empty!", "T-001");
         System.out.println(!req.getType().equals("offline") || !req.getType().equals("online"));

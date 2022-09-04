@@ -38,4 +38,9 @@ public class EventController {
     ResponseEntity<EventRes>create(@RequestBody EventReq eventReq){
         return new ResponseEntity<>(eventService.create(eventReq), HttpStatus.OK);
     }
+
+    @DeleteMapping("/events/{id}")
+    ResponseEntity<EventRes> delete(@PathVariable Long id){
+        return new ResponseEntity<>(eventService.delete(id), HttpStatus.OK);
+    }
 }

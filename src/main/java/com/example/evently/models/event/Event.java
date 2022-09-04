@@ -48,6 +48,7 @@ public abstract class Event {
     @OneToMany
     @JoinColumn(name = "event_id")
     @JsonSerialize
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Requirement> requirements = new ArrayList<>();
 
 //    @OneToOne
