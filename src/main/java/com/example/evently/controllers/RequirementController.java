@@ -6,6 +6,7 @@ import com.example.evently.services.requirement.RequirementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +20,13 @@ public class RequirementController {
     public RequirementController(RequirementService requirementService) {
         this.requirementService = requirementService;
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/requirements")
     public ResponseEntity<List<Requirement>> getAll(){
         return new ResponseEntity<>(requirementService.getAll(), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/requirements/{id}")
     public ResponseEntity<Requirement> getById(@PathVariable Long id){
         return new ResponseEntity<>(requirementService.getById(id), HttpStatus.OK);
@@ -35,9 +37,9 @@ public class RequirementController {
         return new ResponseEntity<>(requirementService.getByEventId(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/requirements")
     public ResponseEntity<Requirement> create(@RequestBody RequirementReq req){
-        System.out.println(req);
         return new ResponseEntity<>(requirementService.create(req), HttpStatus.OK);
     }
 

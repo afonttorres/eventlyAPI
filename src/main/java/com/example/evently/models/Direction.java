@@ -17,12 +17,12 @@ public class Direction {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    String country;
-    String province;
-    String city;
-    String street;
-    String building;
-    String door;
+    String country = "pais";
+    String province = "provincia";
+    String city = "ciutat";
+    String street ="carrer";
+    String building = "numero";
+    String door = "porta";
 
     public String toString(){
         return this.country+", "+this.province+", "+this.city+", "+this.street+", "+this.building+", "+this.door;

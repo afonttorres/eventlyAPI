@@ -18,8 +18,9 @@ public class EventRes {
     private String description;
     private NestedUser publisher;
 //    private List<Tag> tags;
+//    private List<Requirement> requirements;
     private String[] tags;
-    private List<Requirement> requirements;
+    private String[] requirements;
     private String type;
     private List<Participation> participants;
     private int participantsCount;

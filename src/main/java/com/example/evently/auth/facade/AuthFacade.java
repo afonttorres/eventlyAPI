@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface AuthFacade {
     public Optional<User> getAuthUser();
+    public boolean isAdmin();
 }

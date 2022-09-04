@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 @Entity
 @EqualsAndHashCode(callSuper=false)
 public class OnlineEvent extends Event{
-    String webUrl;
+    String webUrl ="www.provisional.com";
     public OnlineEvent(){
         super.setType(Type.ONLINE);
     }
