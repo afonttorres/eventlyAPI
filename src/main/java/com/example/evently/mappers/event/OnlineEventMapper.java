@@ -2,6 +2,7 @@ package com.example.evently.mappers.event;
 
 import com.example.evently.dto.event.req.EventJsonReq;
 import com.example.evently.dto.event.req.EventReq;
+import com.example.evently.models.Requirement;
 import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.Tag;
 import com.example.evently.models.user.User;

@@ -20,17 +20,17 @@ public class TagController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/tags")
     ResponseEntity<List<Tag>> getCategories(){
         return new ResponseEntity<>(categoryService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/categories/{id}")
+    @GetMapping("/tags/{id}")
     ResponseEntity<Tag> getCategory(@PathVariable Long id){
         return new ResponseEntity<>(categoryService.getById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/categories")
+    @PostMapping("/tags")
     ResponseEntity<Tag> createCategory(@RequestBody TagReq req){
         return new ResponseEntity<>(categoryService.create(req), HttpStatus.OK);
     }

@@ -46,7 +46,8 @@ public abstract class Event {
     private List<Tag> tags = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name = "requirements")
+    @JoinColumn(name = "event_id")
+    @JsonSerialize
     private List<Requirement> requirements = new ArrayList<>();
 
 //    @OneToOne
@@ -57,7 +58,6 @@ public abstract class Event {
     String location;
 
     @OneToMany(mappedBy = "event")
-    @JsonIgnore
     @JsonSerialize
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Participation> participants = new ArrayList<>();

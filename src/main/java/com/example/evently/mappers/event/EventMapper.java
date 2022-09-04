@@ -15,7 +15,6 @@ import java.util.List;
 @Data
 public class EventMapper {
     public EventRes mapEventToRes(Event event){
-        System.out.println(event.getClass().getDeclaredFields());
         var res = new EventRes();
         res.setId(event.getId());
         res.setTitle(event.getTitle());
@@ -23,6 +22,7 @@ public class EventMapper {
         res.setType(event.getType().toString());
 //        res.setTags(event.getTags());
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
+        event.getRequirements().forEach(r-> System.out.println("event req from mapper: "+ r.getName()));
         res.setRequirements(event.getRequirements());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
@@ -37,6 +37,7 @@ public class EventMapper {
         res.setDescription(event.getDescription());
 //        res.setTags(event.getTags());
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
+        event.getRequirements().forEach(r-> System.out.println("event req from mapper: "+ r.getName()));
         res.setRequirements(event.getRequirements());
         res.setType(event.getType().toString());
         res.setParticipants(event.getParticipants());
@@ -52,6 +53,7 @@ public class EventMapper {
         res.setDescription(event.getDescription());
 //        res.setTags(event.getTags());
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
+        event.getRequirements().forEach(r-> System.out.println("event req from mapper: "+ r.getName()));
         res.setRequirements(event.getRequirements());
         res.setType(event.getType().toString());
         res.setParticipants(event.getParticipants());

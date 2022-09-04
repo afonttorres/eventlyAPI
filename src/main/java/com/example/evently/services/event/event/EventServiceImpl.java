@@ -1,4 +1,4 @@
-package com.example.evently.services.event;
+package com.example.evently.services.event.event;
 
 import com.example.evently.auth.facade.AuthFacade;
 import com.example.evently.dto.event.req.EventReq;
@@ -6,11 +6,12 @@ import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.event.EventMapper;
-import com.example.evently.mappers.event.OfflineEventMapper;
 import com.example.evently.models.Tag;
+import com.example.evently.models.event.Event;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.EventRepository;
-import com.example.evently.EventTypeEntity.EventTypeRepository;
+import com.example.evently.services.event.offline.OfflineEventService;
+import com.example.evently.services.event.online.OnlineEventService;
 import com.example.evently.services.tag.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,19 +24,17 @@ public class EventServiceImpl implements EventService {
 
     EventRepository eventRepository;
     TagService tagService;
-    EventTypeRepository typeRepository;
-    OffEventServiceImpl offlineService;
-    OnEventServiceImpl onlineService;
-
-
+//    EventTypeRepository typeRepository;
+    OfflineEventService offlineService;
+    OnlineEventService onlineService;
     AuthFacade authFacade;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository,
                             TagService tagService,
                             AuthFacade authFacade,
-                            OnEventServiceImpl onlineService,
-                            OffEventServiceImpl offlineService
+                            OnlineEventService onlineService,
+                            OfflineEventService offlineService
 //                            EventTypeRepository typeRepository
     ) {
         this.eventRepository = eventRepository;
@@ -55,7 +54,6 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventRes> getAll() {
-        eventRepository.findAll().forEach(e -> System.out.println(e.getType().toString()));
         return new EventMapper().mapMultipleEventsToRes(eventRepository.findAll());
     }
 
@@ -64,6 +62,12 @@ public class EventServiceImpl implements EventService {
         var event = eventRepository.findById(id);
         if(event.isEmpty()) throw new NotFoundEx("Event Not Found", "E-404");
         return new EventMapper().mapEventToRes(event.get());
+    }
+
+    public Event getCompleteEventById(Long id){
+        var event = eventRepository.findById(id);
+        if(event.isEmpty()) throw new NotFoundEx("Event Not Found", "E-404");
+        return event.get();
     }
 
     @Override
@@ -75,6 +79,8 @@ public class EventServiceImpl implements EventService {
 
     private EventRes assingType(EventReq req, User auth, List<Tag> tags){
         if(req.getType() == null) throw new BadReqEx("Type can't be empty!", "T-001");
+        System.out.println(!req.getType().equals("offline") || !req.getType().equals("online"));
+        if(!req.getType().equals("offline") && !req.getType().equals("online")) throw new BadReqEx("Wrong type!", "T-002");
         if(req.getType().equals("online")) return onlineService.create(req, auth, tags);
         return offlineService.create(req, auth, tags);
     }

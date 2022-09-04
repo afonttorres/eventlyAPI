@@ -44,7 +44,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag create(TagReq req) {
-        if(this.getAll().stream().filter(c-> c.getName().equals(req.getName())).findAny().isPresent())
+        if(tagRepository.findAll().stream().filter(tag-> tag.getName().equals(req.getName())).findAny().isPresent())
             throw new BadReqEx("Tag Already Exist", "C-001");
         var tag = new Tag();
         tag.setName(req.getName());

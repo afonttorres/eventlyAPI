@@ -1,6 +1,7 @@
 package com.example.evently.models;
 
 import com.example.evently.models.event.Event;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,10 +21,10 @@ public class Requirement {
     private Long id;
 
 
-    private String requirement;
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
-    @JsonSerialize
+    @JsonIgnore
     private Event event;
 }

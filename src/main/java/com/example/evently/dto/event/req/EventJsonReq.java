@@ -12,6 +12,7 @@ public class EventJsonReq {
     String description;
     String username;
     String[] tags;
+    String [] requirements;
     String img;
     String type;
     String[] participants;

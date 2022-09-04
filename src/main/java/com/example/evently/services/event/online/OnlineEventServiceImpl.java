@@ -1,9 +1,10 @@
-package com.example.evently.services.event;
+package com.example.evently.services.event.online;
 
 import com.example.evently.dto.event.req.EventReq;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.mappers.event.EventMapper;
-import com.example.evently.mappers.event.OfflineEventMapper;
+import com.example.evently.mappers.event.OnlineEventMapper;
+import com.example.evently.models.Requirement;
 import com.example.evently.models.Tag;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.EventRepository;
@@ -13,19 +14,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class OffEventServiceImpl implements SubEventService{
+public class OnlineEventServiceImpl implements OnlineEventService {
 
     EventRepository eventRepository;
 
     @Autowired
-    public OffEventServiceImpl(EventRepository eventRepository) {
+    public OnlineEventServiceImpl(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
 
-    public EventRes create(EventReq req, User auth, List<Tag> tags){
-        var event = new OfflineEventMapper().mapReqToOffEvent(req, tags,auth);
+    @Override
+    public EventRes create(EventReq req, User auth, List<Tag> tags) {
+        var event = new OnlineEventMapper().mapReqToOnEvent(req, tags, auth);
         eventRepository.save(event);
         return new EventMapper().mapEventToRes(event);
     }
-
 }

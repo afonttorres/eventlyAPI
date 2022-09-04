@@ -34,6 +34,7 @@ public class DataSeed {
     private EventRepository eventRepository;
     private PasswordEncoder encoder;
     private TagRepository tagRepository;
+    private RequirementRepository requirementRepository;
     private ParticipationRepository participationRepository;
     private EventTypeRepository typeRepository;
 
@@ -43,6 +44,7 @@ public class DataSeed {
                     EventRepository eventRepository,
                     PasswordEncoder encoder,
                     TagRepository tagRepository,
+                    RequirementRepository requirementRepository,
                     ParticipationRepository participationRepository,
                     EventTypeRepository typeRepository
     ) {
@@ -51,6 +53,7 @@ public class DataSeed {
         this.eventRepository = eventRepository;
         this.encoder = encoder;
         this.tagRepository = tagRepository;
+        this.requirementRepository = requirementRepository;
         this.participationRepository = participationRepository;
         this.typeRepository = typeRepository;
     }
@@ -107,7 +110,6 @@ public class DataSeed {
         }
         var newTag = new Tag(tag);
         tagRepository.save(newTag);
-        System.out.println(newTag);
     }
 
     public void createTags(String[] tags){
@@ -120,7 +122,6 @@ public class DataSeed {
                 .filter(t-> req.contains(t.getName()))
                 .collect(Collectors.toList());
     }
-
     public Event createEvent(EventJsonReq req){
         this.createTags(req.getTags());
         var tags = this.findTags(req.getTags());
@@ -135,7 +136,7 @@ public class DataSeed {
         return new OnlineEventMapper().mapJsonReqToOnEvent(req, tags, publisher);
     }
 
-    public OfflineEvent createOffline(EventJsonReq req, List<Tag> tags, User publisher){
+    public OfflineEvent createOffline(EventJsonReq req, List<Tag> tags,  User publisher){
         return new OfflineEventMapper().mapJsonReqToOffEvent(req, tags, publisher);
     }
 
