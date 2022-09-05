@@ -8,6 +8,7 @@
     "img": "",
     "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-01-01",
     "username": "xcapde"
   },
   {
@@ -18,6 +19,7 @@
     "img": "",
     "type": "online",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-01-01",
     "username": "lauraparra"
   },
   {
@@ -28,6 +30,7 @@
     "img": "",
     "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-01-01",
     "username": "lauraparra"
   },
   {
@@ -38,6 +41,7 @@
     "img": "",
     "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-01-01",
     "username": "joelblasi"
   },
   {
@@ -48,6 +52,7 @@
     "img": "",
     "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-01-01",
     "username": "afonttorres"
   },
   {
@@ -58,6 +63,7 @@
     "img": "",
     "type": "online",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-01-01",
     "username": "afonttorres"
   },
   {
@@ -68,6 +74,7 @@
     "img": "",
     "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-01-01",
     "username": "joelblasi"
   },
   {
@@ -78,6 +85,7 @@
     "img": "",
     "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-01-01",
     "username": "xcapde"
   }
 ]

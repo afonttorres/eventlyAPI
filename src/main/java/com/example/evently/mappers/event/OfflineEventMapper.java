@@ -32,6 +32,7 @@ public class OfflineEventMapper {
         var event = new OfflineEvent();
         event.setTitle(eventReq.getTitle());
         event.setDescription(eventReq.getDescription());
+        event.setDate(eventReq.getDate());
         event.setTags(tags);
         event.setPublisher(auth);
         return event;

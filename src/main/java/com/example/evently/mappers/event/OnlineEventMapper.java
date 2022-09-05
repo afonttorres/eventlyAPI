@@ -32,6 +32,7 @@ public class OnlineEventMapper {
         var event = new OnlineEvent();
         event.setTitle(eventReq.getTitle());
         event.setDescription(eventReq.getDescription());
+        event.setDate(eventReq.getDate());
         event.setTags(tags);
         event.setPublisher(auth);
         return event;

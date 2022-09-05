@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,6 +15,7 @@ public class EventJsonReq {
     String username;
     String[] tags;
     String [] requirements;
+    Date date;
     String img;
     String type;
     String[] participants;
