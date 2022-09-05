@@ -9,7 +9,5 @@ public interface RequirementService {
     List<Requirement> getAll();
     Requirement getById(Long id);
     Requirement create(RequirementReq req);
-    List<Requirement> getMultById(Long[] ids);
-
     List<Requirement> getByEventId(Long id);
 }

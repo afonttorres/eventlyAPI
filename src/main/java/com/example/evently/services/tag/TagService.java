@@ -14,5 +14,4 @@ public interface TagService {
 
     Tag create(TagReq req);
     EventRes addTagsToEvent(Long eventId, PostMultTagsReq req);
-    List<Tag> getMultById(PostMultTagsReq req);
 }

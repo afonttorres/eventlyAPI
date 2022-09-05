@@ -40,23 +40,10 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> getMultById(PostMultTagsReq req){
-//        System.out.println(req);
-//        List<Tag> res = new ArrayList<>();
-//        for (Long id : req.getTagIds()){
-//            res.add(tagRepository.findById(id).get());
-//        }
-//        return res;
-        return null;
-    }
-
-    @Override
     public Tag create(TagReq req) {
         if(tagRepository.findAll().stream().filter(t-> t.getName().equals(req.getName())).findFirst().isPresent()){
-            System.out.println("existing tag");
             return tagRepository.findAll().stream().filter(t-> t.getName().equals(req.getName())).findFirst().get();
         }
-        System.out.println("new tag");
         return tagRepository.save(new Tag(req.getName()));
     }
 

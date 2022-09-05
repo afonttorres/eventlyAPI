@@ -64,15 +64,6 @@ public class RequirementServiceImpl implements RequirementService{
     }
 
     @Override
-    public List<Requirement> getMultById(Long[] requirementIds) {
-        List<Requirement> res = new ArrayList<>();
-        for(Long id: requirementIds){
-            res.add(requirementRepository.findById(id).get());
-        }
-        return res;
-    }
-
-    @Override
     public List<Requirement> getByEventId(Long id) {
         return requirementRepository.findByEventId(id);
     }
