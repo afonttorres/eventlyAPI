@@ -1,4 +1,4 @@
-package com.example.evently.models;
+package com.example.evently.EventTypeEntity;
 
 import javax.persistence.*;
 

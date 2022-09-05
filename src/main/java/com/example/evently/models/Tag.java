@@ -24,10 +24,10 @@ public class Tag {
     @Column(name = "id", nullable = false)
     @JsonIgnore
     private Long id;
+
     @NotBlank
     @Size(min=2, max=40)
     private String name;
-
 
     public Tag(String name){
         this.name = name;

@@ -1,13 +1,9 @@
-package com.example.evently.fakers;
+package com.example.evently.EventTypeEntity;
 
-import com.example.evently.models.EventType;
-import com.example.evently.repositories.EventTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class EventTypeInitializer {

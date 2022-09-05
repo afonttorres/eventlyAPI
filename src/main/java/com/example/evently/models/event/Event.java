@@ -1,5 +1,10 @@
-package com.example.evently.models;
+package com.example.evently.models.event;
 
+import com.example.evently.models.Participation;
+import com.example.evently.models.Requirement;
+import com.example.evently.models.Tag;
+import com.example.evently.models.Type;
+import com.example.evently.models.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
@@ -11,16 +16,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "events")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Event {
+public abstract class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -42,16 +45,23 @@ public class Event {
     @JoinColumn(name = "tags")
     private List<Tag> tags = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "event_type")
-    private EventType type;
+    @OneToMany
+    @JoinColumn(name = "event_id")
+    @JsonSerialize
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    private List<Requirement> requirements = new ArrayList<>();
+
+//    @OneToOne
+//    @JoinColumn(name = "event_type")
+//    private EventType type;
+
+    private Type type;
+    String location;
 
     @OneToMany(mappedBy = "event")
-    @JsonIgnore
     @JsonSerialize
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Participation> participants = new ArrayList<>();
-
 
     public int participantsCount(){
         return this.participants.size();
@@ -64,4 +74,6 @@ public class Event {
         }
         return true;
     }
+
+
 }

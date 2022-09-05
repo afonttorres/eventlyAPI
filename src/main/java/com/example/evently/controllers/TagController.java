@@ -5,6 +5,7 @@ import com.example.evently.models.Tag;
 import com.example.evently.services.tag.TagService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,18 +21,20 @@ public class TagController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/categories")
-    ResponseEntity<List<Tag>> getAll(){
+    @GetMapping("/tags")
+    ResponseEntity<List<Tag>> getCategories(){
         return new ResponseEntity<>(categoryService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/categories/{id}")
-    ResponseEntity<Tag> getATag(@PathVariable Long id){
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/tags/{id}")
+    ResponseEntity<Tag> getCategory(@PathVariable Long id){
         return new ResponseEntity<>(categoryService.getById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/categories")
-    ResponseEntity<Tag> create(@RequestBody TagReq req){
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/tags")
+    ResponseEntity<Tag> createCategory(@RequestBody TagReq req){
         return new ResponseEntity<>(categoryService.create(req), HttpStatus.OK);
     }
 

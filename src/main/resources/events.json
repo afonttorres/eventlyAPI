@@ -4,8 +4,9 @@
     "title": "Bicicletada",
     "description": "Bicicletada popular del barri",
     "tags": ["esport", "oci popular"],
+    "requirements": ["req1","req2","req3"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "xcapde"
   },
@@ -13,8 +14,9 @@
     "title": "Mentoria de programació",
     "description": "Mentoria de basics de programacio Front-end. HTML, CSS, JavaScript",
     "tags": ["programacio", "coding"],
+    "requirements": ["req1","req2","req3"],
     "img": "",
-    "type": 2,
+    "type": "online",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "lauraparra"
   },
@@ -22,8 +24,9 @@
     "title": "Passeig caní en grup",
     "description": "Passeig cani pel passeig de La Garriga amb la teva mascota!",
     "tags": ["tracking", "pet-friendly"],
+    "requirements": ["req1","req2","req3"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "lauraparra"
   },
@@ -31,8 +34,9 @@
     "title": "Yoga per jubilats",
     "description": "Yoga a la platja per gent gran",
     "tags": ["salut", "health"],
+    "requirements": ["req1","req2","req3"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "joelblasi"
   },
@@ -40,8 +44,9 @@
     "title": "Classes de crochet",
     "description": "Classes de crochet",
     "tags": ["crochet"],
+    "requirements": ["req1","req2","req3"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "afonttorres"
   },
@@ -49,8 +54,9 @@
     "title": "Analisi House of the Dragon",
     "description": "Comenta l'ultim capitol de House of the Dragon amb gent que comparteixi ",
     "tags": ["TV"],
+    "requirements": ["req1","req2","req3"],
     "img": "",
-    "type": 2,
+    "type": "online",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "afonttorres"
   },
@@ -58,8 +64,9 @@
     "title": "Jocs de rol",
     "description": "desc",
     "tags": ["frikis"],
+    "requirements": ["req1","req2","req3"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "joelblasi"
   },
@@ -67,8 +74,9 @@
     "title": "Xocolatada",
     "description": "Xocolatada popular",
     "tags": ["oci popular"],
+    "requirements": ["req1","req2","req3"],
     "img": "",
-    "type": 1,
+    "type": "offline",
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "username": "xcapde"
   }

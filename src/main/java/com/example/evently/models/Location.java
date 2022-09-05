@@ -1,8 +1,6 @@
 package com.example.evently.models;
 
 import com.example.evently.models.event.Event;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,20 +9,16 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "requirements")
+@Table(name = "event_location")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Requirement {
+public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-
-    private String name;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "event_id")
-    @JsonIgnore
-    private Event event;
+    Event event;
 }
