@@ -10,12 +10,10 @@ import java.util.List;
 
 public class OfflineEventMapper {
     public OfflineEvent mapReqToOffEvent(EventReq eventReq, User auth){
-        System.out.println("REQ: "+eventReq);
         var event = new OfflineEvent();
         event.setTitle(eventReq.getTitle());
         event.setDescription(eventReq.getDescription());
         event.setDate(eventReq.getDate());
-//        event.setHour(eventReq.getDate().getTime());
         event.setPublisher(auth);
 
         return event;

@@ -28,6 +28,7 @@ public class EventMapper {
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
         res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
+        res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
         res.setLocation(event.getLocation());
@@ -45,6 +46,7 @@ public class EventMapper {
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
         res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
+        res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
         res.setType(event.getType().toString());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
@@ -64,6 +66,7 @@ public class EventMapper {
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
         res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
+        res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
         res.setType(event.getType().toString());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());

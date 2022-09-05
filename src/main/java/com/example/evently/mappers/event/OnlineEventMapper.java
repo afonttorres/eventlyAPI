@@ -14,7 +14,6 @@ public class OnlineEventMapper {
         event.setTitle(eventReq.getTitle());
         event.setDescription(eventReq.getDescription());
         event.setDate(eventReq.getDate());
-//        event.setHour(eventReq.getDate().getTime());
         event.setPublisher(auth);
         return event;
     }

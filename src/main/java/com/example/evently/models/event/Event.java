@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -56,9 +57,11 @@ public abstract class Event {
 //    @JoinColumn(name = "event_type")
 //    private EventType type;
 
+    @JoinColumn(name = "type")
     private Type type;
+    @JoinColumn(name="date")
     private Date date;
-//    private Long hour;
+    @JoinColumn(name = "location")
     String location;
 
     @OneToMany(mappedBy = "event")

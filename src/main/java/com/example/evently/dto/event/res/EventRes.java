@@ -20,7 +20,7 @@ public class EventRes {
 //    private List<Tag> tags;
 //    private List<Requirement> requirements;
     private String date;
-//    private Long hour;
+    private String hour;
     private String[] tags;
     private String[] requirements;
     private String type;
