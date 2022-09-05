@@ -4,7 +4,6 @@ import com.example.evently.dto.tag.TagReq;
 import com.example.evently.models.Tag;
 
 import java.util.List;
-import java.util.Set;
 
 public interface TagService {
     List<Tag> getAll();
@@ -12,4 +11,6 @@ public interface TagService {
     Tag getById(Long id);
 
     Tag create(TagReq req);
+
     List<Tag> getMultById(Long[] ids);
+}
