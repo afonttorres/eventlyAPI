@@ -63,8 +63,23 @@ public class RequirementServiceImpl implements RequirementService{
         return requirementRepository.save(requirement);
     }
 
+
     @Override
     public List<Requirement> getByEventId(Long id) {
         return requirementRepository.findByEventId(id);
+    }
+
+    @Override
+    public Boolean delete(RequirementReq req) {
+        var event = eventService.getCompleteEventById(req.getEventId());
+        if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
+            throw new BadReqEx("Only event publisher can delete a requirement!", "R-004");
+        var requirement = requirementRepository.findByNameInEvent(event.getId(), req.getName())
+                .stream()
+                .findFirst();
+        if(requirement.isEmpty())
+            throw new NotFoundEx("Requirement Not Found", "R-404");
+        requirementRepository.delete(requirement.get());
+        return true;
     }
 }

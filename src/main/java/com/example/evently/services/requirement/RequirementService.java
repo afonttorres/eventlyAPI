@@ -10,4 +10,6 @@ public interface RequirementService {
     Requirement getById(Long id);
     Requirement create(RequirementReq req);
     List<Requirement> getByEventId(Long id);
+
+    Boolean delete(RequirementReq req);
 }

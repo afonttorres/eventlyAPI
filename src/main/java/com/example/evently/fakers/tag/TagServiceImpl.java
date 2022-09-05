@@ -1,9 +1,8 @@
-package com.example.evently.services.tag;
+package com.example.evently.fakers.tag;
 
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.dto.tag.PostMultTagsReq;
 import com.example.evently.dto.tag.TagReq;
-import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.models.Tag;

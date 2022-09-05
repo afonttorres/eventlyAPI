@@ -43,5 +43,10 @@ public class RequirementController {
         return new ResponseEntity<>(requirementService.create(req), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("/requirements")
+    public ResponseEntity<Boolean> delete(@RequestBody RequirementReq req){
+        return new ResponseEntity<>(requirementService.delete(req), HttpStatus.OK);
+    }
 
 }

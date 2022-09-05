@@ -4,7 +4,7 @@ import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.dto.tag.PostMultTagsReq;
 import com.example.evently.dto.tag.TagReq;
 import com.example.evently.models.Tag;
-import com.example.evently.services.tag.TagService;
+import com.example.evently.fakers.tag.TagService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

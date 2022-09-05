@@ -1,4 +1,4 @@
-package com.example.evently.services.tag;
+package com.example.evently.fakers.tag;
 
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.dto.tag.PostMultTagsReq;
