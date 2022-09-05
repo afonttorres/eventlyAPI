@@ -12,9 +12,4 @@ public interface TagService {
     Tag getById(Long id);
 
     Tag create(TagReq req);
-
-<<<<<<< HEAD
-=======
     List<Tag> getMultById(Long[] ids);
->>>>>>> typeEnumTrial
-}
