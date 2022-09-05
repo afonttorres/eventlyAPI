@@ -13,7 +13,7 @@ import java.util.Date;
 public class EventReq {
     private String title;
     private String description;
-    private Date type;
+    private String type;
     private Date date;
 //    private Time hour;
 }

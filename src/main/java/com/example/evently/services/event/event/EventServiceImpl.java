@@ -70,6 +70,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventRes create(EventReq eventReq) {
+        System.out.println(eventReq);
         var auth = this.getAuth();
         return this.assingType(eventReq, auth);
     }

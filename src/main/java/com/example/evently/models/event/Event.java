@@ -16,7 +16,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
-//import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +58,7 @@ public abstract class Event {
 
     private Type type;
     private Date date;
-//    private Time hour;
+//    private Long hour;
     String location;
 
     @OneToMany(mappedBy = "event")
