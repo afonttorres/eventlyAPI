@@ -1,4 +1,4 @@
-package com.example.evently.fakers.tag;
+package com.example.evently.services.tag;
 
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.dto.tag.PostMultTagsReq;
@@ -13,5 +13,7 @@ public interface TagService {
     Tag getById(Long id);
 
     Tag create(TagReq req);
-    EventRes addTagsToEvent(Long eventId, PostMultTagsReq req);
+    EventRes addEventTags(Long eventId, PostMultTagsReq req);
+
+    EventRes delete(Long id, TagReq req);
 }

@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -91,11 +93,22 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event addTags(Long id, List<Tag> tags){
+    public Event setEventTags(Long id, List<Tag> tags){
         var event = this.getCompleteEventById(id);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can add tags!", "T-002");
-        event.setTags(tags);
+        Set<Tag> eventTags = event.getTags().stream().map(t-> t).collect(Collectors.toSet());
+        tags.forEach(t -> eventTags.add(t));
+        event.setTags(eventTags.stream().map(t-> t).collect(Collectors.toList()));
+        return eventRepository.save(event);
+    }
+
+    @Override
+    public Event deleteEventTag(Long id, Tag tag) {
+        var event = this.getCompleteEventById(id);
+        if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
+            throw new BadReqEx("Only event publisher can add tags!", "T-002");
+        event.getTags().remove(tag);
         return eventRepository.save(event);
     }
 }

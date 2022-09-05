@@ -4,7 +4,7 @@ import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.dto.tag.PostMultTagsReq;
 import com.example.evently.dto.tag.TagReq;
 import com.example.evently.models.Tag;
-import com.example.evently.fakers.tag.TagService;
+import com.example.evently.services.tag.TagService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,16 +34,22 @@ public class TagController {
         return new ResponseEntity<>(tagService.getById(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping("/tags")
-    ResponseEntity<Tag> create(@RequestBody TagReq req){
-        return new ResponseEntity<>(tagService.create(req), HttpStatus.OK);
-    }
+//    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PostMapping("/tags")
+//    ResponseEntity<Tag> create(@RequestBody TagReq req){
+//        return new ResponseEntity<>(tagService.create(req), HttpStatus.OK);
+//    }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/events/{id}/tags")
     ResponseEntity<EventRes> addTagsToEvent(@PathVariable Long id, @RequestBody PostMultTagsReq req){
-        return new ResponseEntity<>(tagService.addTagsToEvent(id, req), HttpStatus.OK);
+        return new ResponseEntity<>(tagService.addEventTags(id, req), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("/events/{id}/tags")
+    ResponseEntity<EventRes> delete(@PathVariable Long id, @RequestBody TagReq req){
+        return new ResponseEntity<>(tagService.delete(id, req), HttpStatus.OK);
     }
 
 

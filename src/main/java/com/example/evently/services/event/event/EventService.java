@@ -18,5 +18,6 @@ public interface EventService {
 
     EventRes delete(Long id);
 
-    Event addTags(Long id, List<Tag> tags);
+    Event setEventTags(Long id, List<Tag> tags);
+    Event deleteEventTag(Long id, Tag tag);
 }

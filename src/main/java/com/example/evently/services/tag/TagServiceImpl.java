@@ -1,4 +1,4 @@
-package com.example.evently.fakers.tag;
+package com.example.evently.services.tag;
 
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.dto.tag.PostMultTagsReq;
@@ -47,13 +47,20 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public EventRes addTagsToEvent(Long eventId, PostMultTagsReq req) {
+    public EventRes addEventTags(Long eventId, PostMultTagsReq req) {
         var tags = Arrays.stream(req.getTags())
                 .map(t-> this.create(new TagReq(t)))
                 .collect(Collectors.toList());
-        return new EventMapper().mapEventToRes(eventService.addTags(eventId, tags));
+        return new EventMapper().mapEventToRes(eventService.setEventTags(eventId, tags));
     }
 
+    @Override
+    public EventRes delete(Long eventId, TagReq req) {
+        if(tagRepository.findByName(req.getName()).isEmpty())
+            throw new NotFoundEx("Tag Not Found", "T-404");
+        var tag = tagRepository.findByName(req.getName()).get();
+        return new EventMapper().mapEventToRes(eventService.deleteEventTag(eventId, tag));
+    }
 
 
 }
