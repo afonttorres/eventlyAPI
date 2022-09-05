@@ -32,18 +32,15 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository,
-//                            TagService tagService,
                             AuthFacade authFacade,
                             OnlineEventService onlineService,
                             OfflineEventService offlineService
 //                            EventTypeRepository typeRepository
     ) {
         this.eventRepository = eventRepository;
-//        this.tagService = tagService;
         this.authFacade = authFacade;
         this.onlineService = onlineService;
         this.offlineService = offlineService;
-//        this.typeRepository = typeRepository;
     }
 
     private User getAuth(){
