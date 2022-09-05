@@ -18,6 +18,14 @@ public class OfflineEventMapper {
         return event;
     }
 
+    public OfflineEvent mapReqToOffEvent(EventReq eventReq, User auth){
+        var event = new OfflineEvent();
+        event.setTitle(eventReq.getTitle());
+        event.setDescription(eventReq.getDescription());
+        event.setPublisher(auth);
+        return event;
+    }
+
     public OfflineEvent mapJsonReqToOffEvent(EventJsonReq eventReq, List<Tag> tags, User auth){
         var event = new OfflineEvent();
         event.setTitle(eventReq.getTitle());

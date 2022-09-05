@@ -24,8 +24,9 @@ public class OfflineEventServiceImpl implements OfflineEventService {
         this.eventRepository = eventRepository;
     }
 
-    public EventRes create(EventReq req, User auth, List<Tag> tags){
-        var event = new OfflineEventMapper().mapReqToOffEvent(req, tags,auth);
+    @Override
+    public EventRes create(EventReq req, User auth){
+        var event = new OfflineEventMapper().mapReqToOffEvent(req, auth);
         eventRepository.save(event);
         return new EventMapper().mapEventToRes(event);
     }

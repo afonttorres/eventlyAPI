@@ -18,6 +18,13 @@ public class OnlineEventMapper {
         event.setPublisher(auth);
         return event;
     }
+    public OnlineEvent mapReqToOnEvent(EventReq eventReq, User auth){
+        var event = new OnlineEvent();
+        event.setTitle(eventReq.getTitle());
+        event.setDescription(eventReq.getDescription());
+        event.setPublisher(auth);
+        return event;
+    }
 
     public OnlineEvent mapJsonReqToOnEvent(EventJsonReq eventReq, List<Tag> tags, User auth){
         var event = new OnlineEvent();

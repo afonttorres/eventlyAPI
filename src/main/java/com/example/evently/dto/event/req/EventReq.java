@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 public class EventReq {
     private String title;
     private String description;
-    private Long[] tags;
-    private String img;
     private String type;
 }

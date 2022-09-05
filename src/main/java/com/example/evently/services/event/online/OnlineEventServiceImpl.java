@@ -24,8 +24,8 @@ public class OnlineEventServiceImpl implements OnlineEventService {
     }
 
     @Override
-    public EventRes create(EventReq req, User auth, List<Tag> tags) {
-        var event = new OnlineEventMapper().mapReqToOnEvent(req, tags, auth);
+    public EventRes create(EventReq req, User auth) {
+        var event = new OnlineEventMapper().mapReqToOnEvent(req, auth);
         eventRepository.save(event);
         return new EventMapper().mapEventToRes(event);
     }

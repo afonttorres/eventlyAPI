@@ -9,5 +9,5 @@ import com.example.evently.models.user.User;
 import java.util.List;
 
 public interface OnlineEventService {
-    EventRes create(EventReq req, User auth, List<Tag> tags);
+    EventRes create(EventReq req, User auth);
 }

@@ -23,7 +23,7 @@ import java.util.Optional;
 public class EventServiceImpl implements EventService {
 
     EventRepository eventRepository;
-    TagService tagService;
+//    TagService tagService;
 //    EventTypeRepository typeRepository;
     OfflineEventService offlineService;
     OnlineEventService onlineService;
@@ -31,14 +31,14 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository,
-                            TagService tagService,
+//                            TagService tagService,
                             AuthFacade authFacade,
                             OnlineEventService onlineService,
                             OfflineEventService offlineService
 //                            EventTypeRepository typeRepository
     ) {
         this.eventRepository = eventRepository;
-        this.tagService = tagService;
+//        this.tagService = tagService;
         this.authFacade = authFacade;
         this.onlineService = onlineService;
         this.offlineService = offlineService;
@@ -73,8 +73,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventRes create(EventReq eventReq) {
         var auth = this.getAuth();
-        var tags = tagService.getMultById(eventReq.getTags());
-        return this.assingType(eventReq, auth, tags);
+        return this.assingType(eventReq, auth);
     }
 
     @Override
@@ -85,11 +84,19 @@ public class EventServiceImpl implements EventService {
         return res;
     }
 
-    private EventRes assingType(EventReq req, User auth, List<Tag> tags){
+    private EventRes assingType(EventReq req, User auth){
         if(req.getType() == null) throw new BadReqEx("Type can't be empty!", "T-001");
-        System.out.println(!req.getType().equals("offline") || !req.getType().equals("online"));
         if(!req.getType().equals("offline") && !req.getType().equals("online")) throw new BadReqEx("Wrong type!", "T-002");
-        if(req.getType().equals("online")) return onlineService.create(req, auth, tags);
-        return offlineService.create(req, auth, tags);
+        if(req.getType().equals("online")) return onlineService.create(req, auth);
+        return offlineService.create(req, auth);
+    }
+
+    @Override
+    public Event addTags(Long id, List<Tag> tags){
+        var event = this.getCompleteEventById(id);
+        if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
+            throw new BadReqEx("Only event publisher can add tags!", "T-002");
+        event.setTags(tags);
+        return eventRepository.save(event);
     }
 }
