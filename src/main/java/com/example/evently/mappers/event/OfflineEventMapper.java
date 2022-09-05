@@ -9,19 +9,21 @@ import com.example.evently.models.user.User;
 import java.util.List;
 
 public class OfflineEventMapper {
-    public OfflineEvent mapReqToOffEvent(EventReq eventReq, List<Tag> tags, User auth){
-        var event = new OfflineEvent();
-        event.setTitle(eventReq.getTitle());
-        event.setDescription(eventReq.getDescription());
-        event.setTags(tags);
-        event.setPublisher(auth);
-        return event;
-    }
+//    public OfflineEvent mapReqToOffEvent(EventReq eventReq, List<Tag> tags, User auth){
+//        var event = new OfflineEvent();
+//        event.setTitle(eventReq.getTitle());
+//        event.setDescription(eventReq.getDescription());
+//        event.setTags(tags);
+//        event.setPublisher(auth);
+//        return event;
+//    }
 
     public OfflineEvent mapReqToOffEvent(EventReq eventReq, User auth){
         var event = new OfflineEvent();
         event.setTitle(eventReq.getTitle());
         event.setDescription(eventReq.getDescription());
+        event.setDate(eventReq.getDate());
+//        event.setHour(eventReq.getHour());
         event.setPublisher(auth);
         return event;
     }

@@ -11,6 +11,7 @@ import com.example.evently.models.event.OfflineEvent;
 import com.example.evently.models.event.OnlineEvent;
 import lombok.Data;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class EventMapper {
 //        res.setRequirements(event.getRequirements());
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
-
+        res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
         res.setLocation(event.getLocation());
@@ -43,6 +44,7 @@ public class EventMapper {
 //        res.setRequirements(event.getRequirements());
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
+        res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
         res.setType(event.getType().toString());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
@@ -61,6 +63,7 @@ public class EventMapper {
 //        res.setRequirements(event.getRequirements());
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
+        res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
         res.setType(event.getType().toString());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
