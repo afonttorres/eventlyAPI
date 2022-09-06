@@ -1,9 +1,6 @@
 package com.example.evently.models.event;
 
-import com.example.evently.models.Participation;
-import com.example.evently.models.Requirement;
-import com.example.evently.models.Tag;
-import com.example.evently.models.Type;
+import com.example.evently.models.*;
 import com.example.evently.models.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -63,6 +60,10 @@ public abstract class Event {
     private Date date;
     @JoinColumn(name = "location")
     String location;
+
+    @OneToMany(mappedBy = "event")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    private List<Image> images;
 
     @OneToMany(mappedBy = "event")
     @JsonSerialize

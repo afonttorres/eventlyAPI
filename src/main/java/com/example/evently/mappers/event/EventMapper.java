@@ -4,6 +4,7 @@ package com.example.evently.mappers.event;
 import com.example.evently.dto.event.req.EventReq;
 import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
+import com.example.evently.mappers.ImageMapper;
 import com.example.evently.mappers.RequirementMapper;
 import com.example.evently.mappers.TagMapper;
 import com.example.evently.mappers.UserMapper;
@@ -31,6 +32,7 @@ public class EventMapper {
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
         res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
         res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
+        res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
         res.setLocation(event.getLocation());
@@ -49,12 +51,12 @@ public class EventMapper {
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
         res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
         res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
+        res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
         res.setType(event.getType().toString());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
-        var direction = new Direction();
-        res.setLocation(direction.toString());
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
+        res.setLocation(event.getLocation());
         return res;
     }
 
@@ -69,10 +71,11 @@ public class EventMapper {
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
         res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
         res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
+        res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
         res.setType(event.getType().toString());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
-        res.setLocation(event.getWebUrl());
+        res.setLocation(event.getLocation());
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
         return res;
     }

@@ -26,6 +26,6 @@ public class EventRes {
     private String type;
     private List<Participation> participants;
     private int participantsCount;
-    private String img = "provisional.png";
+    private String[] images;
     private String location = "provisional";
 }

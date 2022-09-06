@@ -10,6 +10,7 @@ import com.example.evently.models.event.OfflineEvent;
 import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.*;
+import com.example.evently.repositories.event.EventRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.example.evently.repositories;
+package com.example.evently.repositories.event;
 
 import com.example.evently.models.event.Event;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -30,7 +30,9 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	// https://mvnrepository.com/artifact/org.json/json
 	implementation 'org.json:json:20220320'
+	// https://mavenlibs.com/maven/dependency/com.cloudinary/cloudinary-http44
 	implementation group: 'com.cloudinary', name: 'cloudinary-http44', version: '1.32.0'
 }
 

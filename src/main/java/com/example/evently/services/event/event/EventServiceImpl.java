@@ -10,7 +10,7 @@ import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.models.Tag;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.user.User;
-import com.example.evently.repositories.EventRepository;
+import com.example.evently.repositories.event.EventRepository;
 import com.example.evently.services.event.offline.OfflineEventService;
 import com.example.evently.services.event.online.OnlineEventService;
 import org.springframework.beans.factory.annotation.Autowired;
