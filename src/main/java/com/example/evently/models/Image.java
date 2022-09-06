@@ -22,14 +22,6 @@ public class Image {
     private String imgUrl;
     private String imgId;
 
-
-    public Image(String name, String imgUrl, String imgId) {
-        this.name = name;
-        this.imgUrl = imgUrl;
-        this.imgId = imgId;
-    }
-
-
     @ManyToOne
     @JoinColumn(name = "event_id")
     @JsonIgnore

@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ImageReqDelete {
     String url;
-//    Long eventId;
 }
