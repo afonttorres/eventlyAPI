@@ -2,6 +2,7 @@ package com.example.evently.services.event.event;
 
 import com.example.evently.auth.facade.AuthFacade;
 import com.example.evently.dto.event.req.EventReq;
+import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
@@ -78,6 +79,8 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventRes delete(Long id) {
         var event = this.getCompleteEventById(id);
+        if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
+            throw new BadReqEx("Only event publisher is allowed to delete it!", "T-002");
         var res = new EventMapper().mapEventToRes(event);
         eventRepository.delete(event);
         return res;
@@ -108,5 +111,15 @@ public class EventServiceImpl implements EventService {
             throw new BadReqEx("Only event publisher can add tags!", "T-002");
         event.getTags().remove(tag);
         return eventRepository.save(event);
+    }
+
+    @Override
+    public EventRes update(Long id, EventReqUpdate eventReq) {
+        var event = this.getCompleteEventById(id);
+        if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
+            throw new BadReqEx("Only event publisher is allowed to update it!", "T-002");
+        var updated = new EventMapper().mapReqToExistingEvent(eventReq, event);
+        eventRepository.save(updated);
+        return new EventMapper().mapEventToRes(updated);
     }
 }

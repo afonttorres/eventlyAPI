@@ -1,6 +1,7 @@
 package com.example.evently.services.event.event;
 
 import com.example.evently.dto.event.req.EventReq;
+import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.models.Tag;
 import com.example.evently.models.event.Event;
@@ -20,4 +21,6 @@ public interface EventService {
 
     Event setEventTags(Long id, List<Tag> tags);
     Event deleteEventTag(Long id, Tag tag);
+
+    EventRes update(Long id, EventReqUpdate eventReq);
 }

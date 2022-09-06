@@ -4,15 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import java.sql.Time;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventReq {
+public class EventReqUpdate {
     private String title;
     private String description;
-    private String type;
     private Date date;
 }

@@ -1,6 +1,8 @@
 package com.example.evently.mappers.event;
 
 
+import com.example.evently.dto.event.req.EventReq;
+import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.mappers.RequirementMapper;
 import com.example.evently.mappers.TagMapper;
@@ -80,5 +82,12 @@ public class EventMapper {
         List<EventRes> res = new ArrayList<>();
         events.stream().forEach(e -> res.add(this.mapEventToRes(e)));
         return res;
+    }
+
+    public Event mapReqToExistingEvent(EventReqUpdate eventReq, Event event) {
+        event.setTitle(eventReq.getTitle());
+        event.setDescription(eventReq.getDescription());
+        event.setDate(eventReq.getDate());
+        return event;
     }
 }

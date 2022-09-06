@@ -1,6 +1,7 @@
 package com.example.evently.controllers;
 
 import com.example.evently.dto.event.req.EventReq;
+import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.services.event.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,15 @@ public class EventController {
         return new ResponseEntity<>(eventService.create(eventReq), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/events/{id}")
     ResponseEntity<EventRes> delete(@PathVariable Long id){
         return new ResponseEntity<>(eventService.delete(id), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PutMapping("/events/{id}")
+    ResponseEntity<EventRes> update(@PathVariable Long id, @RequestBody EventReqUpdate eventReq){
+        return new ResponseEntity<>(eventService.update(id, eventReq), HttpStatus.OK);
     }
 }
