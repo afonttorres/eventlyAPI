@@ -1,6 +1,5 @@
 package com.example.evently.fakers;
 
-import com.example.evently.EventTypeEntity.EventTypeRepository;
 import com.example.evently.dto.event.req.EventJsonReq;
 import com.example.evently.mappers.event.OfflineEventMapper;
 import com.example.evently.mappers.event.OnlineEventMapper;
@@ -37,7 +36,6 @@ public class DataSeed {
     private TagRepository tagRepository;
     private RequirementRepository requirementRepository;
     private ParticipationRepository participationRepository;
-    private EventTypeRepository typeRepository;
 
     @Autowired
     public DataSeed(RoleRepository roleRepository,
@@ -46,8 +44,7 @@ public class DataSeed {
                     PasswordEncoder encoder,
                     TagRepository tagRepository,
                     RequirementRepository requirementRepository,
-                    ParticipationRepository participationRepository,
-                    EventTypeRepository typeRepository
+                    ParticipationRepository participationRepository
     ) {
         this.roleRepository = roleRepository;
         this.authRepository = authRepository;
@@ -56,7 +53,6 @@ public class DataSeed {
         this.tagRepository = tagRepository;
         this.requirementRepository = requirementRepository;
         this.participationRepository = participationRepository;
-        this.typeRepository = typeRepository;
     }
 
     @PostConstruct

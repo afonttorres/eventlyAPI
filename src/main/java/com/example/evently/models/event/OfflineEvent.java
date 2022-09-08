@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 @Entity
 @EqualsAndHashCode(callSuper=false)
 public class OfflineEvent extends Event{
-    @OneToOne
+    @OneToOne(mappedBy = "event")
     @JoinColumn(name = "direction_id")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @JsonIgnore
