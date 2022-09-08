@@ -1,6 +1,6 @@
 package com.example.evently.services.tag;
 
-import com.example.evently.dto.event.res.EventRes;
+import com.example.evently.dto.output.Message;
 import com.example.evently.dto.tag.PostMultTagsReq;
 import com.example.evently.dto.tag.TagReq;
 import com.example.evently.models.Tag;
@@ -13,7 +13,7 @@ public interface TagService {
     Tag getById(Long id);
 
     Tag create(TagReq req);
-    EventRes addEventTags(Long eventId, PostMultTagsReq req);
+    Message addEventTags(Long eventId, PostMultTagsReq req);
 
-    EventRes delete(Long id, TagReq req);
+    Message delete(Long id, TagReq req);
 }

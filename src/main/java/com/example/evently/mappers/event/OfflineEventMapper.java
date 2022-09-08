@@ -2,8 +2,11 @@ package com.example.evently.mappers.event;
 
 import com.example.evently.dto.event.req.EventJsonReq;
 import com.example.evently.dto.event.req.EventReq;
+import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.models.*;
+import com.example.evently.models.event.Event;
 import com.example.evently.models.event.OfflineEvent;
+import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.user.User;
 
 import java.util.List;
@@ -15,7 +18,6 @@ public class OfflineEventMapper {
         event.setDescription(eventReq.getDescription());
         event.setDate(eventReq.getDate());
         event.setPublisher(auth);
-
         return event;
     }
 
@@ -29,4 +31,15 @@ public class OfflineEventMapper {
         return event;
     }
 
+    public OfflineEvent mapOnlineToOfflineEvent(EventReqUpdate req, Event event) {
+        OfflineEvent offline = new OfflineEvent();
+        offline.setId(event.getId());
+        offline.setTitle(req.getTitle());
+        offline.setDescription(req.getDescription());
+        offline.setDate(req.getDate());
+        offline.setTags(event.getTags());
+        offline.setPublisher(event.getPublisher());
+        return offline;
+
+    }
 }

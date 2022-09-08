@@ -1,11 +1,14 @@
 package com.example.evently.services.event.offline;
 
 import com.example.evently.dto.event.req.EventReq;
+import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.mappers.event.OfflineEventMapper;
+import com.example.evently.mappers.event.OnlineEventMapper;
 import com.example.evently.models.Direction;
+import com.example.evently.models.event.Event;
 import com.example.evently.models.event.OfflineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
@@ -38,7 +41,7 @@ public class OfflineEventServiceImpl implements OfflineEventService {
     public OfflineEvent getById(Long eventId) {
         var event = offlineRepository.findById(eventId);
         if(event.isEmpty())
-            throw new NotFoundEx("Event Not Found", "E-404");
+            throw new NotFoundEx("Offline event not found", "E-404");
         return event.get();
     }
 
@@ -48,6 +51,13 @@ public class OfflineEventServiceImpl implements OfflineEventService {
         eventRepository.save(event);
         offlineRepository.save(event);
         return new EventMapper().mapEventToRes(event);
+    }
+
+    @Override
+    public EventRes createFromOnlineEvent(EventReqUpdate req, Event event) {
+        eventRepository.delete(event);
+        var saved = eventRepository.save(new OfflineEventMapper().mapOnlineToOfflineEvent(req, event));
+        return new EventMapper().mapEventToRes(saved);
     }
 
 }

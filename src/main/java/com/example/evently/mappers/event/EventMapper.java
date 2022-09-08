@@ -35,7 +35,7 @@ public class EventMapper {
         res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
-        res.setLocation(event.getLocation());
+        res.setLocation(this.defineLocation(event));
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
         return res;
     }
@@ -56,7 +56,7 @@ public class EventMapper {
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
-        res.setLocation(event.getLocation());
+        res.setLocation(this.defineDirection(event));
         return res;
     }
 
@@ -75,11 +75,10 @@ public class EventMapper {
         res.setType(event.getType().toString());
         res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
-        res.setLocation(event.getLocation());
+        res.setLocation(this.defineWeb(event));
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
         return res;
     }
-
 
     public List<EventRes> mapMultipleEventsToRes(List<Event> events){
         List<EventRes> res = new ArrayList<>();
@@ -93,4 +92,29 @@ public class EventMapper {
         event.setDate(eventReq.getDate());
         return event;
     }
+
+    public String defineLocation(Event event){
+        String location = "";
+        if(event.getLocation() != null){
+            location = event.getLocation();
+        }
+        return location;
+    }
+
+    public String defineDirection(OfflineEvent event){
+        String direction = "";
+        if(event.getDirection() != null){
+            direction = event.getDirection().toString();
+        }
+        return direction;
+    }
+
+    public String defineWeb(OnlineEvent event){
+        String web = "";
+        if(event.getWebUrl() != null){
+            web = event.getWebUrl().getUrl();
+        }
+        return web;
+    }
+
 }

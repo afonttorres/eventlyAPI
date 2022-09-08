@@ -1,4 +1,4 @@
-package com.example.evently.dto.error;
+package com.example.evently.dto.output;
 
 import lombok.Builder;
 import lombok.Data;

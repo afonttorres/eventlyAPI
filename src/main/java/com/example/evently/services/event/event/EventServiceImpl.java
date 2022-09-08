@@ -7,6 +7,7 @@ import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.event.EventMapper;
+import com.example.evently.mappers.event.OnlineEventMapper;
 import com.example.evently.models.Tag;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.user.User;
@@ -71,7 +72,6 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventRes create(EventReq eventReq) {
-        System.out.println(eventReq);
         var auth = this.getAuth();
         return this.assingType(eventReq, auth);
     }
@@ -83,14 +83,22 @@ public class EventServiceImpl implements EventService {
             throw new BadReqEx("Only event publisher is allowed to delete it!", "T-002");
         var res = new EventMapper().mapEventToRes(event);
         eventRepository.delete(event);
+        //email to notify event has been deleted
         return res;
     }
 
-    private EventRes assingType(EventReq req, User auth){
-        if(req.getType() == null) throw new BadReqEx("Type can't be empty!", "T-001");
-        if(!req.getType().equals("offline") && !req.getType().equals("online")) throw new BadReqEx("Wrong type!", "T-002");
-        if(req.getType().equals("online")) return onlineService.create(req, auth);
-        return offlineService.create(req, auth);
+    @Override
+    public EventRes update(Long id, EventReqUpdate req) {
+        var event = this.getCompleteEventById(id);
+        if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
+            throw new BadReqEx("Only event publisher is allowed to update it!", "T-002");
+        if(!req.getType().equals(event.getType().toString().toLowerCase())){
+            return this.changeType(req, event);
+        }
+        var updated = new EventMapper().mapReqToExistingEvent(req, event);
+        eventRepository.save(updated);
+        //email to notify modification
+        return new EventMapper().mapEventToRes(updated);
     }
 
     @Override
@@ -113,13 +121,22 @@ public class EventServiceImpl implements EventService {
         return eventRepository.save(event);
     }
 
-    @Override
-    public EventRes update(Long id, EventReqUpdate eventReq) {
-        var event = this.getCompleteEventById(id);
-        if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
-            throw new BadReqEx("Only event publisher is allowed to update it!", "T-002");
-        var updated = new EventMapper().mapReqToExistingEvent(eventReq, event);
-        eventRepository.save(updated);
-        return new EventMapper().mapEventToRes(updated);
+    private void validateType(String type){
+        if(type == null) throw new BadReqEx("Type can't be empty!", "T-001");
+        if(!type.equals("offline") && !type.equals("online")) throw new BadReqEx("Wrong type!", "T-002");
+    }
+
+    private EventRes assingType(EventReq req, User auth){
+        this.validateType(req.getType());
+        if(req.getType().equals("online")) return onlineService.create(req, auth);
+        return offlineService.create(req, auth);
+    }
+
+    private EventRes changeType(EventReqUpdate req, Event event){
+        this.validateType(req.getType());
+        if(req.getType().equals("online")){
+            return onlineService.createFromOfflineEvent(req, event);
+        }
+        return offlineService.createFromOnlineEvent(req, event);
     }
 }

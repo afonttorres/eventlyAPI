@@ -1,9 +1,11 @@
 package com.example.evently.services.event.online;
 
 import com.example.evently.dto.event.req.EventReq;
+import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.mappers.event.OnlineEventMapper;
+import com.example.evently.models.event.Event;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +26,12 @@ public class OnlineEventServiceImpl implements OnlineEventService {
         var event = new OnlineEventMapper().mapReqToOnEvent(req, auth);
         eventRepository.save(event);
         return new EventMapper().mapEventToRes(event);
+    }
+
+    @Override
+    public EventRes createFromOfflineEvent(EventReqUpdate req, Event event) {
+        eventRepository.delete(event);
+        var saved = eventRepository.save( new OnlineEventMapper().mapOfflineToOnlineEvent(req, event));
+        return new EventMapper().mapEventToRes(saved);
     }
 }

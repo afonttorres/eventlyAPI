@@ -1,18 +1,17 @@
 package com.example.evently.services.requirement;
 
 import com.example.evently.auth.facade.AuthFacade;
+import com.example.evently.dto.output.Message;
 import com.example.evently.dto.requirement.RequirementReq;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.models.Requirement;
-import com.example.evently.models.Role;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.RequirementRepository;
 import com.example.evently.services.event.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +50,7 @@ public class RequirementServiceImpl implements RequirementService{
     }
 
     @Override
-    public Requirement create(RequirementReq req) {
+    public Message create(RequirementReq req) {
         if(requirementRepository.findByNameInEvent(req.getEventId(), req.getName()).stream().findAny().isPresent())
             throw new BadReqEx("Requirement already exists!", "R-001");
         var event = eventService.getCompleteEventById(req.getEventId());
@@ -60,7 +59,8 @@ public class RequirementServiceImpl implements RequirementService{
         var requirement = new Requirement();
         requirement.setName(req.getName());
         requirement.setEvent(event);
-        return requirementRepository.save(requirement);
+        requirementRepository.save(requirement);
+        return new Message("Requirement "+requirement.getName()+" created!");
     }
 
 
@@ -70,7 +70,7 @@ public class RequirementServiceImpl implements RequirementService{
     }
 
     @Override
-    public Boolean delete(RequirementReq req) {
+    public Message delete(RequirementReq req) {
         var event = eventService.getCompleteEventById(req.getEventId());
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can delete a requirement!", "R-004");
@@ -80,6 +80,6 @@ public class RequirementServiceImpl implements RequirementService{
         if(requirement.isEmpty())
             throw new NotFoundEx("Requirement Not Found", "R-404");
         requirementRepository.delete(requirement.get());
-        return true;
+        return new Message("Requirement "+req.getName()+" deleted!");
     }
 }
