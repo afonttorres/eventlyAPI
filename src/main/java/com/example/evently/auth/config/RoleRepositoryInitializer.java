@@ -1,7 +1,7 @@
 package com.example.evently.auth.config;
 
 import com.example.evently.models.Role;
-import com.example.evently.models.user.User;
+import com.example.evently.models.User;
 import com.example.evently.repositories.AuthRepository;
 import com.example.evently.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

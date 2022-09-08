@@ -1,6 +1,6 @@
 package com.example.evently.repositories;
 
-import com.example.evently.models.user.User;
+import com.example.evently.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

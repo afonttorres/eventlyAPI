@@ -1,5 +1,6 @@
 package com.example.evently.controllers;
 
+import com.example.evently.dto.output.Message;
 import com.example.evently.dto.requirement.RequirementReq;
 import com.example.evently.models.Requirement;
 import com.example.evently.services.requirement.RequirementService;
@@ -39,13 +40,13 @@ public class RequirementController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/requirements")
-    public ResponseEntity<Requirement> create(@RequestBody RequirementReq req){
+    public ResponseEntity<Message> create(@RequestBody RequirementReq req){
         return new ResponseEntity<>(requirementService.create(req), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/requirements")
-    public ResponseEntity<Boolean> delete(@RequestBody RequirementReq req){
+    public ResponseEntity<Message> delete(@RequestBody RequirementReq req){
         return new ResponseEntity<>(requirementService.delete(req), HttpStatus.OK);
     }
 

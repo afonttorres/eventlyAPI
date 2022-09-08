@@ -1,13 +1,12 @@
 package com.example.evently.services.tag;
 
-import com.example.evently.dto.event.res.EventRes;
+import com.example.evently.dto.output.Message;
 import com.example.evently.dto.tag.PostMultTagsReq;
 import com.example.evently.dto.tag.TagReq;
 import com.example.evently.exceptions.NotFoundEx;
-import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.models.Tag;
 import com.example.evently.repositories.TagRepository;
-import com.example.evently.services.event.event.EventService;
+import com.example.evently.services.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,19 +46,21 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public EventRes addEventTags(Long eventId, PostMultTagsReq req) {
+    public Message addEventTags(Long eventId, PostMultTagsReq req) {
         var tags = Arrays.stream(req.getTags())
                 .map(t-> this.create(new TagReq(t)))
                 .collect(Collectors.toList());
-        return new EventMapper().mapEventToRes(eventService.setEventTags(eventId, tags));
+        eventService.setEventTags(eventId, tags);
+        return new Message("Tags added!");
     }
 
     @Override
-    public EventRes delete(Long eventId, TagReq req) {
+    public Message delete(Long eventId, TagReq req) {
         if(tagRepository.findByName(req.getName()).isEmpty())
             throw new NotFoundEx("Tag Not Found", "T-404");
         var tag = tagRepository.findByName(req.getName()).get();
-        return new EventMapper().mapEventToRes(eventService.deleteEventTag(eventId, tag));
+        eventService.deleteEventTag(eventId, tag);
+        return new Message("Tag "+req.getName()+" deleted!");
     }
 
 

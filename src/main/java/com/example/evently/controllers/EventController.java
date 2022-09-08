@@ -3,7 +3,7 @@ package com.example.evently.controllers;
 import com.example.evently.dto.event.req.EventReq;
 import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
-import com.example.evently.services.event.event.EventService;
+import com.example.evently.services.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

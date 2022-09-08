@@ -2,10 +2,10 @@ package com.example.evently.mappers;
 
 import com.example.evently.dto.direction.DirectionReq;
 import com.example.evently.models.Direction;
-import com.example.evently.models.event.OfflineEvent;
+import com.example.evently.models.Event;
 
 public class DirectionMapper {
-    public Direction mapReqToDirection(DirectionReq directionReq, OfflineEvent event){
+    public Direction mapReqToDirection(DirectionReq directionReq, Event event){
         Direction direction = new Direction();
         direction.setCountry(directionReq.getCountry());
         direction.setProvince(directionReq.getProvince());

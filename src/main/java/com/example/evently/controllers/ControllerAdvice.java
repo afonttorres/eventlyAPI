@@ -1,6 +1,6 @@
 package com.example.evently.controllers;
 
-import com.example.evently.dto.error.ErrorDto;
+import com.example.evently.dto.output.ErrorDto;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import org.springframework.http.ResponseEntity;

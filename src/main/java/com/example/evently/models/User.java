@@ -1,4 +1,4 @@
-package com.example.evently.models.user;
+package com.example.evently.models;
 
 import com.example.evently.models.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;

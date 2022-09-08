@@ -1,6 +1,6 @@
 package com.example.evently.services.image;
 
-import com.example.evently.dto.image.CloudinaryMsg;
+import com.example.evently.dto.output.Message;
 import com.example.evently.dto.image.ImageReqDelete;
 import com.example.evently.dto.image.ImageRes;
 import com.example.evently.exceptions.BadReqEx;
@@ -8,7 +8,7 @@ import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.ImageMapper;
 import com.example.evently.models.Image;
 import com.example.evently.repositories.ImageRepository;
-import com.example.evently.services.event.event.EventService;
+import com.example.evently.services.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -67,24 +67,24 @@ public class ImageServiceImpl implements ImageService{
         Map result = cloudinaryService.upload(multipartFile);
         Image image = new ImageMapper().mapCloudinaryResultToImage(result, event);
         imageRepository.save(image);
-        return new ImageRes("Image Uploaded!", image.getImgUrl(), image.getId());
+        return new ImageRes("Image uploaded!", image.getImgUrl(), image.getId());
     }
 
     @Override
-    public CloudinaryMsg deleteById(Long id) throws IOException {
+    public Message deleteById(Long id) throws IOException {
         Image image = this.findById(id);
         Map result = cloudinaryService.delete(image.getImgId());
         //validar amb result?
         imageRepository.delete(image);
-        return new CloudinaryMsg("Image deleted!");
+        return new Message("Image deleted!");
     }
 
     @Override
-    public CloudinaryMsg deleteByUrl(ImageReqDelete req) throws IOException {
+    public Message deleteByUrl(ImageReqDelete req) throws IOException {
         Image image = this.findByUrl(req.getUrl());
         cloudinaryService.delete(image.getImgId());
         imageRepository.delete(image);
-        return new CloudinaryMsg("Image deleted!");
+        return new Message("Image deleted!");
     }
 
 

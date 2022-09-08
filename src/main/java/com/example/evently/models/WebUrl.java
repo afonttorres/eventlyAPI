@@ -11,17 +11,15 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Image {
+public class WebUrl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String name;
-    private String imgUrl;
-    private String imgId;
+    String url;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "event_id")
     @JsonIgnore
     Event event;

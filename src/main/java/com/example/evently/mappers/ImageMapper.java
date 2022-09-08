@@ -1,7 +1,7 @@
 package com.example.evently.mappers;
 
 import com.example.evently.models.Image;
-import com.example.evently.models.event.Event;
+import com.example.evently.models.Event;
 
 import java.util.ArrayList;
 import java.util.List;

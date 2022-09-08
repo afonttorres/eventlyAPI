@@ -1,6 +1,5 @@
 package com.example.evently.models;
 
-import com.example.evently.models.event.OfflineEvent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +29,7 @@ public class Direction {
     @OneToOne
     @JoinColumn(name = "event_id")
     @JsonIgnore
-    private OfflineEvent event;
+    private Event event;
 
     public String toString(){
         return this.country+", "+this.province+", "+this.city+", "+this.street+", "+this.building+", "+this.door;

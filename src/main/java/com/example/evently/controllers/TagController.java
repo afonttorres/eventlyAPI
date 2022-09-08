@@ -1,6 +1,7 @@
 package com.example.evently.controllers;
 
 import com.example.evently.dto.event.res.EventRes;
+import com.example.evently.dto.output.Message;
 import com.example.evently.dto.tag.PostMultTagsReq;
 import com.example.evently.dto.tag.TagReq;
 import com.example.evently.models.Tag;
@@ -42,13 +43,13 @@ public class TagController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/events/{id}/tags")
-    ResponseEntity<EventRes> addTagsToEvent(@PathVariable Long id, @RequestBody PostMultTagsReq req){
+    ResponseEntity<Message> addTagsToEvent(@PathVariable Long id, @RequestBody PostMultTagsReq req){
         return new ResponseEntity<>(tagService.addEventTags(id, req), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/events/{id}/tags")
-    ResponseEntity<EventRes> delete(@PathVariable Long id, @RequestBody TagReq req){
+    ResponseEntity<Message> delete(@PathVariable Long id, @RequestBody TagReq req){
         return new ResponseEntity<>(tagService.delete(id, req), HttpStatus.OK);
     }
 

@@ -2,6 +2,7 @@ package com.example.evently.controllers;
 
 import com.example.evently.dto.direction.DirectionReq;
 import com.example.evently.dto.event.res.EventRes;
+import com.example.evently.dto.output.Message;
 import com.example.evently.models.Direction;
 import com.example.evently.services.direction.DirectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class DirectionController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/directions")
-    ResponseEntity<EventRes> create(@RequestBody DirectionReq req){
+    ResponseEntity<Message> create(@RequestBody DirectionReq req){
         return new ResponseEntity<>( directionService.create(req), HttpStatus.OK);
     }
 }

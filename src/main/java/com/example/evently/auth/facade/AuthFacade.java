@@ -1,6 +1,6 @@
 package com.example.evently.auth.facade;
 
-import com.example.evently.models.user.User;
+import com.example.evently.models.User;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
 package com.example.evently.auth.config;
 
-import com.example.evently.models.user.User;
+import com.example.evently.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

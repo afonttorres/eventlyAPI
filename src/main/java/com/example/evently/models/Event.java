@@ -1,7 +1,5 @@
-package com.example.evently.models.event;
+package com.example.evently.models;
 
-import com.example.evently.models.*;
-import com.example.evently.models.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
@@ -22,7 +20,7 @@ import java.util.List;
 @Table(name = "events")
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Event {
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -58,8 +56,6 @@ public abstract class Event {
     private Type type;
     @JoinColumn(name="date")
     private Date date;
-    @JoinColumn(name = "location")
-    String location;
 
     @OneToMany(mappedBy = "event")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
@@ -69,6 +65,17 @@ public abstract class Event {
     @JsonSerialize
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Participation> participants = new ArrayList<>();
+
+    @OneToOne(mappedBy = "event")
+    @JoinColumn(name = "direction_id")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    Direction direction;
+
+    @OneToOne(mappedBy = "event")
+    @JoinColumn(name = "weburl_id")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    WebUrl url;
+
 
     public int participantsCount(){
         return this.participants.size();
