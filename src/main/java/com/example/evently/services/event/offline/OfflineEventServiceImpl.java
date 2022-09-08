@@ -47,9 +47,10 @@ public class OfflineEventServiceImpl implements OfflineEventService {
 
     @Override
     public EventRes addLocationToEvent(Direction direction, OfflineEvent event) {
-        event.setLocation(direction.toString());
+        event.setLocation(this.defineLocation(direction));
         eventRepository.save(event);
         offlineRepository.save(event);
+        System.out.println("EVENT LOCATION MODIFIED EMAIL");
         return new EventMapper().mapEventToRes(event);
     }
 
@@ -58,6 +59,12 @@ public class OfflineEventServiceImpl implements OfflineEventService {
         eventRepository.delete(event);
         var saved = eventRepository.save(new OfflineEventMapper().mapOnlineToOfflineEvent(req, event));
         return new EventMapper().mapEventToRes(saved);
+    }
+
+    public String defineLocation(Direction direction){
+        String location = "";
+        if(direction != null) location =direction.toString();
+        return location;
     }
 
 }
