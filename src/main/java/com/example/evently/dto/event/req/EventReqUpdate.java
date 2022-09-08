@@ -12,5 +12,6 @@ import java.util.Date;
 public class EventReqUpdate {
     private String title;
     private String description;
+    private String type;
     private Date date;
 }

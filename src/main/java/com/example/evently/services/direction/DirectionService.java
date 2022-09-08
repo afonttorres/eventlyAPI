@@ -5,4 +5,6 @@ import com.example.evently.dto.output.Message;
 
 public interface DirectionService {
     Message create(DirectionReq req);
+
+    boolean deleteById(Long id);
 }

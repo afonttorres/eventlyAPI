@@ -91,7 +91,6 @@ public class ImageServiceImpl implements ImageService{
         if(image.getEvent().getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can delete its images!", "I-001");
         Map result = cloudinaryService.delete(image.getImgId());
-        //validar amb result?
         imageRepository.delete(image);
         return new Message("Image deleted!");
     }

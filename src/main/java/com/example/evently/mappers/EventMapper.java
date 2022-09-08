@@ -98,10 +98,11 @@ public class EventMapper {
         return res;
     }
 
-    public Event mapReqToExistingEvent(EventReqUpdate eventReq, Event event) {
-        event.setTitle(eventReq.getTitle());
-        event.setDescription(eventReq.getDescription());
-        event.setDate(eventReq.getDate());
+    public Event mapReqToExistingEvent(EventReqUpdate req, Event event) {
+        event.setTitle(req.getTitle());
+        event.setDescription(req.getDescription());
+        event.setDate(req.getDate());
+        event.setType(this.defineType(req.getType()));
         return event;
     }
 }

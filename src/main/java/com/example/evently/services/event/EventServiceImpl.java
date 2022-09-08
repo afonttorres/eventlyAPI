@@ -12,6 +12,7 @@ import com.example.evently.models.Tag;
 import com.example.evently.models.Event;
 import com.example.evently.models.User;
 import com.example.evently.repositories.event.EventRepository;
+import com.example.evently.services.direction.DirectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,6 @@ import java.util.stream.Collectors;
 public class EventServiceImpl implements EventService {
 
     EventRepository eventRepository;
-
     AuthFacade authFacade;
 
     @Autowired

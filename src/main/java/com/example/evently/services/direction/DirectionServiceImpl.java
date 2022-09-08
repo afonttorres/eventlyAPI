@@ -57,5 +57,11 @@ public class DirectionServiceImpl implements DirectionService{
         });
     }
 
+    @Override
+    public boolean deleteById(Long id){
+        directionRepository.deleteById(id);
+        return true;
+    }
+
 
 }
