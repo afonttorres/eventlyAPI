@@ -1,5 +1,6 @@
 package com.example.evently.models;
 
+import com.example.evently.models.event.Event;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ import javax.persistence.*;
 public class Direction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     @Column(name = "id", nullable = false)
     private Long id;
 

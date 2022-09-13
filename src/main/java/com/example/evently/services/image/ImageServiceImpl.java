@@ -8,9 +8,9 @@ import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.ImageMapper;
 import com.example.evently.models.Image;
-import com.example.evently.models.User;
+import com.example.evently.models.user.User;
 import com.example.evently.repositories.ImageRepository;
-import com.example.evently.services.event.EventService;
+import com.example.evently.services.event.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,6 +77,7 @@ public class ImageServiceImpl implements ImageService{
         var event = eventService.getCompleteEventById(id);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can upload images!", "I-001");
+        //if event has more than x pictures throw exception & make user delete one
         BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
         if(bufferedImage == null) throw new BadReqEx("Invalid Image", "I-002");
         Map result = cloudinaryService.upload(multipartFile);
@@ -104,8 +105,5 @@ public class ImageServiceImpl implements ImageService{
         imageRepository.delete(image);
         return new Message("Image deleted!");
     }
-
-
-
 
 }

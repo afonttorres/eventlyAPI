@@ -1,4 +1,4 @@
-package com.example.evently.services.event;
+package com.example.evently.services.event.event;
 
 import com.example.evently.auth.facade.AuthFacade;
 import com.example.evently.dto.event.req.EventReq;
@@ -6,13 +6,14 @@ import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
-import com.example.evently.mappers.EventMapper;
-import com.example.evently.models.Direction;
+import com.example.evently.mappers.event.EventMapper;
+import com.example.evently.mappers.event.OnlineEventMapper;
 import com.example.evently.models.Tag;
-import com.example.evently.models.Event;
-import com.example.evently.models.User;
+import com.example.evently.models.event.Event;
+import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
-import com.example.evently.services.direction.DirectionService;
+import com.example.evently.services.event.offline.OfflineEventService;
+import com.example.evently.services.event.online.OnlineEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +26,23 @@ import java.util.stream.Collectors;
 public class EventServiceImpl implements EventService {
 
     EventRepository eventRepository;
+//    TagService tagService;
+//    EventTypeRepository typeRepository;
+    OfflineEventService offlineService;
+    OnlineEventService onlineService;
     AuthFacade authFacade;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository,
-                            AuthFacade authFacade
+                            AuthFacade authFacade,
+                            OnlineEventService onlineService,
+                            OfflineEventService offlineService
+//                            EventTypeRepository typeRepository
     ) {
         this.eventRepository = eventRepository;
         this.authFacade = authFacade;
+        this.onlineService = onlineService;
+        this.offlineService = offlineService;
     }
 
     private User getAuth(){
@@ -61,13 +71,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventRes create(EventReq req) {
+    public EventRes create(EventReq eventReq) {
         var auth = this.getAuth();
-        if(req.getType() == null) throw new BadReqEx("Type can't be empty!", "T-001");
-        if(!req.getType().equals("offline") && !req.getType().equals("online")) throw new BadReqEx("Wrong type!", "T-002");
-        var event = new EventMapper().mapReqToEvent(req,auth);
-        eventRepository.save(event);
-        return new EventMapper().mapEventToRes(event);
+        return this.assingType(eventReq, auth);
     }
 
     @Override
@@ -77,7 +83,28 @@ public class EventServiceImpl implements EventService {
             throw new BadReqEx("Only event publisher is allowed to delete it!", "T-002");
         var res = new EventMapper().mapEventToRes(event);
         eventRepository.delete(event);
+        //email to notify event has been deleted
+        System.out.println("EVENT DELETED EMAIL");
         return res;
+    }
+
+    @Override
+    public EventRes update(Long id, EventReqUpdate req) {
+        var event = this.getCompleteEventById(id);
+        if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
+            throw new BadReqEx("Only event publisher is allowed to update it!", "T-002");
+        if(!req.getType().equals(event.getType().toString().toLowerCase())){
+            var newEvent = this.changeType(req, event);
+            //email to notify modification
+            System.out.println("EVENT MODIFIED EMAIL");
+            return newEvent;
+        }
+        System.out.println(req);
+        var updated = new EventMapper().mapReqToExistingEvent(req, event);
+        eventRepository.save(updated);
+        //email to notify modification
+        System.out.println("EVENT MODIFIED EMAIL");
+        return new EventMapper().mapEventToRes(updated);
     }
 
     @Override
@@ -100,14 +127,22 @@ public class EventServiceImpl implements EventService {
         return eventRepository.save(event);
     }
 
-    @Override
-    public EventRes update(Long id, EventReqUpdate eventReq) {
-        var event = this.getCompleteEventById(id);
-        if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
-            throw new BadReqEx("Only event publisher is allowed to update it!", "T-002");
-        var updated = new EventMapper().mapReqToExistingEvent(eventReq, event);
-        eventRepository.save(updated);
-        return new EventMapper().mapEventToRes(updated);
+    private void validateType(String type){
+        if(type == null) throw new BadReqEx("Type can't be empty!", "T-001");
+        if(!type.equals("offline") && !type.equals("online")) throw new BadReqEx("Wrong type!", "T-002");
     }
 
+    private EventRes assingType(EventReq req, User auth){
+        this.validateType(req.getType());
+        if(req.getType().equals("online")) return onlineService.create(req, auth);
+        return offlineService.create(req, auth);
+    }
+
+    private EventRes changeType(EventReqUpdate req, Event event){
+        this.validateType(req.getType());
+        if(req.getType().equals("online")){
+            return onlineService.createFromOfflineEvent(req, event);
+        }
+        return offlineService.createFromOnlineEvent(req, event);
+    }
 }

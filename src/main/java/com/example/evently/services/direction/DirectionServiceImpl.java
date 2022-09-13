@@ -6,26 +6,29 @@ import com.example.evently.dto.output.Message;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.DirectionMapper;
-import com.example.evently.models.Event;
+import com.example.evently.models.Direction;
 import com.example.evently.models.Type;
-import com.example.evently.models.User;
+import com.example.evently.models.event.OfflineEvent;
+import com.example.evently.models.user.User;
 import com.example.evently.repositories.DirectionRepository;
-import com.example.evently.services.event.EventService;
+import com.example.evently.services.event.offline.OfflineEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DirectionServiceImpl implements DirectionService{
     DirectionRepository directionRepository;
-    EventService eventService;
+    OfflineEventService offlineEventService;
     AuthFacade authFacade;
 
     @Autowired
-    public DirectionServiceImpl(DirectionRepository directionRepository, EventService eventService, AuthFacade authFacade) {
+    public DirectionServiceImpl(DirectionRepository directionRepository, OfflineEventService offlineEventService, AuthFacade authFacade) {
         this.directionRepository = directionRepository;
-        this.eventService = eventService;
+        this.offlineEventService = offlineEventService;
         this.authFacade = authFacade;
     }
 
@@ -36,8 +39,30 @@ public class DirectionServiceImpl implements DirectionService{
     }
 
     @Override
-    public Message create(DirectionReq req) {
-        var event = eventService.getCompleteEventById(req.getEventId());
+    public List<Direction> getAll() {
+        return directionRepository.findAll();
+    }
+
+    @Override
+    public Direction getById(Long id) {
+        var dir = directionRepository.findById(id);
+        if(dir.isEmpty())
+            throw new NotFoundEx("Direction not found", "D-404");
+        return dir.get();
+    }
+
+    @Override
+    public Direction getByEventId(Long id){
+        var event = offlineEventService.getById(id);
+        var direction = directionRepository.findByEventId(id).stream().findAny();
+        if(direction.isEmpty())
+            throw new NotFoundEx("Direction not found", "D-404");
+        return direction.get();
+    }
+
+    @Override
+    public Message create(Long eventId, DirectionReq req) {
+        var event = offlineEventService.getById(eventId);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher add a direction!", "D-001");
         if(!event.getType().equals(Type.OFFLINE))
@@ -46,21 +71,22 @@ public class DirectionServiceImpl implements DirectionService{
         //comprovar si existeix open maps api
         this.resetDirection(event);
         directionRepository.save(direction);
-        return new Message("Direction "+direction.toString()+" created!");
+        offlineEventService.addLocationToEvent(direction, event);
+        return new Message("Direction "+direction.toString()+" added to event "+event.getTitle()+" !");
     }
 
-    private void resetDirection(Event event){
-        directionRepository.findAll().forEach(d -> {
-            if(d.getEvent() == event){
-                directionRepository.delete(d);
-            }
-        });
-    }
 
     @Override
-    public boolean deleteById(Long id){
-        directionRepository.deleteById(id);
-        return true;
+    public Message delete(Long eventId) {
+        var event = offlineEventService.getById(eventId);
+        this.resetDirection(event);
+        offlineEventService.addLocationToEvent(null, event);
+        return new Message("Direction deleted!");
+    }
+
+    private void resetDirection(OfflineEvent event){
+        var eventDirections = directionRepository.findByEventId(event.getId());
+        directionRepository.deleteAll(eventDirections);
     }
 
 

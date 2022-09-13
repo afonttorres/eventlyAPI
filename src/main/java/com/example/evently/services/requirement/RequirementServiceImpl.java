@@ -6,9 +6,9 @@ import com.example.evently.dto.requirement.RequirementReq;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.models.Requirement;
-import com.example.evently.models.User;
+import com.example.evently.models.user.User;
 import com.example.evently.repositories.RequirementRepository;
-import com.example.evently.services.event.EventService;
+import com.example.evently.services.event.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,12 +50,12 @@ public class RequirementServiceImpl implements RequirementService{
     }
 
     @Override
-    public Message create(RequirementReq req) {
-        if(requirementRepository.findByNameInEvent(req.getEventId(), req.getName()).stream().findAny().isPresent())
-            throw new BadReqEx("Requirement already exists!", "R-001");
-        var event = eventService.getCompleteEventById(req.getEventId());
+    public Message create(Long eventId, RequirementReq req) {
+        var event = eventService.getCompleteEventById(eventId);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can add requirements!", "R-003");
+        if(requirementRepository.findByNameInEvent(eventId, req.getName()).stream().findAny().isPresent())
+            throw new BadReqEx("Requirement already exists!", "R-001");
         var requirement = new Requirement();
         requirement.setName(req.getName());
         requirement.setEvent(event);
@@ -70,8 +70,8 @@ public class RequirementServiceImpl implements RequirementService{
     }
 
     @Override
-    public Message delete(RequirementReq req) {
-        var event = eventService.getCompleteEventById(req.getEventId());
+    public Message delete(Long eventId, RequirementReq req) {
+        var event = eventService.getCompleteEventById(eventId);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can delete a requirement!", "R-004");
         var requirement = requirementRepository.findByNameInEvent(event.getId(), req.getName())
@@ -80,6 +80,6 @@ public class RequirementServiceImpl implements RequirementService{
         if(requirement.isEmpty())
             throw new NotFoundEx("Requirement Not Found", "R-404");
         requirementRepository.delete(requirement.get());
-        return new Message("Requirement deleted!");
+        return new Message("Requirement "+req.getName()+" deleted!");
     }
 }

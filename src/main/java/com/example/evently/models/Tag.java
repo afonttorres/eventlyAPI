@@ -22,6 +22,7 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @JsonIgnore
     private Long id;
 
     @NotBlank

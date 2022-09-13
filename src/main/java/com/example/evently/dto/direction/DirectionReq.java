@@ -19,6 +19,4 @@ public class DirectionReq {
     String street;
     String building;
     String door;
-    @NotBlank
-    Long eventId;
 }

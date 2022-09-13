@@ -6,7 +6,7 @@ import com.example.evently.dto.tag.TagReq;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.models.Tag;
 import com.example.evently.repositories.TagRepository;
-import com.example.evently.services.event.EventService;
+import com.example.evently.services.event.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

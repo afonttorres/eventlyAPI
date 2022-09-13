@@ -1,5 +1,6 @@
 package com.example.evently.models;
 
+import com.example.evently.models.event.Event;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package com.example.evently.models;
 
+import com.example.evently.models.event.OnlineEvent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +8,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class WebUrl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +23,5 @@ public class WebUrl {
     @OneToOne
     @JoinColumn(name = "event_id")
     @JsonIgnore
-    Event event;
+    OnlineEvent event;
 }

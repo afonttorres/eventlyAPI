@@ -5,14 +5,10 @@ import com.example.evently.dto.event.req.EventJsonReq;
 import com.example.evently.dto.event.req.EventReq;
 import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
-import com.example.evently.mappers.ImageMapper;
-import com.example.evently.mappers.RequirementMapper;
-import com.example.evently.mappers.TagMapper;
-import com.example.evently.mappers.UserMapper;
-import com.example.evently.models.Event;
+import com.example.evently.models.event.Event;
 import com.example.evently.models.Tag;
 import com.example.evently.models.Type;
-import com.example.evently.models.User;
+import com.example.evently.models.user.User;
 import lombok.Data;
 
 import java.text.SimpleDateFormat;

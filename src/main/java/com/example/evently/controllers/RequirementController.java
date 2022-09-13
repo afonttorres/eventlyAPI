@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class RequirementController {
 
     RequirementService requirementService;
@@ -39,15 +40,15 @@ public class RequirementController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping("/requirements")
-    public ResponseEntity<Message> create(@RequestBody RequirementReq req){
-        return new ResponseEntity<>(requirementService.create(req), HttpStatus.OK);
+    @PostMapping("events/{id}/requirements")
+    public ResponseEntity<Message> create(@PathVariable Long id, @RequestBody RequirementReq req){
+        return new ResponseEntity<>(requirementService.create(id, req), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @DeleteMapping("/requirements")
-    public ResponseEntity<Message> delete(@RequestBody RequirementReq req){
-        return new ResponseEntity<>(requirementService.delete(req), HttpStatus.OK);
+    @DeleteMapping("events/{id}/requirements")
+    public ResponseEntity<Message> delete(@PathVariable Long id, @RequestBody RequirementReq req){
+        return new ResponseEntity<>(requirementService.delete(id, req), HttpStatus.OK);
     }
 
 }
