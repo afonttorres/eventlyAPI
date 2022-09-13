@@ -50,12 +50,12 @@ public class RequirementServiceImpl implements RequirementService{
     }
 
     @Override
-    public Message create(RequirementReq req) {
-        if(requirementRepository.findByNameInEvent(req.getEventId(), req.getName()).stream().findAny().isPresent())
-            throw new BadReqEx("Requirement already exists!", "R-001");
-        var event = eventService.getCompleteEventById(req.getEventId());
+    public Message create(Long eventId, RequirementReq req) {
+        var event = eventService.getCompleteEventById(eventId);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can add requirements!", "R-003");
+        if(requirementRepository.findByNameInEvent(eventId, req.getName()).stream().findAny().isPresent())
+            throw new BadReqEx("Requirement already exists!", "R-001");
         var requirement = new Requirement();
         requirement.setName(req.getName());
         requirement.setEvent(event);
@@ -70,8 +70,8 @@ public class RequirementServiceImpl implements RequirementService{
     }
 
     @Override
-    public Message delete(RequirementReq req) {
-        var event = eventService.getCompleteEventById(req.getEventId());
+    public Message delete(Long eventId, RequirementReq req) {
+        var event = eventService.getCompleteEventById(eventId);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can delete a requirement!", "R-004");
         var requirement = requirementRepository.findByNameInEvent(event.getId(), req.getName())

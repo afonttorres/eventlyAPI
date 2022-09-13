@@ -40,8 +40,11 @@ public class ImageController {
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
+    //getByEventId?
+
     @PostMapping("/events/{id}/images")
     public ResponseEntity<ImageRes> upload(@RequestParam MultipartFile multipartFile, @PathVariable Long id) throws IOException {
+        System.out.println(multipartFile+" "+id);
         return new ResponseEntity<>(imageService.upload(multipartFile, id), HttpStatus.OK);
     }
 

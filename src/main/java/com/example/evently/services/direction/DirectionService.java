@@ -11,7 +11,11 @@ public interface DirectionService {
 
     Direction getById(Long id);
 
+    Direction getByEventId(Long id);
+
     Message create(Long eventId, DirectionReq req);
 
     Message delete(Long eventId);
+
+
 }

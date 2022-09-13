@@ -17,6 +17,7 @@ import javax.persistence.*;
 public class Direction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     @Column(name = "id", nullable = false)
     private Long id;
 

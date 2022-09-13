@@ -30,7 +30,7 @@ public class EventMapper {
 //        res.setRequirements(event.getRequirements());
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
-        res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
+        res.setDate(new SimpleDateFormat("dd-MM-yyyy").format(event.getDate()));
         res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
         res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
         res.setParticipants(event.getParticipants());
@@ -49,7 +49,7 @@ public class EventMapper {
 //        res.setRequirements(event.getRequirements());
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
-        res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
+        res.setDate(new SimpleDateFormat("dd-MM-yyyy").format(event.getDate()));
         res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
         res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
         res.setType(event.getType().toString());
@@ -69,7 +69,7 @@ public class EventMapper {
 //        res.setRequirements(event.getRequirements());
         res.setTags(new TagMapper().mapMultTagsToStringArr(event.getTags()));
         res.setRequirements(new RequirementMapper().mapMultRequirementsToStringArr(event.getRequirements()));
-        res.setDate(new SimpleDateFormat("dd-M-yyyy").format(event.getDate()));
+        res.setDate(new SimpleDateFormat("dd-MM-yyyy").format(event.getDate()));
         res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
         res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
         res.setType(event.getType().toString());

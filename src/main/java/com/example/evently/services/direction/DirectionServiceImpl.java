@@ -52,6 +52,15 @@ public class DirectionServiceImpl implements DirectionService{
     }
 
     @Override
+    public Direction getByEventId(Long id){
+        var event = offlineEventService.getById(id);
+        var direction = directionRepository.findByEventId(id).stream().findAny();
+        if(direction.isEmpty())
+            throw new NotFoundEx("Direction not found", "D-404");
+        return direction.get();
+    }
+
+    @Override
     public Message create(Long eventId, DirectionReq req) {
         var event = offlineEventService.getById(eventId);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
@@ -76,10 +85,7 @@ public class DirectionServiceImpl implements DirectionService{
     }
 
     private void resetDirection(OfflineEvent event){
-        var eventDirections = directionRepository.findAll()
-                .stream()
-                .filter(dir -> dir.getEvent() == event)
-                .collect(Collectors.toList());
+        var eventDirections = directionRepository.findByEventId(event.getId());
         directionRepository.deleteAll(eventDirections);
     }
 

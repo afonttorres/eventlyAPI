@@ -9,8 +9,8 @@ import java.util.List;
 public interface RequirementService {
     List<Requirement> getAll();
     Requirement getById(Long id);
-    Message create(RequirementReq req);
+    Message create(Long eventId, RequirementReq req);
     List<Requirement> getByEventId(Long id);
 
-    Message delete(RequirementReq req);
+    Message delete(Long eventId, RequirementReq req);
 }

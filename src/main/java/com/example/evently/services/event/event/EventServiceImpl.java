@@ -99,6 +99,7 @@ public class EventServiceImpl implements EventService {
             System.out.println("EVENT MODIFIED EMAIL");
             return newEvent;
         }
+        System.out.println(req);
         var updated = new EventMapper().mapReqToExistingEvent(req, event);
         eventRepository.save(updated);
         //email to notify modification

@@ -25,13 +25,13 @@ public class TagController {
     }
 
     @GetMapping("/tags")
-    ResponseEntity<List<Tag>> getCategories(){
+    ResponseEntity<List<Tag>> getTags(){
         return new ResponseEntity<>(tagService.getAll(), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/tags/{id}")
-    ResponseEntity<Tag> getCategory(@PathVariable Long id){
+    ResponseEntity<Tag> getTag(@PathVariable Long id){
         return new ResponseEntity<>(tagService.getById(id), HttpStatus.OK);
     }
 
