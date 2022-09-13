@@ -7,7 +7,6 @@ import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.event.EventMapper;
-import com.example.evently.mappers.event.OnlineEventMapper;
 import com.example.evently.models.Tag;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.user.User;
@@ -26,8 +25,6 @@ import java.util.stream.Collectors;
 public class EventServiceImpl implements EventService {
 
     EventRepository eventRepository;
-//    TagService tagService;
-//    EventTypeRepository typeRepository;
     OfflineEventService offlineService;
     OnlineEventService onlineService;
     AuthFacade authFacade;
@@ -37,7 +34,6 @@ public class EventServiceImpl implements EventService {
                             AuthFacade authFacade,
                             OnlineEventService onlineService,
                             OfflineEventService offlineService
-//                            EventTypeRepository typeRepository
     ) {
         this.eventRepository = eventRepository;
         this.authFacade = authFacade;
