@@ -36,6 +36,7 @@ public class RequirementServiceImpl implements RequirementService{
         if(auth.isEmpty()) throw new NotFoundEx("User Not Found", "U-404");
         return auth.get();
     }
+
     @Override
     public List<Requirement> getAll() {
         return requirementRepository.findAll();

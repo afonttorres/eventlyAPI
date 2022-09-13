@@ -40,7 +40,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag create(TagReq req) {
         if(tagRepository.findAll().stream().filter(t-> t.getName().equals(req.getName())).findFirst().isPresent()){
-            return tagRepository.findAll().stream().filter(t-> t.getName().equals(req.getName())).findFirst().get();
+            return tagRepository.findAll().stream().filter(t-> t.getName().toLowerCase().equals(req.getName().toLowerCase())).findFirst().get();
         }
         return tagRepository.save(new Tag(req.getName()));
     }
