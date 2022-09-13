@@ -24,7 +24,7 @@ public class EventRes {
     private String[] tags;
     private String[] requirements;
     private String type;
-    private List<Participation> participants;
+    private List<Participation> participants; //fuera
     private int participantsCount;
     private String[] images;
     private String location = "provisional";

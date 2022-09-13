@@ -6,7 +6,6 @@ import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.mappers.event.OfflineEventMapper;
-import com.example.evently.mappers.event.OnlineEventMapper;
 import com.example.evently.models.Direction;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.event.OfflineEvent;

@@ -23,12 +23,11 @@ public class Participation {
 
     @ManyToOne
     @JoinColumn(name = "participant_id")
-    @JsonSerialize
+    @JsonIgnore
     private User participant;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
     @JsonIgnore
-    @JsonSerialize
     private Event event;
 }

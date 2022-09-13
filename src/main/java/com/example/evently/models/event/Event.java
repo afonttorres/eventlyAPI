@@ -62,7 +62,7 @@ public abstract class Event {
     private List<Image> images;
 
     @OneToMany(mappedBy = "event")
-    @JsonSerialize
+    @JsonIgnore
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Participation> participants = new ArrayList<>();
 
