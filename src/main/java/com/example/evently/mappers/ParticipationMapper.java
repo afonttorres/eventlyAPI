@@ -22,7 +22,7 @@ public class ParticipationMapper {
     public ParticipationRes mapParticipationToRes(Participation participation){
         var res = new ParticipationRes();
         res.setId(participation.getId());
-        res.setEvent(new EventMapper().mapEventToRes(participation.getEvent()));
+        res.setEvent(new EventMapper().mapEventToNestedEvent(participation.getEvent()));
         res.setParticipant(new UserMapper().mapUserToNestedUser(participation.getParticipant()));
         return res;
     }

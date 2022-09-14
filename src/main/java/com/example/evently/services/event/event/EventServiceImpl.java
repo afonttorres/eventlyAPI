@@ -53,7 +53,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventRes> getAll() {
-        return new EventMapper().mapMultipleEventsToRes(eventRepository.findAll());
+        var auth = authFacade.getAuthUser();
+        if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findAll());
+        return new EventMapper().mapMultipleEventsToRes(eventRepository.findAll(), auth.get());
     }
 
     @Override
@@ -125,6 +127,13 @@ public class EventServiceImpl implements EventService {
         event.getTags().remove(tag);
         return eventRepository.save(event);
     }
+
+    @Override
+    public List<EventRes> getUserJoinedEvents() {
+        var auth = this.getAuth();
+        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByParticipantId(auth.getId()), auth);
+    }
+
 
     private void validateType(String type){
         if(type == null) throw new BadReqEx("Type can't be empty!", "T-001");

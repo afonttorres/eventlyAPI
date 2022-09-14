@@ -24,5 +24,6 @@ public class EventRes {
     private String type;
     private int participantsCount;
     private String[] images;
-    private String location = "provisional";
+    private String location = "";
+    private boolean isParticipant = false;
 }
