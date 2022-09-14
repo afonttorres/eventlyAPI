@@ -57,7 +57,6 @@ public class DataSeed {
 
     @PostConstruct
     public void addData(){
-//        new EventTypeInitializer(this.typeRepository).setEventTypes();
         this.createUsers();
         this.createEvents();
     }

@@ -1,5 +1,6 @@
 package com.example.evently.services.participation;
 
+import com.example.evently.dto.output.Message;
 import com.example.evently.dto.participation.ParticipationRes;
 import com.example.evently.models.Participation;
 
@@ -9,4 +10,10 @@ public interface ParticipationService {
     ParticipationRes create(Long id);
 
     List<ParticipationRes> getAll();
+
+    ParticipationRes getById(Long id);
+
+    List<ParticipationRes> getByEventId(Long id);
+
+    Message delete(Long id);
 }

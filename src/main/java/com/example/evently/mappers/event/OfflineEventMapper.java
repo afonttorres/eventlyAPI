@@ -3,6 +3,7 @@ package com.example.evently.mappers.event;
 import com.example.evently.dto.event.req.EventJsonReq;
 import com.example.evently.dto.event.req.EventReq;
 import com.example.evently.dto.event.req.EventReqUpdate;
+import com.example.evently.mappers.DateMapper;
 import com.example.evently.models.*;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.event.OfflineEvent;
@@ -15,7 +16,7 @@ public class OfflineEventMapper {
         var event = new OfflineEvent();
         event.setTitle(eventReq.getTitle());
         event.setDescription(eventReq.getDescription());
-        event.setDate(eventReq.getDate());
+        event.setDate(new DateMapper().convertLocalDateTimeToDate(eventReq.getDate()));
         event.setPublisher(auth);
         return event;
     }
@@ -35,7 +36,7 @@ public class OfflineEventMapper {
         offline.setId(event.getId());
         offline.setTitle(req.getTitle());
         offline.setDescription(req.getDescription());
-        offline.setDate(req.getDate());
+        offline.setDate(new DateMapper().convertLocalDateTimeToDate(req.getDate()));
         offline.setTags(event.getTags());
         offline.setPublisher(event.getPublisher());
         return offline;

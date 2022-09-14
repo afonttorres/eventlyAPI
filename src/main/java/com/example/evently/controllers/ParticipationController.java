@@ -1,5 +1,6 @@
 package com.example.evently.controllers;
 
+import com.example.evently.dto.output.Message;
 import com.example.evently.dto.participation.ParticipationRes;
 import com.example.evently.models.Participation;
 import com.example.evently.services.participation.ParticipationService;
@@ -27,8 +28,23 @@ public class ParticipationController {
         return new ResponseEntity<>(participationService.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/participations/{id}")
+    ResponseEntity<ParticipationRes> getById(@PathVariable Long id){
+        return new ResponseEntity<>(participationService.getById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/events/{id}/participations")
+    ResponseEntity<List<ParticipationRes>> getByEventId(@PathVariable Long id){
+        return new ResponseEntity<>(participationService.getByEventId(id), HttpStatus.OK);
+    }
+
     @PostMapping("/events/{id}/participations")
     ResponseEntity<ParticipationRes> create(@PathVariable Long id){
         return new ResponseEntity<>(participationService.create(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/participations/{id}")
+    ResponseEntity<Message> delete(@PathVariable Long id){
+        return new ResponseEntity<>(participationService.delete(id), HttpStatus.OK);
     }
 }

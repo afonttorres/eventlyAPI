@@ -34,6 +34,7 @@ dependencies {
 	implementation 'org.json:json:20220320'
 	// https://mavenlibs.com/maven/dependency/com.cloudinary/cloudinary-http44
 	implementation group: 'com.cloudinary', name: 'cloudinary-http44', version: '1.32.0'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 }
 
 tasks.named('test') {
