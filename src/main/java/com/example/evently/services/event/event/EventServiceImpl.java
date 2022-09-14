@@ -13,6 +13,7 @@ import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
 import com.example.evently.services.event.offline.OfflineEventService;
 import com.example.evently.services.event.online.OnlineEventService;
+import com.example.evently.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,22 +30,57 @@ public class EventServiceImpl implements EventService {
     OnlineEventService onlineService;
     AuthFacade authFacade;
 
+    UserService userService;
+
     @Autowired
     public EventServiceImpl(EventRepository eventRepository,
                             AuthFacade authFacade,
                             OnlineEventService onlineService,
-                            OfflineEventService offlineService
+                            OfflineEventService offlineService,
+                            UserService userService
     ) {
         this.eventRepository = eventRepository;
         this.authFacade = authFacade;
         this.onlineService = onlineService;
         this.offlineService = offlineService;
+        this.userService = userService;
     }
 
     private User getAuth(){
         Optional<User> auth = authFacade.getAuthUser();
         if(auth.isEmpty()) throw new NotFoundEx("User Not Found", "U-404");
         return auth.get();
+    }
+
+    @Override
+    public Event getCompleteEventById(Long id){
+        var event = eventRepository.findById(id);
+        if(event.isEmpty()) throw new NotFoundEx("Event Not Found", "E-404");
+        return event.get();
+    }
+
+    @Override
+    public List<Event> getUserJoinedEvents(User auth){
+        return eventRepository.findByParticipantId(auth.getId());
+    }
+
+    private void validateType(String type){
+        if(type == null) throw new BadReqEx("Type can't be empty!", "T-001");
+        if(!type.equals("offline") && !type.equals("online")) throw new BadReqEx("Wrong type!", "T-002");
+    }
+
+    private EventRes assingType(EventReq req, User auth){
+        this.validateType(req.getType());
+        if(req.getType().equals("online")) return onlineService.create(req, auth);
+        return offlineService.create(req, auth);
+    }
+
+    private EventRes changeType(EventReqUpdate req, Event event){
+        this.validateType(req.getType());
+        if(req.getType().equals("online")){
+            return onlineService.createFromOfflineEvent(req, event);
+        }
+        return offlineService.createFromOnlineEvent(req, event);
     }
 
 
@@ -58,14 +94,10 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventRes getEventById(Long id) {
         var event = eventRepository.findById(id);
+        var auth = authFacade.getAuthUser();
         if(event.isEmpty()) throw new NotFoundEx("Event Not Found", "E-404");
-        return new EventMapper().mapEventToRes(event.get());
-    }
-
-    public Event getCompleteEventById(Long id){
-        var event = eventRepository.findById(id);
-        if(event.isEmpty()) throw new NotFoundEx("Event Not Found", "E-404");
-        return event.get();
+        if(auth.isEmpty()) return new EventMapper().mapEventToRes(event.get());
+        return new EventMapper().mapEventToRes(event.get(), auth.get());
     }
 
     @Override
@@ -128,26 +160,21 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventRes> getUserJoinedEvents() {
         var auth = this.getAuth();
-        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByParticipantId(auth.getId()), auth);
+        return new EventMapper().mapMultipleEventsToRes(this.getUserJoinedEvents(auth), auth);
     }
 
-
-    private void validateType(String type){
-        if(type == null) throw new BadReqEx("Type can't be empty!", "T-001");
-        if(!type.equals("offline") && !type.equals("online")) throw new BadReqEx("Wrong type!", "T-002");
+    @Override
+    public List<EventRes> getAuthPublishedEvents() {
+        var auth = this.getAuth();
+        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByPublisherId(auth.getId()), auth);
     }
 
-    private EventRes assingType(EventReq req, User auth){
-        this.validateType(req.getType());
-        if(req.getType().equals("online")) return onlineService.create(req, auth);
-        return offlineService.create(req, auth);
+    @Override
+    public List<EventRes> getUserPublishedEvents(Long id) {
+        var user = userService.getById(id);
+        var auth = authFacade.getAuthUser();
+        if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByPublisherId(id));
+        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByPublisherId(id), auth.get());
     }
 
-    private EventRes changeType(EventReqUpdate req, Event event){
-        this.validateType(req.getType());
-        if(req.getType().equals("online")){
-            return onlineService.createFromOfflineEvent(req, event);
-        }
-        return offlineService.createFromOnlineEvent(req, event);
-    }
 }
