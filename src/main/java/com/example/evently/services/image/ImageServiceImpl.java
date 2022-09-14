@@ -77,7 +77,8 @@ public class ImageServiceImpl implements ImageService{
         var event = eventService.getCompleteEventById(id);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can upload images!", "I-001");
-        //if event has more than x pictures throw exception & make user delete one
+        if(event.getImages().size() >= 4)
+            throw new BadReqEx("Event allows just 4 images! Please, delete one before uploading a new one.", "I-003");
         BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
         if(bufferedImage == null) throw new BadReqEx("Invalid Image", "I-002");
         Map result = cloudinaryService.upload(multipartFile);
