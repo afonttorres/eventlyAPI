@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ParticipationServiceImpl implements ParticipationService{
@@ -41,6 +42,30 @@ public class ParticipationServiceImpl implements ParticipationService{
         return participation.get();
     }
 
+    @Override
+    public List<ParticipationRes> getAll(){
+        return new ParticipationMapper().mapMultParticipationsToResList(participationRepository.findAll());
+    }
+
+    @Override
+    public ParticipationRes getById(Long id) {
+        var participation = this.getCompleteParticipation(id);
+        return new ParticipationMapper().mapParticipationToRes(participation);
+    }
+
+    @Override
+    public List<ParticipationRes> findByParticipantId(Long id) {
+        return new ParticipationMapper().mapMultParticipationsToResList(participationRepository.findByParticipantId(id));
+    }
+
+    @Override
+    public Message delete(Long id) {
+        var participation = this.getCompleteParticipation(id);
+        if(participation.getParticipant() != this.getAuth() && !authFacade.isAdmin())
+            throw new BadReqEx("Only participants can unjoin events", "P-002");
+        participationRepository.delete(participation);
+        return new Message(participation.getParticipant().getCompleteName()+" unjoined "+participation.getEvent().getTitle()+".");
+    }
 
 
     @Override
@@ -55,33 +80,22 @@ public class ParticipationServiceImpl implements ParticipationService{
     }
 
     @Override
-    public List<ParticipationRes> getAll(){
-        return new ParticipationMapper().mapMultParticipationsToResList(participationRepository.findAll());
-    }
-
-
-
-    @Override
-    public ParticipationRes getById(Long id) {
-        var participation = this.getCompleteParticipation(id);
-        return new ParticipationMapper().mapParticipationToRes(participation);
-    }
-
-    @Override
     public List<ParticipationRes> getByEventId(Long id) {
+        var event = eventService.getCompleteEventById(id);
         return new ParticipationMapper().mapMultParticipationsToResList(participationRepository.findByEventId(id));
     }
 
     @Override
-    public List<ParticipationRes> findByParticipantId(Long id) {
-        return new ParticipationMapper().mapMultParticipationsToResList(participationRepository.findByParticipantId(id));
-    }
-
-    @Override
-    public Message delete(Long id) {
-        var participation = this.getCompleteParticipation(id);
-        if(participation.getParticipant() != this.getAuth() && !authFacade.isAdmin())
-            throw new BadReqEx("Only participants can decide if stop participating", "P-002");
-        return new Message("You are no longer participating in "+participation.getEvent().getTitle()+".");
+    public Message unjoin(Long id) {
+        var auth = this.getAuth();
+        var event = eventService.getCompleteEventById(id);
+        var joined = participationRepository.findByParticipantId(auth.getId())
+                .stream()
+                .filter(p-> p.getEvent() == event)
+                .findFirst();
+        if(joined.isEmpty())
+            throw new NotFoundEx("Participation not found", "P-404");
+        participationRepository.delete(joined.get());
+        return new Message("You've just unjoined "+event.getTitle()+"!");
     }
 }

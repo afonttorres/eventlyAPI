@@ -16,6 +16,5 @@ public interface ParticipationService {
     List<ParticipationRes> getByEventId(Long id);
     List<ParticipationRes> findByParticipantId(Long id);
     Message delete(Long id);
-
-
+    Message unjoin(Long id);
 }

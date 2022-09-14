@@ -57,4 +57,15 @@ public class EventController {
     ResponseEntity<List<EventRes>> getUserJoinedEvents(){
         return new ResponseEntity<>(eventService.getUserJoinedEvents(), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/published-events")
+    ResponseEntity<List<EventRes>> getAuthPublishedEvents(){
+        return new ResponseEntity<>(eventService.getAuthPublishedEvents(), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{id}/events")
+    ResponseEntity<List<EventRes>> getUserPublishedEvents(@PathVariable Long id){
+        return new ResponseEntity<>(eventService.getUserPublishedEvents(id), HttpStatus.OK);
+    }
 }

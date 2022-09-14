@@ -5,6 +5,7 @@ import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.models.Tag;
 import com.example.evently.models.event.Event;
+import com.example.evently.models.user.User;
 
 import java.util.List;
 
@@ -14,15 +15,13 @@ public interface EventService {
     List<EventRes> getAll();
     EventRes getEventById(Long id);
     Event getCompleteEventById(Long id);
-
     EventRes create(EventReq eventReq);
-
+    EventRes update(Long id, EventReqUpdate eventReq);
     EventRes delete(Long id);
-
     Event setEventTags(Long id, List<Tag> tags);
     Event deleteEventTag(Long id, Tag tag);
-
-    EventRes update(Long id, EventReqUpdate eventReq);
-
     List<EventRes> getUserJoinedEvents();
+    List<Event> getUserJoinedEvents(User auth);
+    List<EventRes>  getAuthPublishedEvents();
+    List<EventRes> getUserPublishedEvents(Long id);
 }
