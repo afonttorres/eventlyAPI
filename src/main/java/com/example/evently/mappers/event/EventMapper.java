@@ -28,7 +28,6 @@ public class EventMapper {
         res.setDate(new SimpleDateFormat("dd-MM-yyyy").format(event.getDate()));
         res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
         res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
-        res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
         res.setLocation(this.defineLocation(event));
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
@@ -46,7 +45,6 @@ public class EventMapper {
         res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
         res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
         res.setType(event.getType().toString());
-        res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));
         res.setLocation(this.defineDirection(event));
@@ -64,7 +62,6 @@ public class EventMapper {
         res.setHour(new SimpleDateFormat("HH:mm").format(event.getDate().getTime()));
         res.setImages(new ImageMapper().mapImagesToArray(event.getImages()));
         res.setType(event.getType().toString());
-        res.setParticipants(event.getParticipants());
         res.setParticipantsCount(event.participantsCount());
         res.setLocation(this.defineWeb(event));
         res.setPublisher(new UserMapper().mapUserToNestedUser(event.getPublisher()));

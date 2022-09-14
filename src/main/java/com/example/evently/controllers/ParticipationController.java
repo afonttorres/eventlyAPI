@@ -39,7 +39,7 @@ public class ParticipationController {
     }
 
     @PostMapping("/events/{id}/participations")
-    ResponseEntity<ParticipationRes> create(@PathVariable Long id){
+    ResponseEntity<Message> create(@PathVariable Long id){
         return new ResponseEntity<>(participationService.create(id), HttpStatus.OK);
     }
 

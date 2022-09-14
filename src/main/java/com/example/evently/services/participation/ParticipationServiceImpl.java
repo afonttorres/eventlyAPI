@@ -44,14 +44,14 @@ public class ParticipationServiceImpl implements ParticipationService{
 
 
     @Override
-    public ParticipationRes create(Long id) {
+    public Message create(Long id) {
         var auth = this.getAuth();
         var event = eventService.getCompleteEventById(id);
         if(event.isParticipant(auth))
             throw new BadReqEx("Already participating!", "P-001");
         var part = new ParticipationMapper().mapReqToParticipation(event, auth);
         participationRepository.save(part);
-        return new ParticipationMapper().mapParticipationToRes(part);
+        return new Message("You've just joined "+event.getTitle()+"!");
     }
 
     @Override

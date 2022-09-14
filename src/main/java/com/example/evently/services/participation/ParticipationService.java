@@ -7,7 +7,7 @@ import com.example.evently.models.Participation;
 import java.util.List;
 
 public interface ParticipationService {
-    ParticipationRes create(Long id);
+    Message create(Long id);
 
     List<ParticipationRes> getAll();
 
