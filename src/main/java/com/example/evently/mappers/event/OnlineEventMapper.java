@@ -3,6 +3,7 @@ package com.example.evently.mappers.event;
 import com.example.evently.dto.event.req.EventJsonReq;
 import com.example.evently.dto.event.req.EventReq;
 import com.example.evently.dto.event.req.EventReqUpdate;
+import com.example.evently.mappers.DateMapper;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.Tag;
@@ -15,7 +16,7 @@ public class OnlineEventMapper {
         var event = new OnlineEvent();
         event.setTitle(eventReq.getTitle());
         event.setDescription(eventReq.getDescription());
-        event.setDate(eventReq.getDate());
+        event.setDate(new DateMapper().convertLocalDateTimeToDate(eventReq.getDate()));
         event.setPublisher(auth);
         return event;
     }
@@ -35,7 +36,7 @@ public class OnlineEventMapper {
         online.setId(event.getId());
         online.setTitle(req.getTitle());
         online.setDescription(req.getDescription());
-        online.setDate(req.getDate());
+        online.setDate(new DateMapper().convertLocalDateTimeToDate(req.getDate()));
         online.setTags(event.getTags());
         online.setPublisher(event.getPublisher());
         return online;
