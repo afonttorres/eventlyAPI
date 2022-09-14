@@ -13,4 +13,10 @@ public interface ParticipationRepository extends JpaRepository<Participation, Lo
     @Query("select p from Participation p where upper(p.event.id) = upper(:id)")
     List<Participation> findByEventId(@Param("id") Long id);
 
+    @Query("select p from Participation p where p.participant.id = :id")
+    List<Participation> findByParticipantId(@Param("id") Long id);
+
+
+
+
 }

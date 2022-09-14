@@ -23,4 +23,6 @@ public interface EventService {
     Event deleteEventTag(Long id, Tag tag);
 
     EventRes update(Long id, EventReqUpdate eventReq);
+
+    List<EventRes> getUserJoinedEvents();
 }

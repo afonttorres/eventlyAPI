@@ -73,6 +73,11 @@ public class ParticipationServiceImpl implements ParticipationService{
     }
 
     @Override
+    public List<ParticipationRes> findByParticipantId(Long id) {
+        return new ParticipationMapper().mapMultParticipationsToResList(participationRepository.findByParticipantId(id));
+    }
+
+    @Override
     public Message delete(Long id) {
         var participation = this.getCompleteParticipation(id);
         if(participation.getParticipant() != this.getAuth() && !authFacade.isAdmin())

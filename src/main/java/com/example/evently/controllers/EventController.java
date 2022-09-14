@@ -51,4 +51,10 @@ public class EventController {
     ResponseEntity<EventRes> update(@PathVariable Long id, @RequestBody EventReqUpdate eventReq){
         return new ResponseEntity<>(eventService.update(id, eventReq), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/joined-events")
+    ResponseEntity<List<EventRes>> getUserJoinedEvents(){
+        return new ResponseEntity<>(eventService.getUserJoinedEvents(), HttpStatus.OK);
+    }
 }

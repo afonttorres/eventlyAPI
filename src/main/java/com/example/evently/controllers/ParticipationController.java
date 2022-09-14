@@ -38,6 +38,11 @@ public class ParticipationController {
         return new ResponseEntity<>(participationService.getByEventId(id), HttpStatus.OK);
     }
 
+    @GetMapping("/users/{id}/participations")
+    ResponseEntity<List<ParticipationRes>> getByUserId(@PathVariable Long id){
+        return new ResponseEntity<>(participationService.findByParticipantId(id), HttpStatus.OK);
+    }
+
     @PostMapping("/events/{id}/participations")
     ResponseEntity<Message> create(@PathVariable Long id){
         return new ResponseEntity<>(participationService.create(id), HttpStatus.OK);
