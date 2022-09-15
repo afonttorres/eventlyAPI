@@ -60,7 +60,6 @@ public class EventServiceImpl implements EventService {
         if(event.isEmpty()) throw new NotFoundEx("Event Not Found", "E-404");
         return event.get();
     }
-
     @Override
     public List<Event> getUserJoinedEvents(User auth){
         return eventRepository.findByParticipantId(auth.getId());

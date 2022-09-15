@@ -14,18 +14,19 @@ public interface EventService {
 
     List<EventRes> getAll();
     EventRes getEventById(Long id);
-    Event getCompleteEventById(Long id);
     EventRes create(EventReq eventReq);
     EventRes update(Long id, EventReqUpdate eventReq);
     EventRes delete(Long id);
     Event setEventTags(Long id, List<Tag> tags);
     Event deleteEventTag(Long id, Tag tag);
     List<EventRes> getUserJoinedEvents();
-    List<Event> getUserJoinedEvents(User auth);
     List<EventRes>  getAuthPublishedEvents();
     List<EventRes> getUserPublishedEvents(Long id);
-
     List<EventRes> getByTag(String tag);
-
     List<EventRes> getByType(String type);
+
+
+
+    Event getCompleteEventById(Long id);
+    List<Event> getUserJoinedEvents(User auth);
 }

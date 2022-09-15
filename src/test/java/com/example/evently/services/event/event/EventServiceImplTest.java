@@ -1,13 +1,20 @@
 package com.example.evently.services.event.event;
 
+import com.example.evently.repositories.event.EventRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class EventServiceImplTest {
 
+    @Mock
+    EventRepository eventRepository;
+
     @Test
-    void getCompleteEventById() {
+    void getCompleteEventByIdShouldReturnACompleteEvent() {
     }
 
     @Test

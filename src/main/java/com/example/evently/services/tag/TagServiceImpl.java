@@ -39,8 +39,8 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag create(TagReq req) {
-        if(tagRepository.findAll().stream().filter(t-> t.getName().equals(req.getName())).findFirst().isPresent()){
-            return tagRepository.findAll().stream().filter(t-> t.getName().toLowerCase().equals(req.getName().toLowerCase())).findFirst().get();
+        if(tagRepository.findByName(req.getName()).isPresent()){
+            return tagRepository.findByName(req.getName()).get();
         }
         return tagRepository.save(new Tag(req.getName()));
     }
@@ -56,10 +56,11 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Message delete(Long eventId, TagReq req) {
-        if(tagRepository.findByName(req.getName()).isEmpty())
+        var event = eventService.getCompleteEventById(eventId);
+        var tag = tagRepository.findByName(req.getName());
+        if(tag.isEmpty())
             throw new NotFoundEx("Tag Not Found", "T-404");
-        var tag = tagRepository.findByName(req.getName()).get();
-        eventService.deleteEventTag(eventId, tag);
+        eventService.deleteEventTag(eventId, tag.get());
         return new Message("Tag "+req.getName()+" deleted!");
     }
 

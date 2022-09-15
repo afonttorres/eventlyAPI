@@ -68,7 +68,6 @@ public class DirectionServiceImpl implements DirectionService{
         if(!event.getType().equals(Type.OFFLINE))
             throw new BadReqEx("Only offline events can have a direction", "D-002");
         var direction = new DirectionMapper().mapReqToDirection(req, event);
-        //comprovar si existeix open maps api
         this.resetDirection(event);
         directionRepository.save(direction);
         offlineEventService.addLocationToEvent(direction, event);
