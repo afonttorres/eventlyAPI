@@ -68,4 +68,16 @@ public class EventController {
     ResponseEntity<List<EventRes>> getUserPublishedEvents(@PathVariable Long id){
         return new ResponseEntity<>(eventService.getUserPublishedEvents(id), HttpStatus.OK);
     }
+
+//    events?search=${tag}
+    @GetMapping(value="/events", params ="tag")
+    ResponseEntity<List<EventRes>> getByTag(@RequestParam String tag){
+        return new ResponseEntity<>(eventService.getByTag(tag), HttpStatus.OK);
+    }
+
+//    events?search=${type}
+    @GetMapping(value="/events", params ="type")
+    ResponseEntity<List<EventRes>> getByType(@RequestParam String type){
+        return new ResponseEntity<>(eventService.getByType(type), HttpStatus.OK);
+    }
 }

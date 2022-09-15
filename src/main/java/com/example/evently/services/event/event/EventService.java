@@ -24,4 +24,8 @@ public interface EventService {
     List<Event> getUserJoinedEvents(User auth);
     List<EventRes>  getAuthPublishedEvents();
     List<EventRes> getUserPublishedEvents(Long id);
+
+    List<EventRes> getByTag(String tag);
+
+    List<EventRes> getByType(String type);
 }

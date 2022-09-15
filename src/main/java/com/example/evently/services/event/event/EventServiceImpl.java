@@ -6,8 +6,10 @@ import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
+import com.example.evently.mappers.TypeMapper;
 import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.models.Tag;
+import com.example.evently.models.Type;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
@@ -175,6 +177,21 @@ public class EventServiceImpl implements EventService {
         var auth = authFacade.getAuthUser();
         if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByPublisherId(id));
         return new EventMapper().mapMultipleEventsToRes(eventRepository.findByPublisherId(id), auth.get());
+    }
+
+    @Override
+    public List<EventRes> getByTag(String tag) {
+        var auth = authFacade.getAuthUser();
+        if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByTag(tag));
+        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByTag(tag), auth.get());
+    }
+
+    @Override
+    public List<EventRes> getByType(String type) {
+        var auth = authFacade.getAuthUser();
+        var search = new TypeMapper().stringToType(type);
+        if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByType(search));
+        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByType(search), auth.get());
     }
 
 }
