@@ -14,4 +14,5 @@ public class EventReq {
     private String description;
     private String type;
     private LocalDateTime date;
+
 }

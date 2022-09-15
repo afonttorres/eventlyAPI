@@ -37,7 +37,7 @@ public class EventMapper {
         return res;
     }
 
-    public EventRes mapEventToRes(Event event, User auth){
+    public EventRes mapEventToResAuth(Event event, User auth){
         var res = new EventRes();
         res.setId(event.getId());
         res.setTitle(event.getTitle());
@@ -110,9 +110,9 @@ public class EventMapper {
         return res;
     }
 
-    public List<EventRes> mapMultipleEventsToRes(List<Event> events, User auth){
+    public List<EventRes> mapMultipleEventsToResAuth(List<Event> events, User auth){
         List<EventRes> res = new ArrayList<>();
-        events.stream().forEach(e -> res.add(this.mapEventToRes(e, auth)));
+        events.stream().forEach(e -> res.add(this.mapEventToResAuth(e, auth)));
         return res;
     }
 

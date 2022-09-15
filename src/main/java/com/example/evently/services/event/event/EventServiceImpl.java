@@ -66,7 +66,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private void validateType(String type){
-        if(type == null ||type =="") throw new BadReqEx("Type can't be empty!", "T-001");
+        if(type == null ||type == "") throw new BadReqEx("Type can't be empty!", "T-001");
         if(!type.equals("offline") && !type.equals("online")) throw new BadReqEx("Wrong type!", "T-002");
     }
 
@@ -88,8 +88,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventRes> getAll() {
         var auth = authFacade.getAuthUser();
-        if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findAll());
-        return new EventMapper().mapMultipleEventsToRes(eventRepository.findAll(), auth.get());
+        var events = eventRepository.findAll();
+        if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(events);
+        return new EventMapper().mapMultipleEventsToResAuth(events, auth.get());
     }
 
     @Override
@@ -98,7 +99,7 @@ public class EventServiceImpl implements EventService {
         var auth = authFacade.getAuthUser();
         if(event.isEmpty()) throw new NotFoundEx("Event Not Found", "E-404");
         if(auth.isEmpty()) return new EventMapper().mapEventToRes(event.get());
-        return new EventMapper().mapEventToRes(event.get(), auth.get());
+        return new EventMapper().mapEventToResAuth(event.get(), auth.get());
     }
 
     @Override
@@ -154,20 +155,21 @@ public class EventServiceImpl implements EventService {
         var event = this.getCompleteEventById(id);
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher can add tags!", "T-002");
-        event.getTags().remove(tag);
+        var tags = event.getTags().stream().filter(t -> t!= tag).collect(Collectors.toList());
+        event.setTags(tags);
         return eventRepository.save(event);
     }
 
     @Override
     public List<EventRes> getUserJoinedEvents() {
         var auth = this.getAuth();
-        return new EventMapper().mapMultipleEventsToRes(this.getUserJoinedEvents(auth), auth);
+        return new EventMapper().mapMultipleEventsToResAuth(this.getUserJoinedEvents(auth), auth);
     }
 
     @Override
     public List<EventRes> getAuthPublishedEvents() {
         var auth = this.getAuth();
-        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByPublisherId(auth.getId()), auth);
+        return new EventMapper().mapMultipleEventsToResAuth(eventRepository.findByPublisherId(auth.getId()), auth);
     }
 
     @Override
@@ -175,7 +177,7 @@ public class EventServiceImpl implements EventService {
         var user = userService.getById(id);
         var auth = authFacade.getAuthUser();
         if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByPublisherId(id));
-        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByPublisherId(id), auth.get());
+        return new EventMapper().mapMultipleEventsToResAuth(eventRepository.findByPublisherId(id), auth.get());
     }
 
     @Override
@@ -184,7 +186,7 @@ public class EventServiceImpl implements EventService {
         if(tag.isEmpty() ||tag == null ||tag == "")
             throw new BadReqEx("Tag can't be empty!", "E-001");
         if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByTag(tag));
-        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByTag(tag), auth.get());
+        return new EventMapper().mapMultipleEventsToResAuth(eventRepository.findByTag(tag), auth.get());
     }
 
     @Override
@@ -193,7 +195,7 @@ public class EventServiceImpl implements EventService {
         this.validateType(type);
         var search = new TypeMapper().stringToType(type);
         if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByType(search));
-        return new EventMapper().mapMultipleEventsToRes(eventRepository.findByType(search), auth.get());
+        return new EventMapper().mapMultipleEventsToResAuth(eventRepository.findByType(search), auth.get());
     }
 
 }
