@@ -241,6 +241,38 @@ class EventServiceImplTest {
     }
 
     @Test
+    void updateShouldUpdateEventWhenTypeGoesFromOnToOff() {
+        Long id = 1L;
+        var event = new OfflineEvent();
+        event.setTitle("title1");
+        event.setDescription("desc1");
+        event.setDate(new Date());
+        event.setPublisher(this.auth);
+        Mockito.when(eventRepository.findById(any(Long.class))).thenReturn(Optional.of(events.get(0)));
+        Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.of(this.auth));
+        Mockito.when(offlineEventService.createFromOnlineEvent(offReqUp, events.get(0)))
+                .thenReturn(new EventMapper().mapEventToRes(event));
+        var sut = eventService.update(id, offReqUp);
+        assertThat(sut, equalTo(new EventMapper().mapEventToRes(event)));
+    }
+
+    @Test
+    void updateShouldUpdateEventWhenTypeGoesFromOffToOn() {
+        Long id = 2L;
+        var event = new OnlineEvent();
+        event.setTitle("title2");
+        event.setDescription("desc2");
+        event.setDate(new Date());
+        event.setPublisher(this.auth);
+        Mockito.when(eventRepository.findById(any(Long.class))).thenReturn(Optional.of(events.get(1)));
+        Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.of(this.auth));
+        Mockito.when(onlineEventService.createFromOfflineEvent(onReqUp, events.get(1)))
+                .thenReturn(new EventMapper().mapEventToRes(event));
+        var sut = eventService.update(id, onReqUp);
+        assertThat(sut, equalTo(new EventMapper().mapEventToRes(event)));
+    }
+
+    @Test
     void updateShouldReturnNotFoundExWhenEventNotFound() {
         Long id = 1L;
         Mockito.when(eventRepository.findById(any(Long.class))).thenReturn(Optional.empty());
@@ -427,6 +459,38 @@ class EventServiceImplTest {
     }
 
     @Test
+    void getUserPublisherEventsShouldReturnAListOfEventResByPamId(){
+        Long id = 1L;
+        Mockito.when(userService.getById(any(Long.class))).thenReturn(this.notAuth);
+        Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.of(this.auth));
+        Mockito.when(eventRepository.findByPublisherId(any(Long.class))).thenReturn(events);
+        var sut = eventService.getUserPublishedEvents(id).size();
+        assertThat(sut, equalTo(12));
+    }
+
+    @Test
+    void getUserPublisherEventsShouldThrowNotFoundExWhenCantFindUser() {
+        Mockito.when(userService.getById(any(Long.class))).thenReturn(null);
+        Exception ex = assertThrows(NotFoundEx.class, ()->{
+            eventService.getAuthPublishedEvents();
+        });
+        var sut = ex.getMessage();
+        assertTrue(sut.equals("User Not Found"));
+    }
+
+    @Test
+    void getUserPublisherEventsShouldThrowNotFoundExWhenNotAuth() {
+        Mockito.when(userService.getById(any(Long.class))).thenReturn(this.notAuth);
+        Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.empty());
+        Exception ex = assertThrows(NotFoundEx.class, ()->{
+            eventService.getAuthPublishedEvents();
+        });
+        var sut = ex.getMessage();
+        System.out.println(sut);
+        assertTrue(sut.equals("User Not Found"));
+    }
+
+    @Test
     void getByTagShouldReturnEventResListByTagIfAuth() {
         Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.of(this.auth));
         Mockito.when(eventRepository.findByTag(any(String.class))).thenReturn(events);
@@ -558,7 +622,7 @@ class EventServiceImplTest {
     }
 
     public EventReqUpdate createUpdateOffReq(){
-        return new EventReqUpdate("title", "desc", "offline", new DateMapper().convertDateToLocalDate(new Date(22,9,15)));
+        return new EventReqUpdate("title1", "desc1", "offline", new DateMapper().convertDateToLocalDate(new Date(22,9,15)));
     }
 
     public EventReqUpdate createUpdateOnReq(){
