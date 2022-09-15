@@ -52,7 +52,6 @@ public class ParticipationController {
         return new ResponseEntity<>(participationService.create(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/events/{id}/participations")
     ResponseEntity<List<ParticipationRes>> getByEventId(@PathVariable Long id){
         return new ResponseEntity<>(participationService.getByEventId(id), HttpStatus.OK);
