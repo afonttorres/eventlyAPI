@@ -3,7 +3,7 @@
   {
     "title": "Bicicletada",
     "description": "Bicicletada popular del barri",
-    "tags": ["esport", "oci popular"],
+    "tags": ["esport", "oci-popular"],
     "requirements": ["req1","req2","req3"],
     "img": "",
     "type": "offline",
@@ -80,7 +80,7 @@
   {
     "title": "Xocolatada",
     "description": "Xocolatada popular",
-    "tags": ["oci popular"],
+    "tags": ["oci-popular"],
     "requirements": ["req1","req2","req3"],
     "img": "",
     "type": "offline",
