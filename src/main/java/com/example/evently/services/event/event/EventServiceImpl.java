@@ -67,7 +67,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private void validateType(String type){
-        if(type == null) throw new BadReqEx("Type can't be empty!", "T-001");
+        if(type == null ||type =="") throw new BadReqEx("Type can't be empty!", "T-001");
         if(!type.equals("offline") && !type.equals("online")) throw new BadReqEx("Wrong type!", "T-002");
     }
 
@@ -182,6 +182,8 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventRes> getByTag(String tag) {
         var auth = authFacade.getAuthUser();
+        if(tag.isEmpty() ||tag == null ||tag == "")
+            throw new BadReqEx("Tag can't be empty!", "E-001");
         if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByTag(tag));
         return new EventMapper().mapMultipleEventsToRes(eventRepository.findByTag(tag), auth.get());
     }
@@ -189,6 +191,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventRes> getByType(String type) {
         var auth = authFacade.getAuthUser();
+        this.validateType(type);
         var search = new TypeMapper().stringToType(type);
         if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByType(search));
         return new EventMapper().mapMultipleEventsToRes(eventRepository.findByType(search), auth.get());

@@ -53,4 +53,12 @@ class EventServiceImplTest {
     @Test
     void getUserPublishedEvents() {
     }
+
+    @Test
+    void getByTag() {
+    }
+
+    @Test
+    void getByType() {
+    }
 }
