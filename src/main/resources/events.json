@@ -1,5 +1,4 @@
 [
-
   {
     "title": "Bicicletada",
     "description": "Bicicletada popular del barri",
@@ -87,5 +86,93 @@
     "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
     "date": "2022-09-06T15:30:15",
     "username": "xcapde"
+  },
+  {
+    "title": "Marato 20km",
+    "description": "Marato de 20 km",
+    "tags": ["oci-popular", "esport", "running"],
+    "requirements": ["req1","req2","req3"],
+    "img": "",
+    "type": "offline",
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-10-08T10:30:15",
+    "username": "joelblasi"
+  },
+  {
+    "title": "Escalada al bergueda",
+    "description": "Escalada al bergueda",
+    "tags": ["oci-popular", "esport", "escalada", "montanya"],
+    "requirements": ["req1","req2","req3"],
+    "img": "",
+    "type": "offline",
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-10-08T10:30:15",
+    "username": "joelblasi"
+  },
+  {
+    "title": "Calçotada",
+    "description": "Calçotada",
+    "tags": ["oci-popular", "calçotada", "calçots", "alimentacio"],
+    "requirements": ["req1","req2","req3"],
+    "img": "",
+    "type": "offline",
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-10-08T10:30:15",
+    "username": "joelblasi"
+  },
+  {
+    "title": "Concert simfonic",
+    "description": "Concert simfonic",
+    "tags": ["oci-popular", "conçert", "sinfonia", "instruments"],
+    "requirements": ["req1","req2","req3"],
+    "img": "",
+    "type": "offline",
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-10-08T10:30:15",
+    "username": "joelblasi"
+  },
+  {
+    "title": "Torneig futbol",
+    "description": "Torneig de futbol",
+    "tags": ["oci-popular", "esport", "futbol", "pilota", "jugadors"],
+    "requirements": ["req1","req2","req3"],
+    "img": "",
+    "type": "offline",
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-10-08T10:30:15",
+    "username": "joelblasi"
+  },
+  {
+    "title": "Torneig 3x3 basquet",
+    "description": "Torneig de 3x3 de basquet",
+    "tags": ["oci-popular", "esport", "basquet", "pilota", "NBA"],
+    "requirements": ["req1","req2","req3"],
+    "img": "",
+    "type": "offline",
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-10-08T10:30:15",
+    "username": "joelblasi"
+  },
+  {
+    "title": "Concurs de karaoke",
+    "description": "Karaoke popular",
+    "tags": ["oci-popular", "karaoke", "cantar", "mictofon"],
+    "requirements": ["req1","req2","req3"],
+    "img": "",
+    "type": "offline",
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-10-08T10:30:15",
+    "username": "joelblasi"
+  },
+  {
+    "title": "Classes de bachata",
+    "description": "Classes de bachata gratis cada dimecres",
+    "tags": ["oci-popular", "bachata", "ballar", "musica"],
+    "requirements": ["req1","req2","req3"],
+    "img": "",
+    "type": "offline",
+    "participants": ["xcapde","afonttorres","lauraparra","joelblasi"],
+    "date": "2022-10-08T10:30:15",
+    "username": "joelblasi"
   }
 ]

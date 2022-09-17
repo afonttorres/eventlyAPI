@@ -22,7 +22,6 @@ public class ParticipationController {
         this.participationService = participationService;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/participations")
     ResponseEntity<List<ParticipationRes>> getAll(){
         return new ResponseEntity<>(participationService.getAll(), HttpStatus.OK);
