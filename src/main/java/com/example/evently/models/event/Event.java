@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -65,7 +66,7 @@ public abstract class Event {
     private Date date;
 
     @JoinColumn(name = "location")
-    String location;
+    String location = "";
 
     @OneToMany(mappedBy = "event")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
@@ -86,6 +87,21 @@ public abstract class Event {
             return false;
         }
         return true;
+    }
+
+    public Event(String title, String description, User publisher, Date date){
+        super();
+        this.title = title;
+        this.description = description;
+        this.publisher = publisher;
+        this.date = date;
+    }
+
+    @Override
+    public String toString(){
+        var tags = getTags().stream().map(t -> t.getName()).collect(Collectors.toList());
+        var stringTags = tags.toString();
+        return "Event [title: "+getTitle()+" , desc: "+getDescription()+", date :"+getDate().toString()+" , loc: "+getLocation()+" , tags:"+stringTags+"]";
     }
 
 }

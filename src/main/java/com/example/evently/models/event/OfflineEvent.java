@@ -2,26 +2,37 @@ package com.example.evently.models.event;
 
 import com.example.evently.models.Direction;
 import com.example.evently.models.Type;
+import com.example.evently.models.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import java.util.Date;
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper=false)
+@NoArgsConstructor
 public class OfflineEvent extends Event{
     @OneToOne(mappedBy = "event")
     @JoinColumn(name = "direction_id")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @Cascade(CascadeType.DELETE)
     @JsonIgnore
     Direction direction;
 
-    public OfflineEvent(){
+    public OfflineEvent(String title, String description, User publisher, Date date){
+        super(title, description, publisher, date);
         super.setType(Type.OFFLINE);
+    }
+
+    @Override
+    public String toString() {
+        return "Offline Event [title: "+getTitle()+", desc: "+getDescription()+", type: offline , date: "+getDate().toString()+", loc: "+getLocation()+" , tags: "+getTags().toString()+"]";
     }
 }

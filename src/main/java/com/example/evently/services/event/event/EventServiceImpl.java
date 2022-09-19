@@ -195,4 +195,19 @@ public class EventServiceImpl implements EventService {
         return new EventMapper().mapMultipleEventsToResAuth(eventRepository.findByType(search), auth.get());
     }
 
+    @Override
+    public List<EventRes> getBySearch(String search) {
+        var auth = authFacade.getAuthUser();
+        this.validateSearch(search);
+        eventRepository.findAll().forEach(e -> System.out.println(e.toString()));
+        return null;
+//        if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByType(search));
+//        return new EventMapper().mapMultipleEventsToResAuth(eventRepository.findByType(search), auth.get());
+    }
+
+    private void validateSearch(String search){
+        if(search == null ||search == "" || search.isEmpty())
+            throw new BadReqEx("Search can't be empty!", "E-003");
+    }
+
 }

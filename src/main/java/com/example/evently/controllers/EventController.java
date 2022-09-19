@@ -80,4 +80,10 @@ public class EventController {
     ResponseEntity<List<EventRes>> getByType(@RequestParam String type){
         return new ResponseEntity<>(eventService.getByType(type), HttpStatus.OK);
     }
+
+    //    events?search=${search}
+    @GetMapping(value="/events", params ="search")
+    ResponseEntity<List<EventRes>> getBySearch(@RequestParam String search){
+        return new ResponseEntity<>(eventService.getBySearch(search), HttpStatus.OK);
+    }
 }
