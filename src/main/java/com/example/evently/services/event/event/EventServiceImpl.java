@@ -115,7 +115,6 @@ public class EventServiceImpl implements EventService {
             throw new BadReqEx("Only event publisher is allowed to delete it!", "T-002");
         var res = new EventMapper().mapEventToRes(event);
         eventRepository.delete(event);
-        //email to notify event has been deleted
         System.out.println("EVENT DELETED EMAIL");
         return res;
     }
@@ -127,14 +126,12 @@ public class EventServiceImpl implements EventService {
             throw new BadReqEx("Only event publisher is allowed to update it!", "T-002");
         if(!req.getType().equals(event.getType().toString().toLowerCase())){
             var newEvent = this.changeType(req, event);
-            //email to notify modification
             System.out.println("EVENT MODIFIED EMAIL");
             return newEvent;
         }
         System.out.println(req);
         var updated = new EventMapper().mapReqToExistingEvent(req, event);
         eventRepository.save(updated);
-        //email to notify modification
         System.out.println("EVENT MODIFIED EMAIL");
         return new EventMapper().mapEventToRes(updated);
     }

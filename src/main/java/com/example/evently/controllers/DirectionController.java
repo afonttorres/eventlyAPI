@@ -30,7 +30,7 @@ public class DirectionController {
         return new ResponseEntity<>( directionService.getAll(), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+
     @GetMapping("/events/{id}/directions")
     ResponseEntity<Direction> getByEventId(@PathVariable Long id){
         return new ResponseEntity<>( directionService.getByEventId(id), HttpStatus.OK);
@@ -45,7 +45,6 @@ public class DirectionController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/events/{id}/directions")
     ResponseEntity<Message> create(@PathVariable Long id, @RequestBody DirectionReq req){
-        System.out.println("id: "+id+" DirectionReq: "+req);
         return new ResponseEntity<>( directionService.create(id, req), HttpStatus.OK);
     }
 

@@ -3,11 +3,16 @@ package com.example.evently.services.event.online;
 import com.example.evently.dto.event.req.EventReq;
 import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
+import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.mappers.event.OnlineEventMapper;
+import com.example.evently.models.Direction;
+import com.example.evently.models.WebUrl;
 import com.example.evently.models.event.Event;
+import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
+import com.example.evently.repositories.event.OnlineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +20,21 @@ import org.springframework.stereotype.Service;
 public class OnlineEventServiceImpl implements OnlineEventService {
 
     EventRepository eventRepository;
+    OnlineRepository onlineRepository;
 
     @Autowired
-    public OnlineEventServiceImpl(EventRepository eventRepository) {
+    public OnlineEventServiceImpl(EventRepository eventRepository, OnlineRepository onlineRepository) {
         this.eventRepository = eventRepository;
+        this.onlineRepository = onlineRepository;
+    }
+
+
+    @Override
+    public OnlineEvent getById(Long id) {
+        var event = onlineRepository.findById(id);
+        if(event.isEmpty())
+            throw new NotFoundEx("Online event not found", "E-404");
+        return event.get();
     }
 
     @Override
@@ -29,9 +45,26 @@ public class OnlineEventServiceImpl implements OnlineEventService {
     }
 
     @Override
+    public EventRes addLocationToEvent(WebUrl url, OnlineEvent event) {
+        event.setLocation(this.defineLocation(url));
+        eventRepository.save(event);
+        onlineRepository.save(event);
+        System.out.println("EVENT LOCATION MODIFIED EMAIL");
+        return new EventMapper().mapEventToRes(event);
+    }
+
+    @Override
     public EventRes createFromOfflineEvent(EventReqUpdate req, Event event) {
         eventRepository.delete(event);
         var saved = eventRepository.save( new OnlineEventMapper().mapOfflineToOnlineEvent(req, event));
         return new EventMapper().mapEventToRes(saved);
     }
+
+    public String defineLocation(WebUrl webUrl){
+        String location = "";
+        if(webUrl != null) location =webUrl.getUrl();
+        return location;
+    }
+
+
 }

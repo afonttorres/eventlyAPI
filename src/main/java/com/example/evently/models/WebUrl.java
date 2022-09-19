@@ -24,4 +24,9 @@ public class WebUrl {
     @JoinColumn(name = "event_id")
     @JsonIgnore
     OnlineEvent event;
+
+    public WebUrl(String url, OnlineEvent event){
+        this.url = url;
+        this.event = event;
+    }
 }

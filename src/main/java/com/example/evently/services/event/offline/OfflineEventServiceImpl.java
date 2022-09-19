@@ -29,14 +29,6 @@ public class OfflineEventServiceImpl implements OfflineEventService {
     }
 
     @Override
-    public EventRes create(EventReq req, User auth){
-        var event = new OfflineEventMapper().mapReqToOffEvent(req, auth);
-        eventRepository.save(event);
-        offlineRepository.save(event);
-        return new EventMapper().mapEventToRes(event);
-    }
-
-    @Override
     public OfflineEvent getById(Long eventId) {
         var event = offlineRepository.findById(eventId);
         if(event.isEmpty())
@@ -44,6 +36,13 @@ public class OfflineEventServiceImpl implements OfflineEventService {
         return event.get();
     }
 
+    @Override
+    public EventRes create(EventReq req, User auth){
+        var event = new OfflineEventMapper().mapReqToOffEvent(req, auth);
+        eventRepository.save(event);
+        offlineRepository.save(event);
+        return new EventMapper().mapEventToRes(event);
+    }
     @Override
     public EventRes addLocationToEvent(Direction direction, OfflineEvent event) {
         event.setLocation(this.defineLocation(direction));
