@@ -4,6 +4,7 @@ import com.example.evently.models.Direction;
 import com.example.evently.models.Type;
 import com.example.evently.models.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.Date;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper=false)
-@NoArgsConstructor
+@AllArgsConstructor
 public class OfflineEvent extends Event{
     @OneToOne(mappedBy = "event")
     @JoinColumn(name = "direction_id")
@@ -31,8 +32,12 @@ public class OfflineEvent extends Event{
         super.setType(Type.OFFLINE);
     }
 
+    public OfflineEvent(){
+        super.setType(Type.OFFLINE);
+    }
+
     @Override
     public String toString() {
-        return "Offline Event [title: "+getTitle()+", desc: "+getDescription()+", type: offline , date: "+getDate().toString()+", loc: "+getLocation()+" , tags: "+getTags().toString()+"]";
+        return "Offline Event [title: "+getTitle().toLowerCase()+", desc: "+getDescription().toLowerCase()+", type: offline , date: "+getDate().toString().toLowerCase()+", loc: "+getLocation().toLowerCase()+" , tags: "+getTags().toString().toLowerCase()+"]";
     }
 }

@@ -99,9 +99,7 @@ public abstract class Event {
 
     @Override
     public String toString(){
-        var tags = getTags().stream().map(t -> t.getName()).collect(Collectors.toList());
-        var stringTags = tags.toString();
-        return "Event [title: "+getTitle()+" , desc: "+getDescription()+", date :"+getDate().toString()+" , loc: "+getLocation()+" , tags:"+stringTags+"]";
+        return "Event [title: "+getTitle()+" , desc: "+getDescription().toLowerCase()+", date :"+getDate().toString().toLowerCase()+" , loc: "+getLocation().toLowerCase()+" , tags:"+getTags().toString().toLowerCase()+"]";
     }
 
 }

@@ -35,14 +35,14 @@ class EventTest {
     void OfflineEventShouldBeConvertedToString() {
         var event = events.get(1);
         var sut = event.toString();
-        assertThat(sut, equalTo("Offline Event [title: title6, desc: desc6, type: offline , date: "+new Date().toString()+", loc:  , tags: []]"));
+        assertThat(sut, equalTo("Offline Event [title: title6, desc: desc6, type: offline , date: "+new Date().toString().toLowerCase()+", loc:  , tags: []]"));
     }
 
     @Test
     void OnlineEventShouldBeConvertedToString() {
         var event = events.get(0);
         var sut = event.toString();
-        assertThat(sut, equalTo("Online Event [title: title1, desc: desc1, type: online , date: "+new Date().toString()+", loc:  , tags: []]"));
+        assertThat(sut, equalTo("Online Event [title: title1, desc: desc1, type: online , date: "+new Date().toString().toLowerCase()+", loc:  , tags: []]"));
     }
 
     @Test
@@ -50,7 +50,7 @@ class EventTest {
         var event = events.get(0);
         event.setTags(List.of(new Tag(1L, "esport"), new Tag(2L, "health"), new Tag(3L, "oci")));
         var sut = event.toString();
-        assertThat(sut, equalTo("Online Event [title: title1, desc: desc1, type: online , date: "+new Date().toString()+", loc:  , tags: [Tag(id=1, name=esport), Tag(id=2, name=health), Tag(id=3, name=oci)]]"));
+        assertThat(sut, equalTo("Online Event [title: title1, desc: desc1, type: online , date: "+new Date().toString().toLowerCase()+", loc:  , tags: [tag(id=1, name=esport), tag(id=2, name=health), tag(id=3, name=oci)]]"));
     }
 
     public OfflineEvent createOffEvent(Long id, String title, String desc){

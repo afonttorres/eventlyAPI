@@ -199,10 +199,13 @@ public class EventServiceImpl implements EventService {
     public List<EventRes> getBySearch(String search) {
         var auth = authFacade.getAuthUser();
         this.validateSearch(search);
+        var events = eventRepository.findAll()
+                .stream()
+                .filter( e -> e.toString().contains(search))
+                .collect(Collectors.toList());
         eventRepository.findAll().forEach(e -> System.out.println(e.toString()));
-        return null;
-//        if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(eventRepository.findByType(search));
-//        return new EventMapper().mapMultipleEventsToResAuth(eventRepository.findByType(search), auth.get());
+        if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(events);
+        return new EventMapper().mapMultipleEventsToResAuth(events, auth.get());
     }
 
     private void validateSearch(String search){

@@ -4,6 +4,7 @@ import com.example.evently.models.Type;
 import com.example.evently.models.WebUrl;
 import com.example.evently.models.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.Date;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper=false)
-@NoArgsConstructor
+@AllArgsConstructor
 public class OnlineEvent extends Event{
 
     @OneToOne(mappedBy = "event")
@@ -31,8 +32,12 @@ public class OnlineEvent extends Event{
         super.setType(Type.ONLINE);
     }
 
+    public OnlineEvent(){
+        super.setType(Type.ONLINE);
+    }
+
     @Override
     public String toString() {
-        return "Online Event [title: "+getTitle()+", desc: "+getDescription()+", type: online , date: "+getDate().toString()+", loc: "+getLocation()+" , tags: "+getTags().toString()+"]";
+        return "Online Event [title: "+getTitle().toLowerCase()+", desc: "+getDescription().toLowerCase()+", type: online , date: "+getDate().toString().toLowerCase()+", loc: "+getLocation().toLowerCase()+" , tags: "+getTags().toString().toLowerCase()+"]";
     }
 }
