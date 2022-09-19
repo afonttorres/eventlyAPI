@@ -24,30 +24,30 @@ public class WebUrlController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("/webUrl")
+    @GetMapping("/webUrls")
     ResponseEntity<List<WebUrl>> getAll(){
         return new ResponseEntity<>(webUrlService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/events/{id}/webUrl")
+    @GetMapping("/events/{id}/webUrls")
     ResponseEntity<WebUrl> getByEventId(@PathVariable Long id){
         return new ResponseEntity<>(webUrlService.getByEventId(id), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("/webUrl/{id}")
+    @GetMapping("/webUrls/{id}")
     ResponseEntity<WebUrl> getById(@PathVariable Long id){
         return new ResponseEntity<>(webUrlService.getById(id), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping("/events/{id}/webUrl")
+    @PostMapping("/events/{id}/webUrls")
     ResponseEntity<Message> create(@PathVariable Long id, @RequestBody WebUrlReq req){
         return new ResponseEntity<>(webUrlService.create(id, req), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @DeleteMapping("/events/{id}/webUrl")
+    @DeleteMapping("/events/{id}/webUrls")
     ResponseEntity<Message> delete(@PathVariable Long id){
         return new ResponseEntity<>(webUrlService.delete(id), HttpStatus.OK);
     }
