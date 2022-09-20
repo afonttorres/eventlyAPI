@@ -9,10 +9,10 @@ import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.user.User;
 
 public interface OnlineEventService {
-    EventRes create(EventReq req, User auth);
+    Event create(EventReq req, User auth);
 
     OnlineEvent getById(Long id);
 
     EventRes addLocationToEvent(WebUrl url, OnlineEvent event);
-    EventRes createFromOfflineEvent(EventReqUpdate req, Event event);
+    Event createFromOfflineEvent(EventReqUpdate req, Event event);
 }

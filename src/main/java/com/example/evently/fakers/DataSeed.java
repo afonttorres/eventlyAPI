@@ -67,7 +67,7 @@ public class DataSeed {
         var agnes = new User();
         agnes.setRoles(userRoles);
         agnes.setUsername("afonttorres");
-        agnes.setEmail("aft@gmail.com");
+        agnes.setEmail("afonttorres@gmail.com");
         agnes.setPassword(encoder.encode("password1234"));
         agnes.setName("Agnes");
         agnes.setSurname("Font");
@@ -75,7 +75,7 @@ public class DataSeed {
         var xevi = new User();
         xevi.setRoles(userRoles);
         xevi.setUsername("xcapde");
-        xevi.setEmail("xcapde@gmail.com");
+        xevi.setEmail("xcapde7@gmail.com");
         xevi.setPassword(encoder.encode("password1234"));
         xevi.setName("Xevi");
         xevi.setSurname("Capde");

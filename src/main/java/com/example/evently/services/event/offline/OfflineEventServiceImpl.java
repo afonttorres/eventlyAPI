@@ -7,11 +7,13 @@ import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.mappers.event.OfflineEventMapper;
 import com.example.evently.models.Direction;
+import com.example.evently.models.EmailDetails;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.event.OfflineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
 import com.example.evently.repositories.event.OfflineRepository;
+import com.example.evently.services.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,26 +39,24 @@ public class OfflineEventServiceImpl implements OfflineEventService {
     }
 
     @Override
-    public EventRes create(EventReq req, User auth){
+    public Event create(EventReq req, User auth){
         var event = new OfflineEventMapper().mapReqToOffEvent(req, auth);
         eventRepository.save(event);
         offlineRepository.save(event);
-        return new EventMapper().mapEventToRes(event);
+        return event;
     }
     @Override
     public EventRes addLocationToEvent(Direction direction, OfflineEvent event) {
         event.setLocation(this.defineLocation(direction));
         eventRepository.save(event);
         offlineRepository.save(event);
-        System.out.println("EVENT LOCATION MODIFIED EMAIL");
         return new EventMapper().mapEventToRes(event);
     }
 
     @Override
-    public EventRes createFromOnlineEvent(EventReqUpdate req, Event event) {
+    public Event createFromOnlineEvent(EventReqUpdate req, Event event) {
         eventRepository.delete(event);
-        var saved = eventRepository.save(new OfflineEventMapper().mapOnlineToOfflineEvent(req, event));
-        return new EventMapper().mapEventToRes(saved);
+        return  eventRepository.save(new OfflineEventMapper().mapOnlineToOfflineEvent(req, event));
     }
 
     public String defineLocation(Direction direction){

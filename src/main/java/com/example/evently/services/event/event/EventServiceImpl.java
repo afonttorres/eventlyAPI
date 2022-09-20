@@ -8,11 +8,13 @@ import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.TypeMapper;
 import com.example.evently.mappers.event.EventMapper;
+import com.example.evently.models.EmailDetails;
 import com.example.evently.models.Tag;
 import com.example.evently.models.Type;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
+import com.example.evently.services.email.EmailService;
 import com.example.evently.services.event.offline.OfflineEventService;
 import com.example.evently.services.event.online.OnlineEventService;
 import com.example.evently.services.user.UserService;
@@ -33,19 +35,22 @@ public class EventServiceImpl implements EventService {
     AuthFacade authFacade;
 
     UserService userService;
+    EmailService emailService;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository,
                             AuthFacade authFacade,
                             OnlineEventService onlineService,
                             OfflineEventService offlineService,
-                            UserService userService
+                            UserService userService,
+                            EmailService emailService
     ) {
         this.eventRepository = eventRepository;
         this.authFacade = authFacade;
         this.onlineService = onlineService;
         this.offlineService = offlineService;
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     private User getAuth(){
@@ -70,13 +75,13 @@ public class EventServiceImpl implements EventService {
         if(!type.equals("offline") && !type.equals("online")) throw new BadReqEx("Wrong type!", "T-002");
     }
 
-    private EventRes assingType(EventReq req, User auth){
+    private Event assingType(EventReq req, User auth){
         this.validateType(req.getType());
         if(req.getType().equals("online")) return onlineService.create(req, auth);
         return offlineService.create(req, auth);
     }
 
-    private EventRes changeType(EventReqUpdate req, Event event){
+    private Event changeType(EventReqUpdate req, Event event){
         this.validateType(req.getType());
         if(req.getType().equals("online")){
             return onlineService.createFromOfflineEvent(req, event);
@@ -105,7 +110,10 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventRes create(EventReq eventReq) {
         var auth = this.getAuth();
-        return this.assingType(eventReq, auth);
+        var event = this.assingType(eventReq, auth);
+        //cal?
+        emailService.sendSimpleMail(new EmailDetails(event.getPublisher().getEmail(), "You've just created the event: "+event.getTitle()+" in Evently App!", "Event created"));
+        return new EventMapper().mapEventToResAuth(event, auth);
     }
 
     @Override
@@ -115,7 +123,10 @@ public class EventServiceImpl implements EventService {
             throw new BadReqEx("Only event publisher is allowed to delete it!", "T-002");
         var res = new EventMapper().mapEventToRes(event);
         eventRepository.delete(event);
-        System.out.println("EVENT DELETED EMAIL");
+        //cal?
+        emailService.sendSimpleMail(new EmailDetails(event.getPublisher().getEmail(), "You've just deleted the event: "+event.getTitle()+" in Evently App!", "Event deleted"));
+        //li envio als participants
+        event.getParticipants().forEach(p -> emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), "Event "+event.getTitle()+" you've joined has been deleted in Evently App!", "Event deleted")));
         return res;
     }
 
@@ -126,13 +137,14 @@ public class EventServiceImpl implements EventService {
             throw new BadReqEx("Only event publisher is allowed to update it!", "T-002");
         if(!req.getType().equals(event.getType().toString().toLowerCase())){
             var newEvent = this.changeType(req, event);
-            System.out.println("EVENT MODIFIED EMAIL");
-            return newEvent;
+            //li envio als participants
+            newEvent.getParticipants().forEach( p -> emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), "Event "+newEvent.getTitle()+" you've joined has been modified in Evently App!", "Event modified")));
+            return new EventMapper().mapEventToResAuth(newEvent, event.getPublisher());
         }
-        System.out.println(req);
         var updated = new EventMapper().mapReqToExistingEvent(req, event);
         eventRepository.save(updated);
-        System.out.println("EVENT MODIFIED EMAIL");
+        //li envio als participants
+        updated.getParticipants().forEach( p -> emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), "Event "+updated.getTitle()+" you've joined has been modified in Evently App!", "Event modified")));
         return new EventMapper().mapEventToRes(updated);
     }
 

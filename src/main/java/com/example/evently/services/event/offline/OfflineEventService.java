@@ -12,11 +12,11 @@ import com.example.evently.repositories.event.OfflineRepository;
 import java.util.Optional;
 
 public interface OfflineEventService {
-    EventRes create(EventReq req, User auth);
+    Event create(EventReq req, User auth);
 
     OfflineEvent getById(Long eventId);
 
     EventRes addLocationToEvent(Direction direction, OfflineEvent event);
 
-    EventRes createFromOnlineEvent(EventReqUpdate req, Event event);
+    Event createFromOnlineEvent(EventReqUpdate req, Event event);
 }

@@ -7,12 +7,14 @@ import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.mappers.event.OnlineEventMapper;
 import com.example.evently.models.Direction;
+import com.example.evently.models.EmailDetails;
 import com.example.evently.models.WebUrl;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
 import com.example.evently.repositories.event.OnlineRepository;
+import com.example.evently.services.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,10 +40,11 @@ public class OnlineEventServiceImpl implements OnlineEventService {
     }
 
     @Override
-    public EventRes create(EventReq req, User auth) {
+    public Event create(EventReq req, User auth) {
         var event = new OnlineEventMapper().mapReqToOnEvent(req, auth);
         eventRepository.save(event);
-        return new EventMapper().mapEventToRes(event);
+        onlineRepository.save(event);
+        return event;
     }
 
     @Override
@@ -49,15 +52,13 @@ public class OnlineEventServiceImpl implements OnlineEventService {
         event.setLocation(this.defineLocation(url));
         eventRepository.save(event);
         onlineRepository.save(event);
-        System.out.println("EVENT LOCATION MODIFIED EMAIL");
         return new EventMapper().mapEventToRes(event);
     }
 
     @Override
-    public EventRes createFromOfflineEvent(EventReqUpdate req, Event event) {
+    public Event createFromOfflineEvent(EventReqUpdate req, Event event) {
         eventRepository.delete(event);
-        var saved = eventRepository.save( new OnlineEventMapper().mapOfflineToOnlineEvent(req, event));
-        return new EventMapper().mapEventToRes(saved);
+        return eventRepository.save( new OnlineEventMapper().mapOfflineToOnlineEvent(req, event));
     }
 
     public String defineLocation(WebUrl webUrl){

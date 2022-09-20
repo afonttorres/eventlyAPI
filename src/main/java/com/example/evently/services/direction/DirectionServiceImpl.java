@@ -7,10 +7,12 @@ import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.DirectionMapper;
 import com.example.evently.models.Direction;
+import com.example.evently.models.EmailDetails;
 import com.example.evently.models.Type;
 import com.example.evently.models.event.OfflineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.DirectionRepository;
+import com.example.evently.services.email.EmailService;
 import com.example.evently.services.event.offline.OfflineEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +26,14 @@ public class DirectionServiceImpl implements DirectionService{
     DirectionRepository directionRepository;
     OfflineEventService offlineEventService;
     AuthFacade authFacade;
+    EmailService emailService;
 
     @Autowired
-    public DirectionServiceImpl(DirectionRepository directionRepository, OfflineEventService offlineEventService, AuthFacade authFacade) {
+    public DirectionServiceImpl(DirectionRepository directionRepository, OfflineEventService offlineEventService, AuthFacade authFacade, EmailService emailService) {
         this.directionRepository = directionRepository;
         this.offlineEventService = offlineEventService;
         this.authFacade = authFacade;
+        this.emailService = emailService;
     }
 
     private User getAuth(){
@@ -71,6 +75,12 @@ public class DirectionServiceImpl implements DirectionService{
         this.resetDirection(event);
         directionRepository.save(direction);
         offlineEventService.addLocationToEvent(direction, event);
+        event.getParticipants().forEach(
+                p-> emailService.sendSimpleMail(
+                        new EmailDetails(
+                                p.getParticipant().getEmail(),
+                         "Event "+event.getTitle()+ " has a new location: "+direction.toString()+". Check it out at: http://localhost:3000/events/"+event.getId()+".",
+                                "Event location modified")));
         return new Message("Direction "+direction.toString()+" added to event "+event.getTitle()+" !");
     }
 

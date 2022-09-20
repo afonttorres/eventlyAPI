@@ -17,6 +17,7 @@ import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
 import com.example.evently.repositories.event.OfflineRepository;
 import com.example.evently.repositories.event.OnlineRepository;
+import com.example.evently.services.email.EmailService;
 import com.example.evently.services.event.offline.OfflineEventService;
 import com.example.evently.services.event.online.OnlineEventService;
 import com.example.evently.services.user.UserService;
@@ -58,11 +59,13 @@ class EventServiceImplTest {
     AuthFacade authFacade;
     @Mock
     UserService userService;
+    @Mock
+    EmailService emailService;
 
 
     @BeforeEach
     void init(){
-       eventService  = new EventServiceImpl(eventRepository, authFacade, onlineEventService, offlineEventService, userService);
+       eventService  = new EventServiceImpl(eventRepository, authFacade, onlineEventService, offlineEventService, userService, emailService);
        auth = this.createUser();
        notAuth = this.notAuth();
        events = this.createMultEvents();
@@ -134,7 +137,7 @@ class EventServiceImplTest {
         Mockito.when(eventRepository.save(any(Event.class)))
                 .thenReturn(events.get(1));
         Mockito.when(offlineEventService.create(any(EventReq.class), any(User.class)))
-                .thenReturn(new EventMapper().mapEventToRes(events.get(1)));
+                .thenReturn(events.get(1));
         var sut = eventService.create(offReq);
         System.out.println(sut);
         assertThat(sut, equalTo(new EventMapper().mapEventToRes(events.get(1))));
@@ -146,7 +149,7 @@ class EventServiceImplTest {
         Mockito.when(eventRepository.save(any(Event.class)))
                 .thenReturn(events.get(0));
         Mockito.when(onlineEventService.create(any(EventReq.class), any(User.class)))
-                .thenReturn(new EventMapper().mapEventToRes(events.get(0)));
+                .thenReturn(events.get(0));
         var sut = eventService.create(onReq);
         System.out.println(sut);
         assertThat(sut, equalTo(new EventMapper().mapEventToRes(events.get(0))));
@@ -251,7 +254,7 @@ class EventServiceImplTest {
         Mockito.when(eventRepository.findById(any(Long.class))).thenReturn(Optional.of(events.get(0)));
         Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.of(this.auth));
         Mockito.when(offlineEventService.createFromOnlineEvent(offReqUp, events.get(0)))
-                .thenReturn(new EventMapper().mapEventToRes(event));
+                .thenReturn(event);
         var sut = eventService.update(id, offReqUp);
         assertThat(sut, equalTo(new EventMapper().mapEventToRes(event)));
     }
@@ -267,7 +270,7 @@ class EventServiceImplTest {
         Mockito.when(eventRepository.findById(any(Long.class))).thenReturn(Optional.of(events.get(1)));
         Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.of(this.auth));
         Mockito.when(onlineEventService.createFromOfflineEvent(onReqUp, events.get(1)))
-                .thenReturn(new EventMapper().mapEventToRes(event));
+                .thenReturn(event);
         var sut = eventService.update(id, onReqUp);
         assertThat(sut, equalTo(new EventMapper().mapEventToRes(event)));
     }
