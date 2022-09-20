@@ -40,4 +40,9 @@ public class OfflineEvent extends Event{
     public String toString() {
         return "Offline Event [title: "+getTitle().toLowerCase()+", desc: "+getDescription().toLowerCase()+", type: offline , date: "+getDate().toString().toLowerCase()+", loc: "+getLocation().toLowerCase()+" , tags: "+getTags().toString().toLowerCase()+"]";
     }
+
+    @Override
+    public String beautified(){
+        return "offline event "+getTitle()+" planned in"+getLocation()+" the "+getDate().toGMTString();
+    }
 }

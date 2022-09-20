@@ -20,6 +20,7 @@ import com.example.evently.repositories.event.OnlineRepository;
 import com.example.evently.services.email.EmailService;
 import com.example.evently.services.event.offline.OfflineEventService;
 import com.example.evently.services.event.online.OnlineEventService;
+import com.example.evently.services.notification.NotificationService;
 import com.example.evently.services.user.UserService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -61,11 +62,13 @@ class EventServiceImplTest {
     UserService userService;
     @Mock
     EmailService emailService;
+    @Mock
+    NotificationService notificationService;
 
 
     @BeforeEach
     void init(){
-       eventService  = new EventServiceImpl(eventRepository, authFacade, onlineEventService, offlineEventService, userService, emailService);
+       eventService  = new EventServiceImpl(eventRepository, authFacade, onlineEventService, offlineEventService, userService, emailService, notificationService);
        auth = this.createUser();
        notAuth = this.notAuth();
        events = this.createMultEvents();

@@ -102,4 +102,8 @@ public abstract class Event {
         return "Event [title: "+getTitle()+" , desc: "+getDescription().toLowerCase()+", date :"+getDate().toString().toLowerCase()+" , loc: "+getLocation().toLowerCase()+" , tags:"+getTags().toString().toLowerCase()+"]";
     }
 
+    public String beautified(){
+        return "Event "+getTitle()+" planned in"+getLocation()+" the "+getDate().toString();
+    }
+
 }

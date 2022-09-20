@@ -6,9 +6,11 @@ import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
+import com.example.evently.mappers.DateMapper;
 import com.example.evently.mappers.TypeMapper;
 import com.example.evently.mappers.event.EventMapper;
 import com.example.evently.models.EmailDetails;
+import com.example.evently.models.Notification;
 import com.example.evently.models.Tag;
 import com.example.evently.models.Type;
 import com.example.evently.models.event.Event;
@@ -17,7 +19,9 @@ import com.example.evently.repositories.event.EventRepository;
 import com.example.evently.services.email.EmailService;
 import com.example.evently.services.event.offline.OfflineEventService;
 import com.example.evently.services.event.online.OnlineEventService;
+import com.example.evently.services.notification.NotificationService;
 import com.example.evently.services.user.UserService;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +40,7 @@ public class EventServiceImpl implements EventService {
 
     UserService userService;
     EmailService emailService;
+    NotificationService notificationService;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository,
@@ -43,7 +48,8 @@ public class EventServiceImpl implements EventService {
                             OnlineEventService onlineService,
                             OfflineEventService offlineService,
                             UserService userService,
-                            EmailService emailService
+                            EmailService emailService,
+                            NotificationService notificationService
     ) {
         this.eventRepository = eventRepository;
         this.authFacade = authFacade;
@@ -51,6 +57,7 @@ public class EventServiceImpl implements EventService {
         this.offlineService = offlineService;
         this.userService = userService;
         this.emailService = emailService;
+        this.notificationService = notificationService;
     }
 
     private User getAuth(){
@@ -111,8 +118,6 @@ public class EventServiceImpl implements EventService {
     public EventRes create(EventReq eventReq) {
         var auth = this.getAuth();
         var event = this.assingType(eventReq, auth);
-        //cal?
-        emailService.sendSimpleMail(new EmailDetails(event.getPublisher().getEmail(), "You've just created the event: "+event.getTitle()+" in Evently App!", "Event created"));
         return new EventMapper().mapEventToResAuth(event, auth);
     }
 
@@ -123,28 +128,25 @@ public class EventServiceImpl implements EventService {
             throw new BadReqEx("Only event publisher is allowed to delete it!", "T-002");
         var res = new EventMapper().mapEventToRes(event);
         eventRepository.delete(event);
-        //cal?
-        emailService.sendSimpleMail(new EmailDetails(event.getPublisher().getEmail(), "You've just deleted the event: "+event.getTitle()+" in Evently App!", "Event deleted"));
-        //li envio als participants
-        event.getParticipants().forEach(p -> emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), "Event "+event.getTitle()+" you've joined has been deleted in Evently App!", "Event deleted")));
+        notificationService.createDeleteNotification(event);
         return res;
     }
 
     @Override
     public EventRes update(Long id, EventReqUpdate req) {
         var event = this.getCompleteEventById(id);
+        var beautified = event.beautified();
         if(event.getPublisher() != this.getAuth() && !authFacade.isAdmin())
             throw new BadReqEx("Only event publisher is allowed to update it!", "T-002");
         if(!req.getType().equals(event.getType().toString().toLowerCase())){
             var newEvent = this.changeType(req, event);
-            //li envio als participants
-            newEvent.getParticipants().forEach( p -> emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), "Event "+newEvent.getTitle()+" you've joined has been modified in Evently App!", "Event modified")));
+            System.out.println("aqui");
+            notificationService.createUpdatedNotification(event, beautified, newEvent);
             return new EventMapper().mapEventToResAuth(newEvent, event.getPublisher());
         }
         var updated = new EventMapper().mapReqToExistingEvent(req, event);
         eventRepository.save(updated);
-        //li envio als participants
-        updated.getParticipants().forEach( p -> emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), "Event "+updated.getTitle()+" you've joined has been modified in Evently App!", "Event modified")));
+        notificationService.createUpdatedNotification(event, beautified, updated);
         return new EventMapper().mapEventToRes(updated);
     }
 

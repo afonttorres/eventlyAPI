@@ -10,6 +10,7 @@ import com.example.evently.models.Participation;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.ParticipationRepository;
 import com.example.evently.services.event.event.EventService;
+import com.example.evently.services.notification.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +23,14 @@ public class ParticipationServiceImpl implements ParticipationService{
     ParticipationRepository participationRepository;
     EventService eventService;
     AuthFacade authFacade;
+    NotificationService notificationService;
 
     @Autowired
-    public ParticipationServiceImpl(ParticipationRepository participationRepository, EventService eventService, AuthFacade authFacade) {
+    public ParticipationServiceImpl(ParticipationRepository participationRepository, EventService eventService, AuthFacade authFacade , NotificationService notificationService) {
         this.participationRepository = participationRepository;
         this.eventService = eventService;
         this.authFacade = authFacade;
+        this.notificationService = notificationService;
     }
 
     private User getAuth(){
@@ -76,7 +79,8 @@ public class ParticipationServiceImpl implements ParticipationService{
             throw new BadReqEx("Already participating!", "P-001");
         var part = new ParticipationMapper().mapReqToParticipation(event, auth);
         participationRepository.save(part);
-        return new Message("You've just joined "+event.getTitle()+"!");
+        notificationService.createJoinNotification(event);
+        return new Message("You've just joined "+event.getTitle()+"! We'll send you and email with the details.");
     }
 
     @Override

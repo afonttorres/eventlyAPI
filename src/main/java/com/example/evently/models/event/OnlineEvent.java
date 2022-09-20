@@ -40,4 +40,9 @@ public class OnlineEvent extends Event{
     public String toString() {
         return "Online Event [title: "+getTitle().toLowerCase()+", desc: "+getDescription().toLowerCase()+", type: online , date: "+getDate().toString().toLowerCase()+", loc: "+getLocation().toLowerCase()+" , tags: "+getTags().toString().toLowerCase()+"]";
     }
+
+    @Override
+    public String beautified(){
+        return "online event "+getTitle()+" planned in"+getLocation()+" the "+getDate().toGMTString();
+    }
 }
