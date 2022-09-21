@@ -46,7 +46,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginReq loginReq){
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginReq loginReq){
+        System.out.println(loginReq);
         System.out.println(" EXISTS? :"+authRepository.existsByUsername(loginReq.getUsername()));
         if(!authRepository.existsByUsername(loginReq.getUsername())){
             return ResponseEntity

@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class ImageController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/images")
-    public ResponseEntity<Message> deleteByUrl(@RequestBody ImageReqDelete req) throws IOException {
+    public ResponseEntity<Message> deleteByUrl(@Valid @RequestBody ImageReqDelete req) throws IOException {
         return new ResponseEntity<>(imageService.deleteByUrl(req), HttpStatus.OK);
     }
 }

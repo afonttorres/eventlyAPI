@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,13 +44,13 @@ public class TagController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/events/{id}/tags")
-    ResponseEntity<Message> addTagsToEvent(@PathVariable Long id, @RequestBody PostMultTagsReq req){
+    ResponseEntity<Message> addTagsToEvent(@PathVariable Long id,@Valid @RequestBody PostMultTagsReq req){
         return new ResponseEntity<>(tagService.addEventTags(id, req), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/events/{id}/tags")
-    ResponseEntity<Message> delete(@PathVariable Long id, @RequestBody TagReq req){
+    ResponseEntity<Message> delete(@PathVariable Long id,@Valid  @RequestBody TagReq req){
         return new ResponseEntity<>(tagService.delete(id, req), HttpStatus.OK);
     }
 

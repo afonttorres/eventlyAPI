@@ -3,47 +3,52 @@ package com.example.evently.services.email;
 import com.example.evently.models.EmailDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
 
-@Service
-public class EmailServiceImpl implements EmailService {
+@Component
+public class MailService implements CommandLineRunner {
 
 
 
-    private JavaMailSender javaMailSender;
-    @Value("${spring.mail.username}") private String sender;
+    private static JavaMailSender javaMailSender;
+    @Value("${spring.mail.username}") private static String sender;
 
     @Autowired
-    public EmailServiceImpl(JavaMailSender javaMailSender) {
+    public MailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendSimpleMail(EmailDetails details){
-        try {
-            System.out.println(sender);
-            System.out.println(details.getRecipient());
+    @Override
+    public void run(String... args) throws Exception {
+
+    }
+
+    public static void sendSimpleMail(EmailDetails details){
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(sender);
             mailMessage.setTo(details.getRecipient());
             mailMessage.setText(details.getMsgBody());
             mailMessage.setSubject(details.getSubject());
-            javaMailSender.send(mailMessage);
-            System.out.println("Mail sent successfully!");
-        }
-        catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Error while sending mail");
-        }
-    }
+
+            new Thread(()->{
+                try{
+                    javaMailSender.send(mailMessage);
+                }catch (Exception e){
+                    System.out.println(e);
+                    System.out.println("Error while sending mail");
+                }
+            }).start();
+    };
 
 
     public String sendMailWithAttachment(EmailDetails details){
@@ -68,4 +73,5 @@ public class EmailServiceImpl implements EmailService {
             return "Error while sending mail";
         }
     }
+
 }

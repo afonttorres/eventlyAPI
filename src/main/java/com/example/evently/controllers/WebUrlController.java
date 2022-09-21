@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -42,7 +43,7 @@ public class WebUrlController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/events/{id}/webUrls")
-    ResponseEntity<Message> create(@PathVariable Long id, @RequestBody WebUrlReq req){
+    ResponseEntity<Message> create(@PathVariable Long id,@Valid @RequestBody WebUrlReq req){
         return new ResponseEntity<>(webUrlService.create(id, req), HttpStatus.OK);
     }
 

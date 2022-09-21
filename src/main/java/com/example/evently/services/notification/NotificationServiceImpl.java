@@ -9,7 +9,7 @@ import com.example.evently.models.Notification;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.NotificationRepository;
-import com.example.evently.services.email.EmailService;
+import com.example.evently.services.email.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,13 +23,15 @@ public class NotificationServiceImpl implements NotificationService{
 
 
     AuthFacade authFacade;
-    EmailService emailService;
+//    EmailService emailService;
     NotificationRepository notificationRepository;
 
     @Autowired
-    public NotificationServiceImpl(AuthFacade authFacade, EmailService emailService, NotificationRepository notificationRepository) {
+    public NotificationServiceImpl(AuthFacade authFacade,
+//                                   EmailService emailService,
+                                   NotificationRepository notificationRepository) {
         this.authFacade = authFacade;
-        this.emailService = emailService;
+//        this.emailService = emailService;
         this.notificationRepository = notificationRepository;
     }
 
@@ -65,7 +67,7 @@ public class NotificationServiceImpl implements NotificationService{
         notificationRepository.saveAll(notifications);
         //aqui
         event.getParticipants().forEach(p ->
-                emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), description,subject)));
+                MailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), description,subject)));
     }
 
     @Override
@@ -74,7 +76,7 @@ public class NotificationServiceImpl implements NotificationService{
         String description = "You've joined "+event.beautified();
         String subject = "You've joined an event in Evently App!";
         notificationRepository.save(new Notification(subject, description, auth));
-        emailService.sendSimpleMail(new EmailDetails(auth.getEmail(), description,subject));
+        MailService.sendSimpleMail(new EmailDetails(auth.getEmail(), description,subject));
         //aqui
     }
 
@@ -90,7 +92,7 @@ public class NotificationServiceImpl implements NotificationService{
         notificationRepository.saveAll(notifications);
         //aqui
         event.getParticipants().forEach(p ->
-                emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), description,subject)));
+                MailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), description,subject)));
     }
 
     @Override
@@ -104,7 +106,7 @@ public class NotificationServiceImpl implements NotificationService{
         notificationRepository.saveAll(notifications);
         //aqui
         event.getParticipants().forEach(p ->
-                emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), description,subject)));
+                MailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), description,subject)));
     }
 
     @Override

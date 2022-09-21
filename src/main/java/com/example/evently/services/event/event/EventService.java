@@ -25,8 +25,6 @@ public interface EventService {
     List<EventRes> getByTag(String tag);
     List<EventRes> getByType(String type);
     List<EventRes> getBySearch(String search);
-
-
     Event getCompleteEventById(Long id);
     List<Event> getUserJoinedEvents(User auth);
 

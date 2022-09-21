@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -44,7 +45,7 @@ public class DirectionController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/events/{id}/directions")
-    ResponseEntity<Message> create(@PathVariable Long id, @RequestBody DirectionReq req){
+    ResponseEntity<Message> create(@PathVariable Long id,@Valid @RequestBody DirectionReq req){
         return new ResponseEntity<>( directionService.create(id, req), HttpStatus.OK);
     }
 

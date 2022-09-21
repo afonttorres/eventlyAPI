@@ -27,15 +27,13 @@ public class DirectionServiceImpl implements DirectionService{
     DirectionRepository directionRepository;
     OfflineEventService offlineEventService;
     AuthFacade authFacade;
-    EmailService emailService;
     NotificationService notificationService;
 
     @Autowired
-    public DirectionServiceImpl(DirectionRepository directionRepository, OfflineEventService offlineEventService, AuthFacade authFacade, EmailService emailService, NotificationService notificationService) {
+    public DirectionServiceImpl(DirectionRepository directionRepository, OfflineEventService offlineEventService, AuthFacade authFacade, NotificationService notificationService) {
         this.directionRepository = directionRepository;
         this.offlineEventService = offlineEventService;
         this.authFacade = authFacade;
-        this.emailService = emailService;
         this.notificationService = notificationService;
     }
 

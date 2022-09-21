@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequirementReq {
-    @NotBlank
+    @NotBlank(message = "Requirement is mandatory!")
     @Size(min = 2, max = 50, message = "Requirement should have 2 to 50 characters!")
     String name;
 }

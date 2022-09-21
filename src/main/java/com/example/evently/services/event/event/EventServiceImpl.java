@@ -135,7 +135,6 @@ public class EventServiceImpl implements EventService {
             throw new BadReqEx("Only event publisher is allowed to update it!", "T-002");
         if(!req.getType().equals(event.getType().toString().toLowerCase())){
             var newEvent = this.changeType(req, event);
-            System.out.println("aqui");
             notificationService.createUpdatedNotification(event, beautified, newEvent);
             return new EventMapper().mapEventToResAuth(newEvent, event.getPublisher());
         }

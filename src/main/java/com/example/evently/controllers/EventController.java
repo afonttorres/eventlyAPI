@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class EventController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/events")
-    ResponseEntity<EventRes>create(@RequestBody EventReq eventReq){
+    ResponseEntity<EventRes>create(@Valid @RequestBody EventReq eventReq){
         return new ResponseEntity<>(eventService.create(eventReq), HttpStatus.OK);
     }
 
@@ -48,7 +49,7 @@ public class EventController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/events/{id}")
-    ResponseEntity<EventRes> update(@PathVariable Long id, @RequestBody EventReqUpdate eventReq){
+    ResponseEntity<EventRes> update(@PathVariable Long id,@Valid  @RequestBody EventReqUpdate eventReq){
         return new ResponseEntity<>(eventService.update(id, eventReq), HttpStatus.OK);
     }
 

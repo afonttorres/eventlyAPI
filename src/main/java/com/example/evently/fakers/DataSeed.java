@@ -83,7 +83,7 @@ public class DataSeed {
         var laura = new User();
         laura.setRoles(userRoles);
         laura.setUsername("lauraparra");
-        laura.setEmail("lp@gmail.com");
+        laura.setEmail("parra808@hotmail.com");
         laura.setPassword(encoder.encode("password1234"));
         laura.setName("Laura");
         laura.setSurname("Parra");
@@ -91,7 +91,7 @@ public class DataSeed {
         var joel = new User();
         joel.setRoles(userRoles);
         joel.setUsername("joelblasi");
-        joel.setEmail("jb@gmail.com");
+        joel.setEmail("joelblasi2005@gmail.com");
         joel.setPassword(encoder.encode("password1234"));
         joel.setName("Joel");
         joel.setSurname("Blasi");

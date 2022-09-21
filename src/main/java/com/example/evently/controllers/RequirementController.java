@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,13 +42,13 @@ public class RequirementController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("events/{id}/requirements")
-    public ResponseEntity<Message> create(@PathVariable Long id, @RequestBody RequirementReq req){
+    public ResponseEntity<Message> create(@PathVariable Long id,@Valid @RequestBody RequirementReq req){
         return new ResponseEntity<>(requirementService.create(id, req), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("events/{id}/requirements")
-    public ResponseEntity<Message> delete(@PathVariable Long id, @RequestBody RequirementReq req){
+    public ResponseEntity<Message> delete(@PathVariable Long id,@Valid  @RequestBody RequirementReq req){
         return new ResponseEntity<>(requirementService.delete(id, req), HttpStatus.OK);
     }
 

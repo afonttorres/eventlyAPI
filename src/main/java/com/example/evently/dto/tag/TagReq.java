@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TagReq {
-    @NotBlank
+    @NotBlank(message = "Tag is mandatory!")
     @Size(min = 2, max = 50, message = "Tag should have 2 to 50 characters!")
     String name;
 }

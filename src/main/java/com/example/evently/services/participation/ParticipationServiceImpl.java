@@ -35,7 +35,7 @@ public class ParticipationServiceImpl implements ParticipationService{
 
     private User getAuth(){
         Optional<User> auth = authFacade.getAuthUser();
-        if(auth.isEmpty()) throw new NotFoundEx("User Not Found", "U-404");
+        if(auth.isEmpty()) throw new NotFoundEx("User not found", "U-404");
         return auth.get();
     }
 
@@ -73,11 +73,13 @@ public class ParticipationServiceImpl implements ParticipationService{
 
     @Override
     public Message create(Long id) {
-        var auth = this.getAuth();
+        var auth = authFacade.getAuthUser();
+        if(auth.isEmpty())
+            throw new BadReqEx("Only logged users can join an event!", "U-404");
         var event = eventService.getCompleteEventById(id);
-        if(event.isParticipant(auth))
+        if(event.isParticipant(auth.get()))
             throw new BadReqEx("Already participating!", "P-001");
-        var part = new ParticipationMapper().mapReqToParticipation(event, auth);
+        var part = new ParticipationMapper().mapReqToParticipation(event, auth.get());
         participationRepository.save(part);
         notificationService.createJoinNotification(event);
         return new Message("You've just joined "+event.getTitle()+"! We'll send you and email with the details.");
@@ -91,9 +93,11 @@ public class ParticipationServiceImpl implements ParticipationService{
 
     @Override
     public Message unjoin(Long id) {
-        var auth = this.getAuth();
+        var auth = authFacade.getAuthUser();
+        if(auth.isEmpty())
+            throw new BadReqEx("Only logged users can unjoin an event!", "U-404");
         var event = eventService.getCompleteEventById(id);
-        var joined = participationRepository.findByParticipantId(auth.getId())
+        var joined = participationRepository.findByParticipantId(auth.get().getId())
                 .stream()
                 .filter(p-> p.getEvent() == event)
                 .findFirst();

@@ -50,6 +50,7 @@ class EventServiceImplTest {
     EventReqUpdate onReqUp;
     EventReq offReq;
     EventReqUpdate offReqUp;
+
     @Mock
     EventRepository eventRepository;
     @Mock
@@ -60,8 +61,6 @@ class EventServiceImplTest {
     AuthFacade authFacade;
     @Mock
     UserService userService;
-    @Mock
-    EmailService emailService;
     @Mock
     NotificationService notificationService;
 
@@ -126,6 +125,7 @@ class EventServiceImplTest {
     @Test
     void getEventByIdShouldThrowNotFoundExWhenEventNotFound() {
         Long id = 1L;
+        Mockito.when(eventRepository.findById(any(Long.class))).thenReturn(Optional.empty());
         Exception ex = assertThrows(NotFoundEx.class, ()->{
             eventService.getEventById(id);
         });
@@ -135,7 +135,6 @@ class EventServiceImplTest {
 
     @Test
     void createShouldCreateOffEvent() {
-        System.out.println(offReq);
         Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.of(this.auth));
         Mockito.when(eventRepository.save(any(Event.class)))
                 .thenReturn(events.get(1));
