@@ -14,6 +14,7 @@ import com.example.evently.models.user.User;
 import com.example.evently.repositories.DirectionRepository;
 import com.example.evently.services.email.EmailService;
 import com.example.evently.services.event.offline.OfflineEventService;
+import com.example.evently.services.notification.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +28,15 @@ public class DirectionServiceImpl implements DirectionService{
     OfflineEventService offlineEventService;
     AuthFacade authFacade;
     EmailService emailService;
+    NotificationService notificationService;
 
     @Autowired
-    public DirectionServiceImpl(DirectionRepository directionRepository, OfflineEventService offlineEventService, AuthFacade authFacade, EmailService emailService) {
+    public DirectionServiceImpl(DirectionRepository directionRepository, OfflineEventService offlineEventService, AuthFacade authFacade, EmailService emailService, NotificationService notificationService) {
         this.directionRepository = directionRepository;
         this.offlineEventService = offlineEventService;
         this.authFacade = authFacade;
         this.emailService = emailService;
+        this.notificationService = notificationService;
     }
 
     private User getAuth(){
@@ -75,12 +78,7 @@ public class DirectionServiceImpl implements DirectionService{
         this.resetDirection(event);
         directionRepository.save(direction);
         offlineEventService.addLocationToEvent(direction, event);
-        event.getParticipants().forEach(
-                p-> emailService.sendSimpleMail(
-                        new EmailDetails(
-                                p.getParticipant().getEmail(),
-                         "Event "+event.getTitle()+ " has a new location: "+direction.toString()+". Check it out at: http://localhost:3000/events/"+event.getId()+".",
-                                "Event location modified")));
+        notificationService.createLocationNotification(direction.toString(), event);
         return new Message("Direction "+direction.toString()+" added to event "+event.getTitle()+" !");
     }
 

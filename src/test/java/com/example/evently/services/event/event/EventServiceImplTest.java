@@ -68,7 +68,7 @@ class EventServiceImplTest {
 
     @BeforeEach
     void init(){
-       eventService  = new EventServiceImpl(eventRepository, authFacade, onlineEventService, offlineEventService, userService, emailService, notificationService);
+       eventService  = new EventServiceImpl(eventRepository, authFacade, onlineEventService, offlineEventService, userService, notificationService);
        auth = this.createUser();
        notAuth = this.notAuth();
        events = this.createMultEvents();

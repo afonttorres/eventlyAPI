@@ -29,6 +29,8 @@ public class EmailServiceImpl implements EmailService {
 
     public void sendSimpleMail(EmailDetails details){
         try {
+            System.out.println(sender);
+            System.out.println(details.getRecipient());
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(sender);
             mailMessage.setTo(details.getRecipient());
@@ -38,6 +40,7 @@ public class EmailServiceImpl implements EmailService {
             System.out.println("Mail sent successfully!");
         }
         catch (Exception e) {
+            System.out.println(e);
             System.out.println("Error while sending mail");
         }
     }

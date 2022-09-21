@@ -12,6 +12,7 @@ import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.WebUrlRepository;
 import com.example.evently.services.event.online.OnlineEventService;
+import com.example.evently.services.notification.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,14 @@ public class WebUrlServiceImpl implements WebUrlService{
     WebUrlRepository webUrlRepository;
     OnlineEventService onlineEventService;
     AuthFacade authFacade;
+    NotificationService notificationService;
 
     @Autowired
-    public WebUrlServiceImpl(WebUrlRepository webUrlRepository, OnlineEventService onlineEventService, AuthFacade authFacade) {
+    public WebUrlServiceImpl(WebUrlRepository webUrlRepository, OnlineEventService onlineEventService, AuthFacade authFacade, NotificationService notificationService) {
         this.webUrlRepository = webUrlRepository;
         this.onlineEventService = onlineEventService;
         this.authFacade = authFacade;
+        this.notificationService = notificationService;
     }
 
     private User getAuth(){
@@ -74,6 +77,7 @@ public class WebUrlServiceImpl implements WebUrlService{
         this.resetWebUrl(event);
         webUrlRepository.save(url);
         onlineEventService.addLocationToEvent(url, event);
+        notificationService.createLocationNotification( url.getUrl(), event);
         return new Message("Web url "+url.getUrl()+" added to event "+event.getTitle()+" !");
     }
 

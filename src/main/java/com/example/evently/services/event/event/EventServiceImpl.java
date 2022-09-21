@@ -16,12 +16,10 @@ import com.example.evently.models.Type;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
-import com.example.evently.services.email.EmailService;
 import com.example.evently.services.event.offline.OfflineEventService;
 import com.example.evently.services.event.online.OnlineEventService;
 import com.example.evently.services.notification.NotificationService;
 import com.example.evently.services.user.UserService;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +37,6 @@ public class EventServiceImpl implements EventService {
     AuthFacade authFacade;
 
     UserService userService;
-    EmailService emailService;
     NotificationService notificationService;
 
     @Autowired
@@ -48,7 +45,6 @@ public class EventServiceImpl implements EventService {
                             OnlineEventService onlineService,
                             OfflineEventService offlineService,
                             UserService userService,
-                            EmailService emailService,
                             NotificationService notificationService
     ) {
         this.eventRepository = eventRepository;
@@ -56,7 +52,6 @@ public class EventServiceImpl implements EventService {
         this.onlineService = onlineService;
         this.offlineService = offlineService;
         this.userService = userService;
-        this.emailService = emailService;
         this.notificationService = notificationService;
     }
 

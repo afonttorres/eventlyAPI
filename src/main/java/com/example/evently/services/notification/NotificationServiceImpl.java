@@ -63,6 +63,7 @@ public class NotificationServiceImpl implements NotificationService{
                 .map(p -> new Notification(subject, description, p.getParticipant()))
                 .collect(Collectors.toList());
         notificationRepository.saveAll(notifications);
+        //aqui
         event.getParticipants().forEach(p ->
                 emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), description,subject)));
     }
@@ -74,6 +75,7 @@ public class NotificationServiceImpl implements NotificationService{
         String subject = "You've joined an event in Evently App!";
         notificationRepository.save(new Notification(subject, description, auth));
         emailService.sendSimpleMail(new EmailDetails(auth.getEmail(), description,subject));
+        //aqui
     }
 
     @Override
@@ -86,6 +88,21 @@ public class NotificationServiceImpl implements NotificationService{
                 .map(p -> new Notification(subject, description, p.getParticipant()))
                 .collect(Collectors.toList());
         notificationRepository.saveAll(notifications);
+        //aqui
+        event.getParticipants().forEach(p ->
+                emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), description,subject)));
+    }
+
+    @Override
+    public void createLocationNotification(String location, Event event) {
+        String description = "The "+event.getTitle()+" has a new location: "+location+". Check it out at http://localhost:3000/events/"+event.getId()+".";
+        String subject = "Event location modified in Evently App!";
+        var notifications = event.getParticipants()
+                .stream()
+                .map(p -> new Notification(subject, description, p.getParticipant()))
+                .collect(Collectors.toList());
+        notificationRepository.saveAll(notifications);
+        //aqui
         event.getParticipants().forEach(p ->
                 emailService.sendSimpleMail(new EmailDetails(p.getParticipant().getEmail(), description,subject)));
     }
@@ -100,6 +117,23 @@ public class NotificationServiceImpl implements NotificationService{
         notificationRepository.delete(notification.get());
         return new Message("Notification with subject "+notification.get().getSubject()+" deleted.");
     }
+
+    @Override
+    public Message toggleCheck(Long id) {
+        var notification = notificationRepository.findById(id);
+        if(notification.isEmpty())
+            throw new NotFoundEx("Notification not found", "N-404");
+        if(notification.get().getNotified() != this.getAuth() && !authFacade.isAdmin())
+            throw new BadReqEx("Only notified users can check their notifications", "N-001");
+        notification.get().setChecked(!notification.get().isChecked());
+        notificationRepository.save(notification.get());
+        if(notification.get().isChecked()){
+            return new Message("Notification with subject "+notification.get().getSubject()+" checked.");
+        }
+        return new Message("Notification with subject "+notification.get().getSubject()+" unchecked.");
+    }
+
+
 
 
 }

@@ -20,6 +20,9 @@ public class Notification {
     private Long id;
     private String subject;
     private String description;
+
+    @Version
+    private java.sql.Timestamp createdAt;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "notified_id")
