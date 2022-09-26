@@ -24,7 +24,5 @@ public class EventReq {
     @Size(min = 3, max = 15, message = "Type should have 2 to 15 characters!")
     private String type;
     @NotNull(message="Date can't be empty!")
-//    @Size(min = 3, message = "Date should have at least 3 characters!")
     private LocalDateTime date;
-
 }

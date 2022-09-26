@@ -43,6 +43,6 @@ public class OnlineEvent extends Event{
 
     @Override
     public String beautified(){
-        return "online event "+getTitle()+" planned in"+getLocation()+" the "+getDate().toGMTString().substring(0,getDate().toString().lastIndexOf(":"));
+        return "online event "+getTitle()+" planned in "+getLocation()+" the "+getDate().toGMTString().substring(0,getDate().toString().lastIndexOf(":"));
     }
 }

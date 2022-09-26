@@ -21,6 +21,7 @@ import com.example.evently.services.event.online.OnlineEventService;
 import com.example.evently.services.notification.NotificationService;
 import com.example.evently.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -95,7 +96,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventRes> getAll() {
         var auth = authFacade.getAuthUser();
-        var events = eventRepository.findAll();
+        var events = eventRepository.findAllByOrderByIdDesc();
         if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(events);
         return new EventMapper().mapMultipleEventsToResAuth(events, auth.get());
     }
@@ -207,11 +208,10 @@ public class EventServiceImpl implements EventService {
     public List<EventRes> getBySearch(String search) {
         var auth = authFacade.getAuthUser();
         this.validateSearch(search);
-        var events = eventRepository.findAll()
+        var events = eventRepository.findAllByOrderByIdDesc()
                 .stream()
                 .filter( e -> e.toString().contains(search))
                 .collect(Collectors.toList());
-        eventRepository.findAll().forEach(e -> System.out.println(e.toString()));
         if(auth.isEmpty()) return new EventMapper().mapMultipleEventsToRes(events);
         return new EventMapper().mapMultipleEventsToResAuth(events, auth.get());
     }

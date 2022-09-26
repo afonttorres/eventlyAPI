@@ -49,7 +49,7 @@ public abstract class Event {
     @JoinColumn(name = "publisher_id")
     private User publisher;
 
-    @OneToMany
+    @ManyToMany
     @JoinColumn(name = "tags")
     private List<Tag> tags = new ArrayList<>();
 
@@ -103,7 +103,7 @@ public abstract class Event {
     }
 
     public String beautified(){
-        return "Event "+getTitle()+" planned in"+getLocation()+" the "+getDate().toString();
+        return "Event "+getTitle()+" planned in "+getLocation()+" the "+getDate().toString();
     }
 
 }

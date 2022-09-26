@@ -23,15 +23,12 @@ public class NotificationServiceImpl implements NotificationService{
 
 
     AuthFacade authFacade;
-//    EmailService emailService;
     NotificationRepository notificationRepository;
 
     @Autowired
     public NotificationServiceImpl(AuthFacade authFacade,
-//                                   EmailService emailService,
                                    NotificationRepository notificationRepository) {
         this.authFacade = authFacade;
-//        this.emailService = emailService;
         this.notificationRepository = notificationRepository;
     }
 

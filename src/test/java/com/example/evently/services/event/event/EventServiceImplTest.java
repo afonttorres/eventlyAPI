@@ -99,7 +99,7 @@ class EventServiceImplTest {
     @Test
     void getAllShouldReturnAllEventsWhenUserNotLogged() {
         Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.empty());
-        Mockito.when(eventRepository.findAll()).thenReturn(events);
+        Mockito.when(eventRepository.findAllByOrderByIdDesc()).thenReturn(events);
         var sut = eventService.getAll().size();
         assertThat(sut, equalTo(12));
     }
@@ -107,7 +107,7 @@ class EventServiceImplTest {
     @Test
     void getAllShouldReturnAllEventsWhenUserLogged() {
         Mockito.when(authFacade.getAuthUser()).thenReturn(Optional.of(auth));
-        Mockito.when(eventRepository.findAll()).thenReturn(events);
+        Mockito.when(eventRepository.findAllByOrderByIdDesc()).thenReturn(events);
         var sut = eventService.getAll().size();
         assertThat(sut, equalTo(12));
     }

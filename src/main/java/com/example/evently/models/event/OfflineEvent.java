@@ -43,6 +43,6 @@ public class OfflineEvent extends Event{
 
     @Override
     public String beautified(){
-        return "offline event "+getTitle()+" planned in"+getLocation()+" the "+getDate().toGMTString().substring(0,getDate().toString().lastIndexOf(":"));
+        return "offline event "+getTitle()+" planned in "+getLocation()+" the "+getDate().toGMTString().substring(0,getDate().toString().lastIndexOf(":"));
     }
 }

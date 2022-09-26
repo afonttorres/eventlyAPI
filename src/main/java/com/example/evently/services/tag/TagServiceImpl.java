@@ -3,6 +3,7 @@ package com.example.evently.services.tag;
 import com.example.evently.dto.output.Message;
 import com.example.evently.dto.tag.PostMultTagsReq;
 import com.example.evently.dto.tag.TagReq;
+import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.models.Tag;
 import com.example.evently.repositories.TagRepository;
@@ -33,7 +34,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag getById(Long id) {
         var tag = tagRepository.findById(id);
-        if(tag.isEmpty()) throw new NotFoundEx("Tag Not Found", "C-404");
+        if(tag.isEmpty()) throw new NotFoundEx("Tag Not Found", "T-404");
         return tag.get();
     }
 
