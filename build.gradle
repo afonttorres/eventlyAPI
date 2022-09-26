@@ -40,6 +40,8 @@ dependencies {
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	// https://mvnrepository.com/artifact/com.sun.mail/javax.mail
 	implementation 'com.sun.mail:javax.mail:1.6.2'
+	// https://mavenlibs.com/maven/dependency/org.springframework.boot/spring-boot-configuration-processor
+	implementation 'org.springframework.boot:spring-boot-configuration-processor:2.7.4'
 
 }
 

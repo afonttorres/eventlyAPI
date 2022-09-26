@@ -7,9 +7,6 @@ import com.example.evently.models.Direction;
 import com.example.evently.models.event.Event;
 import com.example.evently.models.event.OfflineEvent;
 import com.example.evently.models.user.User;
-import com.example.evently.repositories.event.OfflineRepository;
-
-import java.util.Optional;
 
 public interface OfflineEventService {
     Event create(EventReq req, User auth);

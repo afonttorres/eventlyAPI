@@ -15,9 +15,6 @@ import com.example.evently.models.event.OfflineEvent;
 import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.event.EventRepository;
-import com.example.evently.repositories.event.OfflineRepository;
-import com.example.evently.repositories.event.OnlineRepository;
-import com.example.evently.services.email.EmailService;
 import com.example.evently.services.event.offline.OfflineEventService;
 import com.example.evently.services.event.online.OnlineEventService;
 import com.example.evently.services.notification.NotificationService;
@@ -29,8 +26,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.*;

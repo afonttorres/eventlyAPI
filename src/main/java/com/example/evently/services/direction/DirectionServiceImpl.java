@@ -7,12 +7,10 @@ import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.mappers.DirectionMapper;
 import com.example.evently.models.Direction;
-import com.example.evently.models.EmailDetails;
 import com.example.evently.models.Type;
 import com.example.evently.models.event.OfflineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.DirectionRepository;
-import com.example.evently.services.email.EmailService;
 import com.example.evently.services.event.offline.OfflineEventService;
 import com.example.evently.services.notification.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class DirectionServiceImpl implements DirectionService{

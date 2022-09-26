@@ -7,7 +7,6 @@ import com.example.evently.exceptions.BadReqEx;
 import com.example.evently.exceptions.NotFoundEx;
 import com.example.evently.models.Type;
 import com.example.evently.models.WebUrl;
-import com.example.evently.models.event.OfflineEvent;
 import com.example.evently.models.event.OnlineEvent;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.WebUrlRepository;
