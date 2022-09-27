@@ -7,8 +7,10 @@ This application is the result of merging the different projects our team member
 Evently was designed to achieve all the features we spoke about in those three projects. It allows the User organize Events and share them with other Users becoming a small social network to share hobbies, knowledge and create bonds.
 
 ## Documentation
-
 [Evently API](http://localhost:8080/swagger-ui/index.html#/)
+
+### Client
++ [Evently App](https://github.com/xcapde/eventlyUI)
 
 ## Tech Stack
 + Java
@@ -20,9 +22,6 @@ Evently was designed to achieve all the features we spoke about in those three p
 + Mail Sender
 + JUnit Mockito
 + Swagger
-
-### Client
-+ [Evently App](https://github.com/xcapde/eventlyUI)
 
 ### Version control
 + GIT
@@ -48,6 +47,8 @@ Lastly we thought it would be a shame for Users to miss if Events had been modif
 
 Given the deadline of the project (four weeks time) this project turns out to be unfinished but we are looking forward to add new features and end those which are not finished yet.
 
+### Relationship entity diagram
+![App Screenshot](https://res.cloudinary.com/dkju5on5v/image/upload/v1664302749/Evently_Entity_Diagram_1_lad8ix.png)
 ## Features
 ### Event CRUD
 + Display all Events
@@ -79,9 +80,6 @@ Given the deadline of the project (four weeks time) this project turns out to be
 + Create a User (sign up)
 + Display Users
 + Authenticate User (log in)
-
-## Relationship entity diagram
-![App Screenshot](https://res.cloudinary.com/dkju5on5v/image/upload/v1664302749/Evently_Entity_Diagram_1_lad8ix.png)
 
 ## Next
 Since we've just got started we are planning to add a lot of new features to our application .
