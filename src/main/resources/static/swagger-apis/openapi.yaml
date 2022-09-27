@@ -1,14 +1,17 @@
 ---
 openapi: 3.0.3
+swagger: 2.0
 info:
   title: Evently API
   description: This API manages events data for its React client Evently App.
   termsOfService: urn:tos
   contact: {}
-  version: '1.0'
+  version: 1.0.0
 servers:
 - url: http://localhost:8080
   description: base url
+"host": http://localhost:8080
+"basePath": /api/v1
 tags:
 - name: Authentication
   description: Authentication Controller

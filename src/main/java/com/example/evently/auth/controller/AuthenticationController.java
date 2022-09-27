@@ -6,6 +6,8 @@ import com.example.evently.models.Role;
 import com.example.evently.models.user.User;
 import com.example.evently.repositories.AuthRepository;
 import com.example.evently.repositories.RoleRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,8 +24,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/auth")
 @CrossOrigin
+@Api(value="", tags={"Authentication"})
 public class AuthenticationController {
     private final AuthRepository authRepository;
     private final RoleRepository roleRepository;
@@ -46,6 +49,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
+    @ApiOperation(value = "Logs a user in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginReq loginReq){
         System.out.println(loginReq);
         System.out.println(" EXISTS? :"+authRepository.existsByUsername(loginReq.getUsername()));
@@ -72,6 +76,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
+    @ApiOperation(value = "Register a user in the application")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupReq singUpReq){
 
         if(authRepository.existsByUsername(singUpReq.getUsername())){
