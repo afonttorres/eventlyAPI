@@ -26,7 +26,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.3'
 	implementation 'javax.validation:validation-api:2.0.1.Final'
 	implementation 'org.hibernate:hibernate-validator:8.0.0.Final'
-	compileOnly 'org.projectlombok:lombok'
+	implementation 'io.springfox:springfox-swagger-common:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -40,9 +43,6 @@ dependencies {
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	// https://mvnrepository.com/artifact/com.sun.mail/javax.mail
 	implementation 'com.sun.mail:javax.mail:1.6.2'
-	// https://mavenlibs.com/maven/dependency/org.springframework.boot/spring-boot-configuration-processor
-	implementation 'org.springframework.boot:spring-boot-configuration-processor:2.7.4'
-
 }
 
 tasks.named('test') {

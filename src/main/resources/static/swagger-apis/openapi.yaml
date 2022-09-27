@@ -1,0 +1,1824 @@
+---
+openapi: 3.0.3
+info:
+  title: Evently API
+  description: This API manages events data for its React client Evently App.
+  termsOfService: urn:tos
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://localhost:8080
+  description: base url
+tags:
+- name: Authentication
+  description: Authentication Controller
+- name: Event
+  description: Event Controller
+- name: Direction
+  description: Direction Controller
+- name: Image
+  description: Image Controller
+- name: Notification
+  description: Notification Controller
+- name: Participation
+  description: Participation Controller
+- name: Requirement
+  description: Requirement Controller
+- name: Tag
+  description: Tag Controller
+- name: Web url
+  description: Web Url Controller
+paths:
+  "/auth/signin":
+    post:
+      tags:
+      - Authentication
+      summary: Authenticate user
+      operationId: authenticateUserUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/LoginReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/auth/signup":
+    post:
+      tags:
+      - Authentication
+      summary: Register user
+      operationId: registerUserUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SignupReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events":
+    get:
+      tags:
+      - Event
+      summary: Get all events
+      operationId: getAllUsingGET
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/EventRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - Event
+      summary: Create an event
+      operationId: createUsingPOST_1
+      security:
+      - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/EventReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/EventRes"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events/{id}":
+    get:
+      tags:
+      - Event
+      summary: Get a single event by its id
+      operationId: getEventByIdUsingGET
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/EventRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+      - Event
+      summary: Update an event
+      operationId: updateUsingPUT
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/EventReqUpdate"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/EventRes"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - Event
+      summary: Delete an event
+      operationId: deleteUsingDELETE_1
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/EventRes"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/events?type={type}":
+    get:
+      tags:
+      - Event
+      summary: Get events by type
+      operationId: getByTypeUsingGET
+      security:
+      - bearer: []
+      parameters:
+      - in: path
+        name: type
+        description: type
+        required: true
+        allowReserved: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/EventRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events?search={search}":
+    get:
+      tags:
+      - Event
+      summary: Get events by search
+      operationId: getBySearchUsingGET
+      security:
+      - bearer: []
+      parameters:
+      - in: path
+        name: search
+        description: search
+        required: true
+        allowReserved: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/EventRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events?tag={tag}":
+    get:
+      tags:
+      - Event
+      summary: Get events by tag
+      operationId: getByTagUsingGET
+      security:
+      - bearer: []
+      parameters:
+      - in: path
+        name: tag
+        description: tag
+        required: true
+        allowReserved: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/EventRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found        
+  "/joined-events":
+    get:
+      tags:
+      - Event
+      summary: Get authenticated user joined events
+      operationId: getUserJoinedEventsUsingGET
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/EventRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/published-events":
+    get:
+      tags:
+      - Event
+      summary: Get authenticated user published events
+      operationId: getAuthPublishedEventsUsingGET
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/EventRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/users/{id}/events":
+    get:
+      tags:
+      - Event
+      summary: Get user published events by its id
+      operationId: getUserPublishedEventsUsingGET
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/EventRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/directions":
+    get:
+      tags:
+      - Direction
+      summary: Get all directions
+      operationId: getAllDirectionsUsingGET
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Direction"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/directions/{id}":
+    get:
+      tags:
+      - Direction
+      summary: Get a single direction by its id
+      operationId: getByIdUsingGET
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Direction"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events/{id}/directions":
+    get:
+      tags:
+      - Direction
+      summary: Get direction by event id
+      operationId: getByEventIdUsingGET
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Direction"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - Direction
+      summary: Create event direction
+      operationId: createUsingPOST
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DirectionReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - Direction
+      summary: Delete event direction
+      operationId: deleteUsingDELETE
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden        
+  "/events/{id}/images":
+    post:
+      tags:
+      - Image
+      summary: Upload event image
+      operationId: uploadUsingPOST
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              format: binary
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ImageRes"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/images":
+    get:
+      tags:
+      - Image
+      summary: Get all images
+      operationId: getAllUsingGET_2
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Image"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - Image
+      summary: Delete image by its url
+      operationId: deleteByUrlUsingDELETE
+      security:
+      - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ImageReqDelete"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/images/{id}":
+    get:
+      tags:
+      - Image
+      summary: Get a single image by its id
+      operationId: getByIdUsingGET_1
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Image"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - Image
+      summary: Delete image by its id
+      operationId: deleteByIdUsingDELETE
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/auth-notifications":
+    get:
+      tags:
+      - Notification
+      summary: Get authenticated user notifications
+      operationId: getAuthNotificatonsUsingGET
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Notification"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/auth-notifications/{id}":
+    delete:
+      tags:
+      - Notification
+      summary: Delete notification
+      operationId: deleteUsingDELETE_2
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/auth-notifications/{id}/check":
+    patch:
+      tags:
+      - Notification
+      summary: Toggle check
+      operationId: toggleCheckUsingPATCH
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/notifications":
+    get:
+      tags:
+      - Notification
+      summary: Get all notifications
+      operationId: getAllUsingGET_3
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Notification"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events/{id}/participations":
+    get:
+      tags:
+      - Participation
+      summary: Get participations by event id
+      operationId: getByEventIdUsingGET_1
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ParticipationRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - Participation
+      summary: Create a participation (join)
+      operationId: createUsingPOST_2
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events/{id}/unjoin":
+    delete:
+      tags:
+      - Participation
+      summary: Delete a participation by event id (unjoin)
+      operationId: unjoinUsingDELETE
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/participations":
+    get:
+      tags:
+      - Participation
+      summary: Get all participations
+      operationId: getAllUsingGET_4
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ParticipationRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/participations/{id}":
+    get:
+      tags:
+      - Participation
+      summary: Get a single participation by its id
+      operationId: getByIdUsingGET_2
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ParticipationRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - Participation
+      summary: Delete a participation by its id
+      operationId: deleteUsingDELETE_3
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/users/{id}/participations":
+    get:
+      tags:
+      - Participation
+      summary: Get user participations by its id
+      operationId: getByUserIdUsingGET
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ParticipationRes"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events/{id}/requirements":
+    get:
+      tags:
+      - Requirement
+      summary: Get requirements by event id
+      operationId: getByEventIdUsingGET_2
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Requirement"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - Requirement
+      summary: Create event requirement
+      operationId: createUsingPOST_3
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RequirementReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - Requirement
+      summary: Delete event requirement
+      operationId: deleteUsingDELETE_4
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RequirementReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/requirements":
+    get:
+      tags:
+      - Requirement
+      summary: Get all requirements
+      operationId: getAllUsingGET_5
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Requirement"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/requirements/{id}":
+    get:
+      tags:
+      - Requirement
+      summary: Get a single requirement by its id
+      operationId: getByIdUsingGET_3
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Requirement"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events/{id}/tags":
+    post:
+      tags:
+      - Tag
+      summary: Create event tags
+      operationId: addTagsToEventUsingPOST
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PostMultTagsReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - Tag
+      summary: Delete event tags
+      operationId: deleteUsingDELETE_5
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TagReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/tags":
+    get:
+      tags:
+      - Tag
+      summary: Get all tags
+      operationId: getTagsUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Tag"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/tags/{id}":
+    get:
+      tags:
+      - Tag
+      summary: Get a single tag by its id
+      operationId: getTagUsingGET
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Tag"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/events/{id}/webUrls":
+    get:
+      tags:
+      - Web url
+      summary: Get by event id
+      operationId: getByEventIdUsingGET_3
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/WebUrl"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - Web url
+      summary: Create event url
+      operationId: createUsingPOST_4
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/WebUrlReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+      - Web url
+      summary: Delete event url
+      operationId: deleteUsingDELETE_6
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Message"
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/webUrls":
+    get:
+      tags:
+      - Web url
+      summary: Get all
+      operationId: getAllUsingGET_6
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/WebUrl"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/webUrls/{id}":
+    get:
+      tags:
+      - Web url
+      summary: Get a single url by its id
+      operationId: getByIdUsingGET_4
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/WebUrl"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  securitySchemes:
+    bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: Token de autenticación
+  schemas:
+    Direction:
+      title: Direction
+      type: object
+      properties:
+        building:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        door:
+          type: string
+        province:
+          type: string
+        street:
+          type: string
+    DirectionReq:
+      title: DirectionReq
+      required:
+      - building
+      - city
+      - country
+      - province
+      - street
+      type: object
+      properties:
+        building:
+          maxLength: 12
+          minLength: 1
+          type: string
+        city:
+          maxLength: 300
+          minLength: 3
+          type: string
+        country:
+          maxLength: 300
+          minLength: 3
+          type: string
+        door:
+          type: string
+        province:
+          maxLength: 300
+          minLength: 3
+          type: string
+        street:
+          maxLength: 300
+          minLength: 3
+          type: string
+    EventReq:
+      title: EventReq
+      required:
+      - date
+      - description
+      - title
+      - type
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        description:
+          maxLength: 2500
+          minLength: 3
+          type: string
+        title:
+          maxLength: 300
+          minLength: 3
+          type: string
+        type:
+          maxLength: 15
+          minLength: 3
+          type: string
+    EventReqUpdate:
+      title: EventReqUpdate
+      required:
+      - date
+      - description
+      - title
+      - type
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        description:
+          maxLength: 2500
+          minLength: 3
+          type: string
+        title:
+          maxLength: 300
+          minLength: 3
+          type: string
+        type:
+          maxLength: 15
+          minLength: 3
+          type: string
+    EventRes:
+      title: EventRes
+      type: object
+      properties:
+        date:
+          type: string
+        description:
+          type: string
+        hour:
+          type: string
+        id:
+          type: integer
+          format: int64
+        images:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        participant:
+          type: boolean
+        participantsCount:
+          type: integer
+          format: int32
+        publisher:
+          "$ref": "#/components/schemas/NestedUser"
+        requirements:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+        type:
+          type: string
+    Image:
+      title: Image
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        imgId:
+          type: string
+        imgUrl:
+          type: string
+        name:
+          type: string
+    ImageReqDelete:
+      title: ImageReqDelete
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          maxLength: 2147483647
+          minLength: 7
+          type: string
+    ImageRes:
+      title: ImageRes
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        message:
+          type: string
+        url:
+          type: string
+    LoginReq:
+      title: LoginReq
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        password:
+          maxLength: 50
+          minLength: 2
+          type: string
+        username:
+          maxLength: 50
+          minLength: 2
+          type: string
+    Message:
+      title: Message
+      type: object
+      properties:
+        message:
+          type: string
+    NestedEventRes:
+      title: NestedEventRes
+      type: object
+      properties:
+        date:
+          type: string
+        description:
+          type: string
+        hour:
+          type: string
+        id:
+          type: integer
+          format: int64
+        images:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        participantsCount:
+          type: integer
+          format: int32
+        publisher:
+          "$ref": "#/components/schemas/NestedUser"
+        title:
+          type: string
+        type:
+          type: string
+    NestedUser:
+      title: NestedUser
+      type: object
+      properties:
+        avatar:
+          type: string
+        completeName:
+          type: string
+        username:
+          type: string
+    Notification:
+      title: Notification
+      type: object
+      properties:
+        checked:
+          type: boolean
+        createdAt:
+          "$ref": "#/components/schemas/Timestamp"
+        description:
+          type: string
+        id:
+          type: integer
+          format: int64
+        subject:
+          type: string
+    ParticipationRes:
+      title: ParticipationRes
+      type: object
+      properties:
+        event:
+          "$ref": "#/components/schemas/NestedEventRes"
+        id:
+          type: integer
+          format: int64
+        participant:
+          "$ref": "#/components/schemas/NestedUser"
+    PostMultTagsReq:
+      title: PostMultTagsReq
+      required:
+      - tags
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+    Requirement:
+      title: Requirement
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    RequirementReq:
+      title: RequirementReq
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 50
+          minLength: 2
+          type: string
+    SignupReq:
+      title: SignupReq
+      required:
+      - email
+      - name
+      - password
+      - surname
+      - username
+      type: object
+      properties:
+        email:
+          maxLength: 50
+          minLength: 0
+          type: string
+        name:
+          maxLength: 50
+          minLength: 2
+          type: string
+        password:
+          maxLength: 50
+          minLength: 2
+          type: string
+        role:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        surname:
+          maxLength: 50
+          minLength: 2
+          type: string
+        username:
+          maxLength: 50
+          minLength: 2
+          type: string
+    Tag:
+      title: Tag
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 40
+          minLength: 2
+          type: string
+    TagReq:
+      title: TagReq
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 50
+          minLength: 2
+          type: string
+    Timestamp:
+      title: Timestamp
+      type: object
+      properties:
+        date:
+          type: integer
+          format: int32
+        day:
+          type: integer
+          format: int32
+        hours:
+          type: integer
+          format: int32
+        minutes:
+          type: integer
+          format: int32
+        month:
+          type: integer
+          format: int32
+        nanos:
+          type: integer
+          format: int32
+        seconds:
+          type: integer
+          format: int32
+        time:
+          type: integer
+          format: int64
+        timezoneOffset:
+          type: integer
+          format: int32
+        year:
+          type: integer
+          format: int32
+    WebUrl:
+      title: WebUrl
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        url:
+          type: string
+    WebUrlReq:
+      title: WebUrlReq
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          maxLength: 2147483647
+          minLength: 7
+          type: string
