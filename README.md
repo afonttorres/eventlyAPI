@@ -1,10 +1,8 @@
 
 # Evently App 📅📌
-React App developed as Final Project for Factoria F5 FullStack Web Development Bootcamp.
+Rest API developed as Final Project server side for Factoria F5 FullStack Web Development Bootcamp.
 
-This application is the result of merging the different projects our team members had in mind. Before starting with the development we gathered to brainstorm and came along with three potential projects. The first one was an application to share hobbies with other Users, the second one was an application to help either students and mentors getting in touch, and finally, the last one had the aim to provide a solution for social entities or councils to organize their social activities.
-
-Evently was designed to achieve all the features we spoke about in those three projects. It allows the User organize Events and share them with other Users becoming a small social network to share hobbies, knowledge and create bonds.
+This API manages all information required to develop a small social network to help users enhance bonds with their community by sharing events and interacting with them by uploading, joining and unjoining them and add details such as tags, requirements or images. It also provides a notification service to warn participants about its joined events' modifications by sending an email or a notification in their application.
 
 ## Documentation
 [Evently API](http://localhost:8080/swagger-ui/index.html#/)
