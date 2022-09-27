@@ -1,5 +1,5 @@
 
-# Evently App 📅📌
+# Evently API 📅📌
 Rest API developed as Final Project server side for Factoria F5 FullStack Web Development Bootcamp.
 
 This API manages all information required to develop a small social network to help users enhance bonds with their community by sharing events and interacting with those of their interest by uploading, joining and unjoining them and add details such as tags, requirements or images. It also provides a notification service to warn participants about its joined events' modifications by sending an email and a notification in their application.
