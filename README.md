@@ -4,6 +4,16 @@ Rest API developed as Final Project server side for Factoria F5 FullStack Web De
 
 This API manages all information required to develop a small social network to help users enhance bonds with their community by sharing events and interacting with those of their interest by uploading, joining and unjoining them and add details such as tags, requirements or images. It also provides a notification service to warn participants about its joined events' modifications by sending an email and a notification in their application.
 
+This application was designed using layered architecture principles and following SOLID and clean code principles. Every entity has its own controller and its services whom provide the business logic are injected by using interfaces. Data's persistence is managed by their repositories which extend Jpa Repository. In addition, every entity has both request and response Dtos and its mappers.
+
+This API has authentication implementation by using JWT to improve user expierence and protect routes.
+
+This application implements Cloudinary to upload images and java Mail Sender to send notifications.
+
+The API services are tested using JUnit Mockito.
+
+Lastly, Swagger was used to document the API.
+
 ## Documentation
 [Evently API](http://localhost:8080/swagger-ui/index.html#/)
 
@@ -13,9 +23,11 @@ This API manages all information required to develop a small social network to h
 ## Tech Stack
 + Java
 + Spring Boot
++ Spring data
 + JPA Repository
-+ H2 console
++ H2 hibernate
 + Lombok
++ JWT
 + Cloudinary
 + Mail Sender
 + JUnit Mockito
