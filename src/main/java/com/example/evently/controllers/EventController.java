@@ -5,7 +5,9 @@ import com.example.evently.dto.event.req.EventReqUpdate;
 import com.example.evently.dto.event.res.EventRes;
 import com.example.evently.services.event.event.EventService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,21 +87,42 @@ public class EventController {
 //    events?search=${tag}
     @GetMapping(value="/events", params ="tag")
     @ApiOperation(value = "Get events by tag")
-    ResponseEntity<List<EventRes>> getByTag(@RequestParam String tag){
+    ResponseEntity<List<EventRes>> getByTag(
+            @ApiParam(
+                    name =  "tag",
+                    type = "String",
+                    value = "tag",
+                    example = "esport",
+                    required = true)
+            @RequestParam String tag){
+
         return new ResponseEntity<>(eventService.getByTag(tag), HttpStatus.OK);
     }
 
 //    events?search=${type}
     @GetMapping(value="/events", params ="type")
     @ApiOperation(value = "Get events by type")
-    ResponseEntity<List<EventRes>> getByType(@RequestParam String type){
+    ResponseEntity<List<EventRes>> getByType(
+            @ApiParam(
+                    name =  "type",
+                    type = "String",
+                    value = "type",
+                    example = "offline",
+                    required = true)
+            @RequestParam String type){
         return new ResponseEntity<>(eventService.getByType(type), HttpStatus.OK);
     }
 
     //    events?search=${search}
     @GetMapping(value="/events", params ="search")
     @ApiOperation(value = "Get events by search")
-    ResponseEntity<List<EventRes>> getBySearch(@RequestParam String search){
+    ResponseEntity<List<EventRes>> getBySearch(
+            @ApiParam(
+                    name =  "search",
+                    type = "String",
+                    value = "search",
+                    example = "bicicleta",
+                    required = true)@RequestParam String search){
         return new ResponseEntity<>(eventService.getBySearch(search), HttpStatus.OK);
     }
 }

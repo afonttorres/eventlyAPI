@@ -2,7 +2,7 @@
 # Evently API 📅📌
 Rest API developed as Final Project server side for Factoria F5 FullStack Web Development Bootcamp.
 
-This API manages all information required to develop a small social network to help users enhance bonds with their community by sharing events and interacting with those of their interest by uploading, joining and unjoining them and add details such as tags, requirements or images. It also provides a notification service to warn participants about its joined events' modifications by sending an email and a notification in their application.
+This API manages all information required to develop a small social network to help users enhance bonds with their community by sharing events and interacting with those of their interest by uploading, joining and unjoining them and add details such as tags, requirements or images. It also provides a notification service to warn participants about its joined events' modifications by sending an email and a notification in the application.
 
 This application was designed using layered architecture principles and following SOLID and clean code principles. Every entity has its own controller and its services whom provide the business logic are injected by using interfaces. Data's persistence is managed by their repositories which extend Jpa Repository. In addition, every entity has both request and response Dtos and its mappers.
 
@@ -31,7 +31,7 @@ Lastly, Swagger was used to document the API.
 + Cloudinary
 + Mail Sender
 + JUnit Mockito
-+ Swagger
++ Swagger (Springfox)
 
 ### Version control
 + GIT
@@ -116,7 +116,7 @@ We expect many more features will come on the go.
 + [Agnès Font](https://github.com/afonttorres)
 
 ## Installation
-This project was bootstrapped with Spring Boot and might require dependencies. Make sure to check your buil.gradle file to install them. 
+This project was bootstrapped with Spring Boot and might require dependencies. Make sure to check your build.gradle file to install them. 
 
 #### 1. Clone the repository
 ```bash
